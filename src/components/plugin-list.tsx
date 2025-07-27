@@ -91,16 +91,19 @@ export function PluginList() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {plugins.map((plugin) => (
-            <Card key={plugin.name} className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow duration-300">
-              <div className="relative h-48 w-full">
-                <Image
-                  src={plugin.imageUrl}
-                  alt={plugin.name}
-                  layout="fill"
-                  objectFit="cover"
-                  data-ai-hint={plugin.dataAiHint}
-                />
-              </div>
+            <Card key={plugin.slug} className="flex flex-col overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-transform duration-300 ease-in-out">
+              <Link href={`/plugins/${plugin.slug}`} passHref>
+                <div className="relative h-48 w-full cursor-pointer">
+                  <Image
+                    src={plugin.imageUrl}
+                    alt={plugin.name}
+                    layout="fill"
+                    objectFit="cover"
+                    data-ai-hint={plugin.dataAiHint}
+                    className="hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              </Link>
               <CardContent className="p-6 flex-grow">
                 <Badge variant="secondary" className="mb-2">{plugin.category}</Badge>
                 <h3 className="text-xl font-bold font-headline mb-2">{plugin.name}</h3>
@@ -110,7 +113,7 @@ export function PluginList() {
                 <p className="text-lg font-semibold">{plugin.price}</p>
                 <Link href={`/plugins/${plugin.slug}`} passHref>
                   <Button asChild>
-                    <a>View</a>
+                    <a>View Details</a>
                   </Button>
                 </Link>
               </CardFooter>

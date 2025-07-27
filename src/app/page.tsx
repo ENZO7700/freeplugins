@@ -8,7 +8,6 @@ import { PluginList } from '@/components/plugin-list';
 
 export default function Home() {
   const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 2500); // 2.5s for intro
@@ -16,7 +15,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background">
       <IntroAnimation isVisible={loading} />
 
       <div
@@ -26,7 +25,6 @@ export default function Home() {
       >
         <Header />
         <main className="container mx-auto px-4 py-8">
-          {error && <p className="text-destructive text-center mb-4">{error}</p>}
           <HeroSection />
           <PluginList />
         </main>
