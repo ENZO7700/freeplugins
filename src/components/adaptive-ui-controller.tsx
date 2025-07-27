@@ -113,7 +113,7 @@ export function AdaptiveUiController({ onAdapt }: AdaptiveUiControllerProps) {
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select speed" />
-                          </SelectTrigger>
+                          </Trigger>
                         </FormControl>
                         <SelectContent>
                           <SelectItem value="fast">Fast</SelectItem>

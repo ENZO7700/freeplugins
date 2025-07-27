@@ -11,16 +11,17 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const AnimationSettingsSchema = z.object({
-  animationSpeed: z.enum(['fast', 'medium', 'slow']),
-  transitionEffect: z.string(),
-  elementVisibility: z.string(),
+  animationSpeed: z.enum(['fast', 'medium', 'slow']).describe('The speed of animations.'),
+  transitionEffect: z.string().describe('The type of transition effect, e.g., "fade", "slide".'),
+  elementVisibility: z.string().describe('Controls the visibility of certain UI elements to reduce clutter.'),
 });
 
 const UiElementAdjustmentsSchema = z.object({
-  fontSize: z.string(),
-  elementSpacing: z.string(),
-  colorScheme: z.string(),
+  fontSize: z.string().describe('The base font size, e.g., "16px".'),
+  elementSpacing: z.string().describe('The spacing between UI elements, e.g., "10px".'),
+  colorScheme: z.string().describe('The color scheme, e.g., "light", "dark", "high-contrast".'),
 });
+
 
 const AdaptAnimationsToUserBehaviorInputSchema = z.object({
   userActions: z
@@ -36,11 +37,11 @@ export type AdaptAnimationsToUserBehaviorInput = z.infer<
 >;
 
 const AdaptAnimationsToUserBehaviorOutputSchema = z.object({
-  animationSettings: z.string().describe(
-    'A JSON string that includes details such as animation speed, transition effects, and UI element visibility.'
+  animationSettings: AnimationSettingsSchema.describe(
+    'An object containing details such as animation speed, transition effects, and UI element visibility.'
   ),
-  uiElementAdjustments: z.string().describe(
-    'A JSON string that includes details such as font size, element spacing, and color scheme.'
+  uiElementAdjustments: UiElementAdjustmentsSchema.describe(
+    'An object containing details such as font size, element spacing, and color scheme.'
   ),
 });
 export type AdaptAnimationsToUserBehaviorOutput = z.infer<
@@ -70,15 +71,23 @@ const prompt = ai.definePrompt({
   - Low network speed and less powerful devices should simplify animations to improve performance.
   - User behavior should inform UI element adjustments, such as font size and element spacing, to improve readability and ease of use.
 
-  Return the animation settings and UI element adjustments as JSON strings.
+  Return the animation settings and UI element adjustments as structured JSON objects.
 
-  Example:
+  Example Output:
   {
-    "animationSettings": "{\\"animationSpeed\\": \\"fast\\", \\"transitionEffect\\": \\"fade\\", \\"elementVisibility\\": \\"visible\\"}",
-    "uiElementAdjustments": "{\\"fontSize\\": \\"16px\\", \\"elementSpacing\\": \\"10px\\", \\"colorScheme\\": \\"light\\"}"
+    "animationSettings": {
+      "animationSpeed": "fast",
+      "transitionEffect": "fade",
+      "elementVisibility": "visible"
+    },
+    "uiElementAdjustments": {
+      "fontSize": "16px",
+      "elementSpacing": "10px",
+      "colorScheme": "light"
+    }
   }
 
-  Ensure the JSON strings are valid and contain appropriate values for the given context.
+  Ensure the output contains valid JSON objects with appropriate values for the given context.
 `,
 });
 

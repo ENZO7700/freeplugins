@@ -25,8 +25,8 @@ export default function Home() {
   ) => {
     // The AI returns JSON strings, so we need to parse them.
     try {
-      const parsedAnimations = JSON.parse(result.animationSettings as unknown as string);
-      const parsedUi = JSON.parse(result.uiElementAdjustments as unknown as string);
+      const parsedAnimations = result.animationSettings;
+      const parsedUi = result.uiElementAdjustments;
       setAnimationStyle(parsedAnimations);
       setUiStyle(parsedUi);
       toast({

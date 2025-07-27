@@ -1,21 +1,14 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from "@/components/ui/dialog";
 
 const plugins = [
   {
+    slug: 'seo-optimizer-pro',
     name: 'SEO Optimizer Pro',
     category: 'SEO',
     description: 'Boost your search engine rankings with our advanced SEO toolkit.',
@@ -25,6 +18,7 @@ const plugins = [
     dataAiHint: 'chart graph',
   },
   {
+    slug: 'ecommerceify',
     name: 'E-commerceify',
     category: 'E-commerce',
     description: 'Turn your website into a powerful online store in minutes.',
@@ -34,6 +28,7 @@ const plugins = [
     dataAiHint: 'shopping cart',
   },
   {
+    slug: 'socialconnect',
     name: 'SocialConnect',
     category: 'Social Media',
     description: 'Automate your social media posts and grow your audience.',
@@ -43,6 +38,7 @@ const plugins = [
     dataAiHint: 'people network',
   },
   {
+    slug: 'datavisualizer',
     name: 'DataVisualizer',
     category: 'Analytics',
     description: 'Create stunning charts and graphs from your data effortlessly.',
@@ -52,6 +48,7 @@ const plugins = [
     dataAiHint: 'data analytics',
   },
   {
+    slug: 'codeguardian',
     name: 'CodeGuardian',
     category: 'Security',
     description: 'Protect your website from malware and security threats.',
@@ -61,6 +58,7 @@ const plugins = [
     dataAiHint: 'security shield',
   },
   {
+    slug: 'formbuilder-plus',
     name: 'FormBuilder+',
     category: 'Utilities',
     description: 'Build custom forms with advanced logic and integrations.',
@@ -82,8 +80,7 @@ export function PluginList() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {plugins.map((plugin) => (
-          <Dialog key={plugin.name}>
-            <Card className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <Card key={plugin.name} className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow duration-300">
               <div className="relative h-48 w-full">
                 <Image
                   src={plugin.imageUrl}
@@ -100,38 +97,19 @@ export function PluginList() {
               </CardContent>
               <CardFooter className="p-6 pt-0 flex justify-between items-center">
                 <p className="text-lg font-semibold">{plugin.price}</p>
-                <DialogTrigger asChild>
-                  <Button>View</Button>
-                </DialogTrigger>
+                <Link href={`/plugins/${plugin.slug}`} passHref>
+                  <Button asChild>
+                    <a>View</a>
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
-            <DialogContent className="sm:max-w-[625px]">
-              <DialogHeader>
-                <div className="relative h-60 w-full mb-4 rounded-lg overflow-hidden">
-                   <Image
-                      src={plugin.imageUrl}
-                      alt={plugin.name}
-                      layout="fill"
-                      objectFit="cover"
-                      data-ai-hint={plugin.dataAiHint}
-                    />
-                </div>
-                <DialogTitle className="text-2xl font-headline">{plugin.name}</DialogTitle>
-                <div className='flex items-center gap-4'>
-                   <Badge variant="secondary">{plugin.category}</Badge>
-                   <p className="text-xl font-semibold">{plugin.price}</p>
-                </div>
-                <DialogDescription className="pt-4">
-                  {plugin.longDescription || plugin.description}
-                </DialogDescription>
-              </DialogHeader>
-              <DialogFooter>
-                  <Button type="button">Add to Cart</Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
         ))}
       </div>
     </section>
   );
+}
+
+export const getPluginData = (slug: string) => {
+  return plugins.find(p => p.slug === slug);
 }
