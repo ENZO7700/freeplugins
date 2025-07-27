@@ -4,12 +4,22 @@ import Image from 'next/image';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 const plugins = [
   {
     name: 'SEO Optimizer Pro',
     category: 'SEO',
     description: 'Boost your search engine rankings with our advanced SEO toolkit.',
+    longDescription: 'Our SEO Optimizer Pro offers a complete suite of tools including keyword research, backlink analysis, on-page optimization, and performance tracking. Ideal for businesses of all sizes looking to improve their online visibility.',
     price: '$49',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'chart graph',
@@ -18,6 +28,7 @@ const plugins = [
     name: 'E-commerceify',
     category: 'E-commerce',
     description: 'Turn your website into a powerful online store in minutes.',
+    longDescription: 'E-commerceify provides everything you need to start selling online. Features include product management, secure payment gateways, inventory tracking, and customer management. Fully customizable to match your brand.',
     price: '$99',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'shopping cart',
@@ -26,6 +37,7 @@ const plugins = [
     name: 'SocialConnect',
     category: 'Social Media',
     description: 'Automate your social media posts and grow your audience.',
+    longDescription: 'With SocialConnect, you can schedule posts across multiple platforms, track engagement, and analyze your social media performance. Save time and grow your online presence effectively.',
     price: '$29',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'people network',
@@ -34,6 +46,7 @@ const plugins = [
     name: 'DataVisualizer',
     category: 'Analytics',
     description: 'Create stunning charts and graphs from your data effortlessly.',
+    longDescription: 'DataVisualizer connects to your data sources and allows you to build interactive dashboards with a simple drag-and-drop interface. Make data-driven decisions with beautiful and insightful visualizations.',
     price: '$39',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'data analytics',
@@ -42,6 +55,7 @@ const plugins = [
     name: 'CodeGuardian',
     category: 'Security',
     description: 'Protect your website from malware and security threats.',
+    longDescription: 'CodeGuardian offers real-time threat detection, malware scanning, and a powerful firewall to protect your application. Get peace of mind with 24/7 security monitoring.',
     price: '$59',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'security shield',
@@ -50,6 +64,7 @@ const plugins = [
     name: 'FormBuilder+',
     category: 'Utilities',
     description: 'Build custom forms with advanced logic and integrations.',
+    longDescription: 'Create any type of form, from simple contact forms to complex surveys with conditional logic. FormBuilder+ integrates with your favorite apps to streamline your data collection process.',
     price: '$19',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'form survey',
@@ -67,26 +82,54 @@ export function PluginList() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {plugins.map((plugin) => (
-          <Card key={plugin.name} className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow duration-300">
-            <div className="relative h-48 w-full">
-              <Image
-                src={plugin.imageUrl}
-                alt={plugin.name}
-                layout="fill"
-                objectFit="cover"
-                data-ai-hint={plugin.dataAiHint}
-              />
-            </div>
-            <CardContent className="p-6 flex-grow">
-              <Badge variant="secondary" className="mb-2">{plugin.category}</Badge>
-              <h3 className="text-xl font-bold font-headline mb-2">{plugin.name}</h3>
-              <p className="text-muted-foreground text-sm">{plugin.description}</p>
-            </CardContent>
-            <CardFooter className="p-6 pt-0 flex justify-between items-center">
-              <p className="text-lg font-semibold">{plugin.price}</p>
-              <Button>View</Button>
-            </CardFooter>
-          </Card>
+          <Dialog key={plugin.name}>
+            <Card className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow duration-300">
+              <div className="relative h-48 w-full">
+                <Image
+                  src={plugin.imageUrl}
+                  alt={plugin.name}
+                  layout="fill"
+                  objectFit="cover"
+                  data-ai-hint={plugin.dataAiHint}
+                />
+              </div>
+              <CardContent className="p-6 flex-grow">
+                <Badge variant="secondary" className="mb-2">{plugin.category}</Badge>
+                <h3 className="text-xl font-bold font-headline mb-2">{plugin.name}</h3>
+                <p className="text-muted-foreground text-sm">{plugin.description}</p>
+              </CardContent>
+              <CardFooter className="p-6 pt-0 flex justify-between items-center">
+                <p className="text-lg font-semibold">{plugin.price}</p>
+                <DialogTrigger asChild>
+                  <Button>View</Button>
+                </DialogTrigger>
+              </CardFooter>
+            </Card>
+            <DialogContent className="sm:max-w-[625px]">
+              <DialogHeader>
+                <div className="relative h-60 w-full mb-4 rounded-lg overflow-hidden">
+                   <Image
+                      src={plugin.imageUrl}
+                      alt={plugin.name}
+                      layout="fill"
+                      objectFit="cover"
+                      data-ai-hint={plugin.dataAiHint}
+                    />
+                </div>
+                <DialogTitle className="text-2xl font-headline">{plugin.name}</DialogTitle>
+                <div className='flex items-center gap-4'>
+                   <Badge variant="secondary">{plugin.category}</Badge>
+                   <p className="text-xl font-semibold">{plugin.price}</p>
+                </div>
+                <DialogDescription className="pt-4">
+                  {plugin.longDescription || plugin.description}
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                  <Button type="button">Add to Cart</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         ))}
       </div>
     </section>
