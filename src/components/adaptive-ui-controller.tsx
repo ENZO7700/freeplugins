@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { adaptAnimationsToUserBehavior, type AdaptAnimationsToUserBehaviorInput } from '@/ai/flows/adapt-animations-to-user-behavior';
+import { adaptAnimationsToUserBehavior, type AdaptAnimationsToUserBehaviorInput, type AdaptAnimationsToUserBehaviorOutput } from '@/ai/flows/adapt-animations-to-user-behavior';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -22,7 +22,7 @@ const adaptationSchema = z.object({
 type AdaptationFormValues = z.infer<typeof adaptationSchema>;
 
 interface AdaptiveUiControllerProps {
-  onAdapt: (animationSettings: string, uiElementAdjustments: string) => void;
+  onAdapt: (result: AdaptAnimationsToUserBehaviorOutput) => void;
 }
 
 export function AdaptiveUiController({ onAdapt }: AdaptiveUiControllerProps) {
@@ -42,13 +42,13 @@ export function AdaptiveUiController({ onAdapt }: AdaptiveUiControllerProps) {
     startTransition(async () => {
       try {
         const result = await adaptAnimationsToUserBehavior(data as AdaptAnimationsToUserBehaviorInput);
-        onAdapt(result.animationSettings, result.uiElementAdjustments);
+        onAdapt(result);
       } catch (error) {
         console.error('AI adaptation failed:', error);
         toast({
           variant: 'destructive',
           title: 'AI Error',
-          description: 'Could not adapt UI. Please try again.',
+          description: error instanceof Error ? error.message : 'Could not adapt UI. Please try again.',
         });
       }
     });

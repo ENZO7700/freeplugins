@@ -10,30 +10,38 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
+const AnimationSettingsSchema = z.object({
+  animationSpeed: z.enum(['fast', 'medium', 'slow']),
+  transitionEffect: z.string(),
+  elementVisibility: z.string(),
+});
+
+const UiElementAdjustmentsSchema = z.object({
+  fontSize: z.string(),
+  elementSpacing: z.string(),
+  colorScheme: z.string(),
+});
+
 const AdaptAnimationsToUserBehaviorInputSchema = z.object({
   userActions: z
     .string()
     .describe(
       'A log of user actions, including clicks, scrolls, and other interactions.'
     ),
-  deviceType: z.string().describe('The type of device the user is using.'),
-  networkSpeed: z.string().describe('The user\'s network speed.'),
+  deviceType: z.enum(['desktop', 'tablet', 'mobile']),
+  networkSpeed: z.enum(['fast', 'medium', 'slow']),
 });
 export type AdaptAnimationsToUserBehaviorInput = z.infer<
   typeof AdaptAnimationsToUserBehaviorInputSchema
 >;
 
 const AdaptAnimationsToUserBehaviorOutputSchema = z.object({
-  animationSettings: z
-    .string()
-    .describe(
-      'The animation settings, which should be a JSON string that includes details such as animation speed, transition effects, and UI element visibility.'
-    ),
-  uiElementAdjustments: z
-    .string()
-    .describe(
-      'The UI element adjustments, which should be a JSON string that includes details such as font size, element spacing, and color scheme.'
-    ),
+  animationSettings: AnimationSettingsSchema.describe(
+    'The animation settings, which should be a JSON object that includes details such as animation speed, transition effects, and UI element visibility.'
+  ),
+  uiElementAdjustments: UiElementAdjustmentsSchema.describe(
+    'The UI element adjustments, which should be a JSON object that includes details such as font size, element spacing, and color scheme.'
+  ),
 });
 export type AdaptAnimationsToUserBehaviorOutput = z.infer<
   typeof AdaptAnimationsToUserBehaviorOutputSchema
@@ -62,15 +70,23 @@ const prompt = ai.definePrompt({
   - Low network speed and less powerful devices should simplify animations to improve performance.
   - User behavior should inform UI element adjustments, such as font size and element spacing, to improve readability and ease of use.
 
-  Return the animation settings and UI element adjustments as JSON strings.
+  Return the animation settings and UI element adjustments as JSON objects.
 
   Example:
   {
-    "animationSettings": '{\"animationSpeed\": \"fast\", \"transitionEffect\": \"fade\", \"elementVisibility\": \"visible\"}',
-    "uiElementAdjustments": '{\"fontSize\": \"16px\", \"elementSpacing\": \"10px\", \"colorScheme\": \"light\"}'
+    "animationSettings": {
+      "animationSpeed": "fast",
+      "transitionEffect": "fade",
+      "elementVisibility": "visible"
+    },
+    "uiElementAdjustments": {
+      "fontSize": "16px",
+      "elementSpacing": "10px",
+      "colorScheme": "light"
+    }
   }
 
-  Ensure the JSON strings are valid and contain appropriate values for the given context.
+  Ensure the JSON objects are valid and contain appropriate values for the given context.
 `,
 });
 
@@ -82,6 +98,9 @@ const adaptAnimationsToUserBehaviorFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await prompt(input);
-    return output!;
+    if (!output) {
+      throw new Error('AI failed to generate adaptation settings.');
+    }
+    return output;
   }
 );

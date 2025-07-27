@@ -5,7 +5,8 @@ import { IntroAnimation } from '@/components/intro-animation';
 import { Header } from '@/components/header';
 import { HeroSection } from '@/components/hero-section';
 import { AdaptiveUiController } from '@/components/adaptive-ui-controller';
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/use-toast";
+import type { AdaptAnimationsToUserBehaviorOutput } from '@/ai/flows/adapt-animations-to-user-behavior';
 
 export default function Home() {
   const [loading, setLoading] = React.useState(true);
@@ -19,24 +20,14 @@ export default function Home() {
   }, []);
 
   const handleAdaptation = (
-    animationSettings: string,
-    uiElementAdjustments: string
+    result: AdaptAnimationsToUserBehaviorOutput
   ) => {
-    try {
-      setAnimationStyle(JSON.parse(animationSettings));
-      setUiStyle(JSON.parse(uiElementAdjustments));
-      toast({
-        title: 'UI Adapted!',
-        description: 'Animations and styles have been updated by AI.',
-      });
-    } catch (e) {
-      console.error('Failed to parse AI response:', e);
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: 'Failed to apply AI-driven UI changes.',
-      });
-    }
+    setAnimationStyle(result.animationSettings);
+    setUiStyle(result.uiElementAdjustments);
+    toast({
+      title: 'UI Adapted!',
+      description: 'Animations and styles have been updated by AI.',
+    });
   };
 
   return (
