@@ -5,10 +5,15 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Zap, Wind, Eye } from 'lucide-react';
+import type { AdaptAnimationsToUserBehaviorOutput } from '@/ai/flows/adapt-animations-to-user-behavior';
+
+type AnimationSettings = AdaptAnimationsToUserBehaviorOutput['animationSettings'];
+type UiElementAdjustments = AdaptAnimationsToUserBehaviorOutput['uiElementAdjustments'];
+
 
 interface StyleProps {
-  animationStyle?: { [key: string]: string };
-  uiStyle?: { [key:string]: string };
+  animationStyle?: AnimationSettings;
+  uiStyle?: UiElementAdjustments;
 }
 
 export function HeroSection({ animationStyle, uiStyle }: StyleProps) {
@@ -47,10 +52,14 @@ export function HeroSection({ animationStyle, uiStyle }: StyleProps) {
     return '0.5s';
   };
 
-  const dynamicCardStyle = {
+  const dynamicCardStyle: React.CSSProperties = {
     transition: `transform ${getTransitionDuration()} ease-out, box-shadow ${getTransitionDuration()} ease-out`,
     fontSize: uiStyle?.fontSize || 'inherit',
     padding: uiStyle?.elementSpacing || '1.5rem',
+  };
+  
+  const pStyle: React.CSSProperties = {
+    fontSize: uiStyle?.fontSize || 'inherit',
   };
 
   return (
@@ -59,7 +68,7 @@ export function HeroSection({ animationStyle, uiStyle }: StyleProps) {
         <h2 className="text-4xl md:text-6xl font-bold font-headline tracking-tighter">
           The Ultimate Software Marketplace
         </h2>
-        <p className="mt-4 text-lg text-muted-foreground" style={{ fontSize: uiStyle?.fontSize }}>
+        <p className="mt-4 text-lg text-muted-foreground" style={pStyle}>
           Find, share, and sell software plugins and tools that power your projects.
         </p>
         <Button size="lg" className="mt-8">
