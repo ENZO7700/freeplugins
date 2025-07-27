@@ -16,10 +16,10 @@ export function IntroAnimation({ isVisible }: IntroAnimationProps) {
     >
       <div className="text-center">
         <h1 className="text-4xl md:text-6xl font-bold font-headline text-primary animate-glow opacity-0 animate-fade-in" style={{animationDelay: '0.2s'}}>
-          Expresívny
+          freeplugins
         </h1>
         <h2 className="text-5xl md:text-7xl font-bold font-headline text-foreground opacity-0 animate-fade-in-up" style={{animationDelay: '0.6s'}}>
-          Navigátor
+          .org
         </h2>
       </div>
     </div>

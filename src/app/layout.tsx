@@ -17,8 +17,8 @@ const ptSans = PT_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Expresívny Navigátor',
-  description: 'A masterpiece of modern UI/UX and animation.',
+  title: 'freeplugins.org | Your Software Marketplace',
+  description: 'The ultimate marketplace for software plugins and tools.',
 };
 
 export default function RootLayout({

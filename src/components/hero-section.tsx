@@ -23,21 +23,21 @@ export function HeroSection({ animationStyle, uiStyle }: StyleProps) {
   const featureCards = [
     {
       icon: <Zap className="w-8 h-8 text-primary" />,
-      title: 'Blazing Fast',
-      description: 'Optimized for performance, delivering a seamless experience.',
-      dataAiHint: 'lightning technology',
+      title: 'Vast Plugin Library',
+      description: 'Access a wide variety of plugins for any need.',
+      dataAiHint: 'software code',
     },
     {
       icon: <Wind className="w-8 h-8 text-primary" />,
-      title: 'Fluid Animations',
-      description: 'Engaging and smooth animations that bring the UI to life.',
-      dataAiHint: 'abstract wind',
+      title: 'Easy Integration',
+      description: 'Integrate our plugins seamlessly into your projects.',
+      dataAiHint: 'puzzle connect',
     },
     {
       icon: <Eye className="w-8 h-8 text-primary" />,
-      title: 'Adaptive UI',
-      description: 'An interface that intelligently adapts to your behavior.',
-      dataAiHint: 'futuristic eye',
+      title: 'Community Reviewed',
+      description: 'Reliable and reviewed plugins by our community.',
+      dataAiHint: 'people community',
     },
   ];
 
@@ -57,13 +57,13 @@ export function HeroSection({ animationStyle, uiStyle }: StyleProps) {
     <section className="py-12 md:py-24">
       <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
         <h2 className="text-4xl md:text-6xl font-bold font-headline tracking-tighter">
-          Navigate with Expression
+          The Ultimate Software Marketplace
         </h2>
         <p className="mt-4 text-lg text-muted-foreground" style={{ fontSize: uiStyle?.fontSize }}>
-          Discover a new dimension of web interaction, where the interface adapts to you.
+          Find, share, and sell software plugins and tools that power your projects.
         </p>
         <Button size="lg" className="mt-8">
-          Get Started <ArrowRight className="ml-2" />
+          Explore Plugins <ArrowRight className="ml-2" />
         </Button>
       </div>
 
@@ -91,13 +91,13 @@ export function HeroSection({ animationStyle, uiStyle }: StyleProps) {
 
       <div className="mt-24 grid md:grid-cols-2 gap-12 items-center">
         <div style={{ transform: `translateX(${offsetY * -0.1}px)` }}>
-            <h3 className="text-3xl font-bold font-headline">A Visual Masterpiece</h3>
+            <h3 className="text-3xl font-bold font-headline">Power Up Your Workflow</h3>
             <p className="mt-4 text-muted-foreground">
-                Every pixel is crafted with precision, every interaction designed with intent. Experience a UI that's not just functional, but also a joy to use. The parallax effects create a sense of depth, making your journey through the application more immersive.
+                Streamline your development process with high-quality plugins. From small utilities to large-scale integrations, find the tools you need to build better and faster.
             </p>
         </div>
         <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl" style={{ transform: `translateX(${offsetY * 0.1}px)` }}>
-            <Image src="https://placehold.co/600x400.png" layout="fill" objectFit="cover" alt="Abstract visual" data-ai-hint="abstract purple" />
+            <Image src="https://placehold.co/600x400.png" layout="fill" objectFit="cover" alt="Abstract visual of code" data-ai-hint="digital code" />
         </div>
       </div>
     </section>
