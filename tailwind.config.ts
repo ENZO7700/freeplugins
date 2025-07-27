@@ -98,7 +98,35 @@ export default {
         'fade-in-up': 'fade-in-up 1s ease-out forwards',
         'glow': 'glow 3s ease-in-out infinite',
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.muted.foreground'),
+            h1: {
+              color: theme('colors.foreground'),
+            },
+            h2: {
+              color: theme('colors.foreground'),
+            },
+            h3: {
+              color: theme('colors.foreground'),
+            },
+            strong: {
+              color: theme('colors.foreground'),
+            },
+            a: {
+              color: theme('colors.primary.DEFAULT'),
+              '&:hover': {
+                color: theme('colors.primary.DEFAULT'),
+              },
+            },
+          },
+        },
+      }),
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/typography'),
+  ],
 } satisfies Config;

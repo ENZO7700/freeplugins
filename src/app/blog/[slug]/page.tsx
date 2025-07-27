@@ -4,7 +4,6 @@ import { getPostBySlug } from '@/lib/blog-posts';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Header } from '@/components/header';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
