@@ -5,18 +5,8 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Zap, Wind, Eye } from 'lucide-react';
-import type { AdaptAnimationsToUserBehaviorOutput } from '@/ai/flows/adapt-animations-to-user-behavior';
 
-type AnimationSettings = AdaptAnimationsToUserBehaviorOutput['animationSettings'];
-type UiElementAdjustments = AdaptAnimationsToUserBehaviorOutput['uiElementAdjustments'];
-
-
-interface StyleProps {
-  animationStyle?: AnimationSettings;
-  uiStyle?: UiElementAdjustments;
-}
-
-export function HeroSection({ animationStyle, uiStyle }: StyleProps) {
+export function HeroSection() {
   const [offsetY, setOffsetY] = React.useState(0);
   const handleScroll = () => setOffsetY(window.pageYOffset);
 
@@ -46,20 +36,8 @@ export function HeroSection({ animationStyle, uiStyle }: StyleProps) {
     },
   ];
 
-  const getTransitionDuration = () => {
-    if (animationStyle?.animationSpeed === 'fast') return '0.2s';
-    if (animationStyle?.animationSpeed === 'slow') return '1s';
-    return '0.5s';
-  };
-
   const dynamicCardStyle: React.CSSProperties = {
-    transition: `transform ${getTransitionDuration()} ease-out, box-shadow ${getTransitionDuration()} ease-out`,
-    fontSize: uiStyle?.fontSize || 'inherit',
-    padding: uiStyle?.elementSpacing || '1.5rem',
-  };
-  
-  const pStyle: React.CSSProperties = {
-    fontSize: uiStyle?.fontSize || 'inherit',
+    transition: `transform 0.5s ease-out, box-shadow 0.5s ease-out`,
   };
 
   return (
@@ -68,7 +46,7 @@ export function HeroSection({ animationStyle, uiStyle }: StyleProps) {
         <h2 className="text-4xl md:text-6xl font-bold font-headline tracking-tighter">
           The Ultimate Software Marketplace
         </h2>
-        <p className="mt-4 text-lg text-muted-foreground" style={pStyle}>
+        <p className="mt-4 text-lg text-muted-foreground">
           Find, share, and sell software plugins and tools that power your projects.
         </p>
         <Button size="lg" className="mt-8">
@@ -83,7 +61,7 @@ export function HeroSection({ animationStyle, uiStyle }: StyleProps) {
             style={{ transform: `translateY(${offsetY * (0.05 * (index + 1))}px)` }}
           >
             <Card
-              className="h-full hover:shadow-primary/20 hover:shadow-2xl hover:-translate-y-2"
+              className="h-full hover:shadow-primary/20 hover:shadow-2xl hover:-translate-y-2 p-6"
               style={dynamicCardStyle}
             >
               <CardHeader className="flex flex-col items-center text-center">

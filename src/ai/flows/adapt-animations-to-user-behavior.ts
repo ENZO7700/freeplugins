@@ -72,22 +72,6 @@ const prompt = ai.definePrompt({
   - User behavior should inform UI element adjustments, such as font size and element spacing, to improve readability and ease of use.
 
   Return the animation settings and UI element adjustments as structured JSON objects.
-
-  Example Output:
-  {
-    "animationSettings": {
-      "animationSpeed": "fast",
-      "transitionEffect": "fade",
-      "elementVisibility": "visible"
-    },
-    "uiElementAdjustments": {
-      "fontSize": "16px",
-      "elementSpacing": "10px",
-      "colorScheme": "light"
-    }
-  }
-
-  Ensure the output contains valid JSON objects with appropriate values for the given context.
 `,
 });
 
