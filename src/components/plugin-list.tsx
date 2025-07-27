@@ -1,10 +1,12 @@
 'use client';
 
+import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 
 export interface Plugin {
   slug: string;
@@ -81,6 +83,17 @@ const plugins: Plugin[] = [
 ];
 
 export function PluginList() {
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);
+  
+  const allCategories = ['All', ...Array.from(new Set(plugins.map(p => p.category)))];
+
+  const filteredPlugins = plugins.filter(plugin => {
+    const matchesCategory = selectedCategory === 'All' || !selectedCategory ? true : plugin.category === selectedCategory;
+    const matchesSearch = plugin.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
   return (
     <section className="py-12 md:py-24">
       <div className="text-center max-w-3xl mx-auto mb-12">
@@ -89,8 +102,30 @@ export function PluginList() {
           Discover tools that will supercharge your workflow.
         </p>
       </div>
+
+      <div className="flex flex-col md:flex-row gap-4 mb-8">
+        <Input 
+          placeholder="Search plugins..."
+          className="flex-grow"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <div className="flex items-center gap-2 overflow-x-auto pb-2">
+            {allCategories.map(category => (
+                <Button 
+                    key={category}
+                    variant={selectedCategory === category || (!selectedCategory && category === 'All') ? "default" : "outline"}
+                    onClick={() => setSelectedCategory(category === 'All' ? null : category)}
+                    className="whitespace-nowrap"
+                >
+                    {category}
+                </Button>
+            ))}
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {plugins.map((plugin) => (
+        {filteredPlugins.map((plugin) => (
             <Card key={plugin.slug} className="flex flex-col overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-transform duration-300 ease-in-out">
               <Link href={`/plugins/${plugin.slug}`} passHref>
                 <div className="relative h-48 w-full cursor-pointer">
@@ -120,6 +155,12 @@ export function PluginList() {
             </Card>
         ))}
       </div>
+      {filteredPlugins.length === 0 && (
+        <div className="text-center py-16">
+            <h3 className="text-2xl font-bold font-headline">No Plugins Found</h3>
+            <p className="text-muted-foreground mt-2">Try adjusting your search or filters.</p>
+        </div>
+      )}
     </section>
   );
 }
