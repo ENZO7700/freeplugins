@@ -6,7 +6,18 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
-const plugins = [
+export interface Plugin {
+  slug: string;
+  name: string;
+  category: string;
+  description: string;
+  longDescription: string;
+  price: string;
+  imageUrl: string;
+  dataAiHint: string;
+}
+
+const plugins: Plugin[] = [
   {
     slug: 'seo-optimizer-pro',
     name: 'SEO Optimizer Pro',

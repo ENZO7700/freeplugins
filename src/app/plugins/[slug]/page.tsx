@@ -1,4 +1,6 @@
-import { getPluginData } from '@/components/plugin-list';
+'use client';
+
+import { getPluginData, Plugin } from '@/components/plugin-list';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Header } from '@/components/header';
@@ -6,13 +8,25 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { useCart } from '@/context/cart-context';
+import { useToast } from '@/hooks/use-toast';
 
 export default function PluginDetailPage({ params }: { params: { slug: string } }) {
   const plugin = getPluginData(params.slug);
+  const { addToCart } = useCart();
+  const { toast } = useToast();
 
   if (!plugin) {
     notFound();
   }
+
+  const handleAddToCart = () => {
+    addToCart(plugin as Plugin);
+    toast({
+      title: "Added to cart",
+      description: `${plugin.name} has been added to your cart.`,
+    })
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -43,7 +57,7 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
               <h1 className="text-4xl font-bold font-headline mb-4">{plugin.name}</h1>
               <p className="text-2xl font-semibold mb-6">{plugin.price}</p>
               <p className="text-lg text-muted-foreground mb-6">{plugin.description}</p>
-              <Button size="lg">Add to Cart</Button>
+              <Button size="lg" onClick={handleAddToCart}>Add to Cart</Button>
             </div>
           </div>
 

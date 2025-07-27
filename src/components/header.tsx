@@ -1,4 +1,5 @@
 import { ThemeToggle } from './theme-toggle';
+import { Cart } from './cart';
 
 export function Header() {
   return (
@@ -7,7 +8,10 @@ export function Header() {
         <h1 className="text-xl font-bold font-headline text-primary">
           freeplugins.org
         </h1>
-        <ThemeToggle />
+        <div className="flex items-center gap-4">
+          <ThemeToggle />
+          <Cart />
+        </div>
       </div>
     </header>
   );
