@@ -8,7 +8,7 @@ import { ArrowRight, Zap, Wind, Eye } from 'lucide-react';
 
 interface StyleProps {
   animationStyle?: { [key: string]: string };
-  uiStyle?: { [key: string]: string };
+  uiStyle?: { [key:string]: string };
 }
 
 export function HeroSection({ animationStyle, uiStyle }: StyleProps) {
@@ -95,6 +95,7 @@ export function HeroSection({ animationStyle, uiStyle }: StyleProps) {
             <p className="mt-4 text-muted-foreground">
                 Streamline your development process with high-quality plugins. From small utilities to large-scale integrations, find the tools you need to build better and faster.
             </p>
+            <Button variant="outline" className="mt-6">Learn More</Button>
         </div>
         <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl" style={{ transform: `translateX(${offsetY * 0.1}px)` }}>
             <Image src="https://placehold.co/600x400.png" layout="fill" objectFit="cover" alt="Abstract visual of code" data-ai-hint="digital code" />

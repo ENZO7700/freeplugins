@@ -36,11 +36,11 @@ export type AdaptAnimationsToUserBehaviorInput = z.infer<
 >;
 
 const AdaptAnimationsToUserBehaviorOutputSchema = z.object({
-  animationSettings: AnimationSettingsSchema.describe(
-    'The animation settings, which should be a JSON object that includes details such as animation speed, transition effects, and UI element visibility.'
+  animationSettings: z.string().describe(
+    'A JSON string that includes details such as animation speed, transition effects, and UI element visibility.'
   ),
-  uiElementAdjustments: UiElementAdjustmentsSchema.describe(
-    'The UI element adjustments, which should be a JSON object that includes details such as font size, element spacing, and color scheme.'
+  uiElementAdjustments: z.string().describe(
+    'A JSON string that includes details such as font size, element spacing, and color scheme.'
   ),
 });
 export type AdaptAnimationsToUserBehaviorOutput = z.infer<
@@ -70,23 +70,15 @@ const prompt = ai.definePrompt({
   - Low network speed and less powerful devices should simplify animations to improve performance.
   - User behavior should inform UI element adjustments, such as font size and element spacing, to improve readability and ease of use.
 
-  Return the animation settings and UI element adjustments as JSON objects.
+  Return the animation settings and UI element adjustments as JSON strings.
 
   Example:
   {
-    "animationSettings": {
-      "animationSpeed": "fast",
-      "transitionEffect": "fade",
-      "elementVisibility": "visible"
-    },
-    "uiElementAdjustments": {
-      "fontSize": "16px",
-      "elementSpacing": "10px",
-      "colorScheme": "light"
-    }
+    "animationSettings": "{\\"animationSpeed\\": \\"fast\\", \\"transitionEffect\\": \\"fade\\", \\"elementVisibility\\": \\"visible\\"}",
+    "uiElementAdjustments": "{\\"fontSize\\": \\"16px\\", \\"elementSpacing\\": \\"10px\\", \\"colorScheme\\": \\"light\\"}"
   }
 
-  Ensure the JSON objects are valid and contain appropriate values for the given context.
+  Ensure the JSON strings are valid and contain appropriate values for the given context.
 `,
 });
 

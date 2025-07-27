@@ -7,6 +7,7 @@ import { HeroSection } from '@/components/hero-section';
 import { AdaptiveUiController } from '@/components/adaptive-ui-controller';
 import { useToast } from "@/hooks/use-toast";
 import type { AdaptAnimationsToUserBehaviorOutput } from '@/ai/flows/adapt-animations-to-user-behavior';
+import { PluginList } from '@/components/plugin-list';
 
 export default function Home() {
   const [loading, setLoading] = React.useState(true);
@@ -22,12 +23,24 @@ export default function Home() {
   const handleAdaptation = (
     result: AdaptAnimationsToUserBehaviorOutput
   ) => {
-    setAnimationStyle(result.animationSettings);
-    setUiStyle(result.uiElementAdjustments);
-    toast({
-      title: 'UI Adapted!',
-      description: 'Animations and styles have been updated by AI.',
-    });
+    // The AI returns JSON strings, so we need to parse them.
+    try {
+      const parsedAnimations = JSON.parse(result.animationSettings as unknown as string);
+      const parsedUi = JSON.parse(result.uiElementAdjustments as unknown as string);
+      setAnimationStyle(parsedAnimations);
+      setUiStyle(parsedUi);
+      toast({
+        title: 'UI Adapted!',
+        description: 'Animations and styles have been updated by AI.',
+      });
+    } catch (error) {
+      console.error("Failed to parse AI response:", error);
+      toast({
+        variant: 'destructive',
+        title: 'AI Error',
+        description: 'Could not apply UI adaptations due to an invalid format.',
+      });
+    }
   };
 
   return (
@@ -42,6 +55,7 @@ export default function Home() {
         <Header />
         <main className="container mx-auto px-4 py-8">
           <HeroSection animationStyle={animationStyle} uiStyle={uiStyle} />
+          <PluginList />
         </main>
       </div>
 
