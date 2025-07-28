@@ -147,9 +147,7 @@ export function PluginList() {
               <CardFooter className="p-6 pt-0 flex justify-between items-center">
                 <p className="text-lg font-semibold">{plugin.price}</p>
                 <Link href={`/plugins/${plugin.slug}`} passHref>
-                  <Button asChild>
-                    <a>View Details</a>
-                  </Button>
+                  <Button>View Details</Button>
                 </Link>
               </CardFooter>
             </Card>
