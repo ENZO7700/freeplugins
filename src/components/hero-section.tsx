@@ -5,16 +5,9 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Zap, Wind, Eye } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export function HeroSection() {
-  const [offsetY, setOffsetY] = React.useState(0);
-  const handleScroll = () => setOffsetY(window.pageYOffset);
-
-  React.useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const featureCards = [
     {
       icon: <Zap className="w-8 h-8 text-primary" />,
@@ -36,58 +29,89 @@ export function HeroSection() {
     },
   ];
 
-  const dynamicCardStyle: React.CSSProperties = {
-    transition: `transform 0.5s ease-out, box-shadow 0.5s ease-out`,
+  const cardVariants = {
+    offscreen: {
+      y: 50,
+      opacity: 0
+    },
+    onscreen: (i: number) => ({
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 40,
+        damping: 10,
+        delay: i * 0.2
+      }
+    })
   };
 
   return (
-    <section className="py-12 md:py-24 overflow-hidden">
-      <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
-        <h2 className="text-4xl md:text-6xl font-bold font-headline tracking-tighter">
-          The Ultimate Software Marketplace
-        </h2>
-        <p className="mt-4 text-lg text-muted-foreground">
-          Find, share, and sell software plugins and tools that power your projects.
-        </p>
-        <Button size="lg" className="mt-8">
-          Explore Plugins <ArrowRight className="ml-2" />
-        </Button>
-      </div>
+    <section className="relative overflow-hidden bg-background py-20 md:py-32">
+      <div className="absolute inset-0 bg-grid-pattern opacity-5 dark:opacity-[0.07]"></div>
+       <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-background via-background/80 to-transparent"></div>
+       <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div 
+          className="text-center max-w-4xl mx-auto mb-20"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <h2 className="text-4xl md:text-6xl font-bold font-headline tracking-tighter animate-glow">
+            The Ultimate Software Marketplace
+          </h2>
+          <p className="mt-6 text-lg md:text-xl text-muted-foreground">
+            Find, share, and sell software plugins and tools that power your projects.
+          </p>
+          <Button size="lg" className="mt-8 shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-shadow">
+            Explore Plugins <ArrowRight className="ml-2" />
+          </Button>
+        </motion.div>
 
-      <div className="grid md:grid-cols-3 gap-8">
-        {featureCards.map((feature, index) => (
-          <div
-            key={feature.title}
-            style={{ transform: `translateY(${offsetY * (0.05 * (index + 1))}px)` }}
-          >
-            <Card
-              className="h-full hover:shadow-primary/20 hover:shadow-2xl hover:-translate-y-2 p-6"
-              style={dynamicCardStyle}
+        <div className="grid md:grid-cols-3 gap-8">
+          {featureCards.map((feature, index) => (
+            <motion.div
+              key={feature.title}
+              custom={index}
+              variants={cardVariants}
+              initial="offscreen"
+              whileInView="onscreen"
+              viewport={{ once: true, amount: 0.4 }}
             >
-              <CardHeader className="flex flex-col items-center text-center">
-                <div className="p-4 bg-primary/10 rounded-full mb-4">{feature.icon}</div>
-                <CardTitle className="font-headline">{feature.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <CardDescription>{feature.description}</CardDescription>
-              </CardContent>
-            </Card>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-24 grid md:grid-cols-2 gap-12 items-center">
-        <div style={{ transform: `translateX(${offsetY * -0.1}px)` }}>
-            <h3 className="text-3xl font-bold font-headline">Power Up Your Workflow</h3>
-            <p className="mt-4 text-muted-foreground">
-                Streamline your development process with high-quality plugins. From small utilities to large-scale integrations, find the tools you need to build better and faster.
-            </p>
-            <Button variant="outline" className="mt-6">Learn More</Button>
-        </div>
-        <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl" style={{ transform: `translateX(${offsetY * 0.1}px)` }}>
-            <Image src="https://placehold.co/600x400.png" fill style={{objectFit: "cover"}} alt="Abstract visual of code" data-ai-hint="digital code" />
+              <Card
+                className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/50 hover:bg-background/80 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-300 ease-in-out"
+              >
+                <CardHeader className="flex flex-col items-center text-center">
+                  <div className="p-4 bg-primary/10 rounded-full mb-4 border border-primary/20">{feature.icon}</div>
+                  <CardTitle className="font-headline text-2xl">{feature.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <CardDescription className="text-base">{feature.description}</CardDescription>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
   );
+}
+
+// Add this to your globals.css or a suitable stylesheet
+const styles = `
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
+  background-size: 3rem 3rem;
+}
+`;
+// A simple way to inject the style, or add it to globals.css directly
+if (typeof window !== 'undefined') {
+  const styleSheet = document.createElement("style");
+  styleSheet.type = "text/css";
+  styleSheet.innerText = styles;
+  document.head.appendChild(styleSheet);
 }

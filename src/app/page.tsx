@@ -24,9 +24,11 @@ export default function Home() {
         }`}
       >
         <PageTransitionWrapper>
-          <main className="container mx-auto px-4 py-8">
+          <main>
             <HeroSection />
-            <PluginList />
+            <div className="container mx-auto px-4 py-8">
+              <PluginList />
+            </div>
           </main>
         </PageTransitionWrapper>
       </div>

@@ -20,7 +20,7 @@ export function Header() {
     >
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" passHref>
-          <div className="text-xl font-bold font-headline text-primary cursor-pointer">
+          <div className="text-xl font-bold font-headline text-primary cursor-pointer hover:animate-glow">
             Expresívny Navigátor
           </div>
         </Link>
