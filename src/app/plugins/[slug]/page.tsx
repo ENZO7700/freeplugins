@@ -3,13 +3,13 @@
 import { getPluginData, Plugin } from '@/components/plugin-list';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { Header } from '@/components/header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useCart } from '@/context/cart-context';
 import { useToast } from '@/hooks/use-toast';
+import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
 
 export default function PluginDetailPage({ params }: { params: { slug: string } }) {
   const plugin = getPluginData(params.slug);
@@ -29,8 +29,7 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
+    <PageTransitionWrapper>
       <main className="container mx-auto px-4 py-8 flex-grow">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
@@ -47,8 +46,8 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
               <Image
                 src={plugin.imageUrl}
                 alt={plugin.name}
-                layout="fill"
-                objectFit="cover"
+                fill
+                style={{objectFit: "cover"}}
                 data-ai-hint={plugin.dataAiHint}
               />
             </div>
@@ -69,6 +68,6 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
           </div>
         </div>
       </main>
-    </div>
+    </PageTransitionWrapper>
   );
 }

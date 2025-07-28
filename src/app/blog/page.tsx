@@ -1,18 +1,16 @@
 'use client';
 
-import { Header } from '@/components/header';
-import { getAllPosts, BlogPost } from '@/lib/blog-posts';
+import { getAllPosts } from '@/lib/blog-posts';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
 
 export default function BlogPage() {
   const posts = getAllPosts();
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
+    <PageTransitionWrapper>
       <main className="container mx-auto px-4 py-8 flex-grow">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h1 className="text-4xl md:text-5xl font-bold font-headline">Blog</h1>
@@ -29,8 +27,8 @@ export default function BlogPage() {
                     <Image
                         src={post.imageUrl}
                         alt={post.title}
-                        layout="fill"
-                        objectFit="cover"
+                        fill
+                        style={{objectFit: "cover"}}
                         data-ai-hint={post.dataAiHint}
                         className="hover:scale-105 transition-transform duration-300"
                     />
@@ -51,6 +49,6 @@ export default function BlogPage() {
           ))}
         </div>
       </main>
-    </div>
+    </PageTransitionWrapper>
   );
 }

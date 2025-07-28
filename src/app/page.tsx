@@ -2,9 +2,9 @@
 
 import * as React from 'react';
 import { IntroAnimation } from '@/components/intro-animation';
-import { Header } from '@/components/header';
 import { HeroSection } from '@/components/hero-section';
 import { PluginList } from '@/components/plugin-list';
+import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
 
 export default function Home() {
   const [loading, setLoading] = React.useState(true);
@@ -23,11 +23,12 @@ export default function Home() {
           loading ? 'opacity-0' : 'opacity-100'
         }`}
       >
-        <Header />
-        <main className="container mx-auto px-4 py-8">
-          <HeroSection />
-          <PluginList />
-        </main>
+        <PageTransitionWrapper>
+          <main className="container mx-auto px-4 py-8">
+            <HeroSection />
+            <PluginList />
+          </main>
+        </PageTransitionWrapper>
       </div>
     </div>
   );

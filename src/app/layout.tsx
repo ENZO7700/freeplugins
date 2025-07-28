@@ -4,6 +4,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from "@/components/ui/toaster"
 import { CartProvider } from '@/context/cart-context';
+import { Header } from '@/components/header';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -18,7 +19,7 @@ const ptSans = PT_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'freeplugins.org | Your Software Marketplace',
+  title: 'Expresívny Navigátor',
   description: 'The ultimate marketplace for software plugins and tools.',
 };
 
@@ -42,6 +43,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <CartProvider>
+            <Header />
             {children}
             <Toaster />
           </CartProvider>

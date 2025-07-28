@@ -3,10 +3,10 @@
 import { getPostBySlug } from '@/lib/blog-posts';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = getPostBySlug(params.slug);
@@ -16,8 +16,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
+    <PageTransitionWrapper>
       <main className="container mx-auto px-4 py-8 flex-grow">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
@@ -44,8 +43,8 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               <Image
                 src={post.imageUrl}
                 alt={post.title}
-                layout="fill"
-                objectFit="cover"
+                fill
+                style={{objectFit: "cover"}}
                 data-ai-hint={post.dataAiHint}
               />
             </div>
@@ -57,6 +56,6 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           </article>
         </div>
       </main>
-    </div>
+    </PageTransitionWrapper>
   );
 }

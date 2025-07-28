@@ -85,7 +85,7 @@ export function HeroSection() {
             <Button variant="outline" className="mt-6">Learn More</Button>
         </div>
         <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl" style={{ transform: `translateX(${offsetY * 0.1}px)` }}>
-            <Image src="https://placehold.co/600x400.png" layout="fill" objectFit="cover" alt="Abstract visual of code" data-ai-hint="digital code" />
+            <Image src="https://placehold.co/600x400.png" fill style={{objectFit: "cover"}} alt="Abstract visual of code" data-ai-hint="digital code" />
         </div>
       </div>
     </section>

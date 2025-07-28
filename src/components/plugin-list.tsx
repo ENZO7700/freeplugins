@@ -132,8 +132,8 @@ export function PluginList() {
                   <Image
                     src={plugin.imageUrl}
                     alt={plugin.name}
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{objectFit: "cover"}}
                     data-ai-hint={plugin.dataAiHint}
                     className="hover:scale-105 transition-transform duration-300"
                   />
@@ -146,9 +146,9 @@ export function PluginList() {
               </CardContent>
               <CardFooter className="p-6 pt-0 flex justify-between items-center">
                 <p className="text-lg font-semibold">{plugin.price}</p>
-                <Link href={`/plugins/${plugin.slug}`} passHref>
-                  <Button>View Details</Button>
-                </Link>
+                <Button asChild>
+                  <Link href={`/plugins/${plugin.slug}`}>View Details</Link>
+                </Button>
               </CardFooter>
             </Card>
         ))}
