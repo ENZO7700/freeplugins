@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from "@/components/ui/toaster"
 import { CartProvider } from '@/context/cart-context';
 import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -35,7 +36,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
       </head>
-      <body className={`${poppins.variable} ${ptSans.variable} font-body antialiased`}>
+      <body className={`${poppins.variable} ${ptSans.variable} font-body antialiased flex flex-col min-h-screen`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -44,7 +45,10 @@ export default function RootLayout({
         >
           <CartProvider>
             <Header />
-            {children}
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
             <Toaster />
           </CartProvider>
         </ThemeProvider>

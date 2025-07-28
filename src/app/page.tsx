@@ -15,23 +15,23 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <>
       <IntroAnimation isVisible={loading} />
 
       <div
-        className={`flex-grow transition-opacity duration-1000 ${
+        className={`transition-opacity duration-1000 ${
           loading ? 'opacity-0' : 'opacity-100'
         }`}
       >
         <PageTransitionWrapper>
-          <main>
+          <>
             <HeroSection />
             <div className="container mx-auto px-4 py-8">
               <PluginList />
             </div>
-          </main>
+          </>
         </PageTransitionWrapper>
       </div>
-    </div>
+    </>
   );
 }
