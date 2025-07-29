@@ -17,6 +17,7 @@ export default function Home() {
 
   // When category changes, decide whether to show plugins
   React.useEffect(() => {
+    // Show PluginList if a category is present in the URL
     setShowPlugins(!!category);
   }, [category]);
   
