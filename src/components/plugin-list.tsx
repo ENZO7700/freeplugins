@@ -7,6 +7,8 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { useCart } from '@/context/cart-context';
+import { useToast } from '@/hooks/use-toast';
 
 export interface Plugin {
   slug: string;
@@ -85,6 +87,8 @@ const plugins: Plugin[] = [
 export function PluginList() {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);
+  const { addToCart } = useCart();
+  const { toast } = useToast();
   
   const allCategories = ['All', ...Array.from(new Set(plugins.map(p => p.category)))];
 
@@ -93,6 +97,14 @@ export function PluginList() {
     const matchesSearch = plugin.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  const handleAddToCart = (plugin: Plugin) => {
+    addToCart(plugin);
+    toast({
+      title: "Added to cart",
+      description: `${plugin.name} has been added to your cart.`,
+    })
+  };
 
   return (
     <section className="py-12 md:py-24">
@@ -141,14 +153,14 @@ export function PluginList() {
               </Link>
               <CardContent className="p-6 flex-grow">
                 <Badge variant="secondary" className="mb-2">{plugin.category}</Badge>
-                <h3 className="text-xl font-bold font-headline mb-2">{plugin.name}</h3>
+                <Link href={`/plugins/${plugin.slug}`} passHref>
+                  <h3 className="text-xl font-bold font-headline mb-2 cursor-pointer hover:underline">{plugin.name}</h3>
+                </Link>
                 <p className="text-muted-foreground text-sm">{plugin.description}</p>
               </CardContent>
               <CardFooter className="p-6 pt-0 flex justify-between items-center">
                 <p className="text-lg font-semibold">{plugin.price}</p>
-                <Button asChild>
-                  <Link href={`/plugins/${plugin.slug}`}>View Details</Link>
-                </Button>
+                <Button onClick={() => handleAddToCart(plugin)}>Add to Cart</Button>
               </CardFooter>
             </Card>
         ))}

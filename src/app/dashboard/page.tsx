@@ -57,7 +57,7 @@ export default function DashboardPage() {
   if (loading || !user) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <div>Loading...</div>
+        <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     );
   }

@@ -2,15 +2,11 @@
 
 import * as React from 'react';
 import {
-  Auth,
   User,
   onAuthStateChanged,
-  signOut as firebaseSignOut,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { AuthCredentials } from '@/lib/auth-service';
+import { signIn as firebaseSignIn, signUp as firebaseSignUp, logOut as firebaseSignOut } from '@/lib/auth-service';
 
 interface AuthContextType {
   user: User | null;
@@ -36,15 +32,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
   
   const login = async (email: string, password: string): Promise<any> => {
-    return signInWithEmailAndPassword(auth, email, password);
+    return firebaseSignIn({ email, password });
   }
 
   const signup = async (email: string, password: string): Promise<any> => {
-    return createUserWithEmailAndPassword(auth, email, password);
+    return firebaseSignUp({ email, password });
   }
 
   const logout = async (): Promise<void> => {
-    return firebaseSignOut(auth);
+    return firebaseSignOut();
   }
 
 
