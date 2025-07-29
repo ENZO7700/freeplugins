@@ -104,15 +104,16 @@ export function PluginList() {
   const allCategories = ['All', ...getPluginCategories()];
 
   const handleCategoryChange = (category: string | null) => {
-    setSelectedCategory(category);
-    const params = new URLSearchParams(searchParams.toString());
-    if (category) {
-        params.set('category', category);
+    const newCategory = category === 'All' ? null : category;
+    setSelectedCategory(newCategory);
+    const params = new URLSearchParams(window.location.search);
+    if (newCategory) {
+      params.set('category', newCategory);
     } else {
-        params.delete('category');
+      params.delete('category');
     }
     router.push(`?${params.toString()}`);
-  }
+  };
 
   const filteredPlugins = plugins.filter(plugin => {
     const matchesCategory = !selectedCategory || plugin.category === selectedCategory;
@@ -149,7 +150,7 @@ export function PluginList() {
                 <Button 
                     key={category}
                     variant={selectedCategory === (category === 'All' ? null : category) ? "default" : "outline"}
-                    onClick={() => handleCategoryChange(category === 'All' ? null : category)}
+                    onClick={() => handleCategoryChange(category)}
                     className="whitespace-nowrap"
                 >
                     {category}
