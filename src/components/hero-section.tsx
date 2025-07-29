@@ -98,20 +98,3 @@ export function HeroSection() {
     </section>
   );
 }
-
-// Add this to your globals.css or a suitable stylesheet
-const styles = `
-.bg-grid-pattern {
-  background-image:
-    linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
-    linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
-  background-size: 3rem 3rem;
-}
-`;
-// A simple way to inject the style, or add it to globals.css directly
-if (typeof window !== 'undefined') {
-  const styleSheet = document.createElement("style");
-  styleSheet.type = "text/css";
-  styleSheet.innerText = styles;
-  document.head.appendChild(styleSheet);
-}
