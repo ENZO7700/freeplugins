@@ -17,7 +17,7 @@ import {
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { useAuth } from '@/context/auth-context';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 
@@ -30,6 +30,7 @@ const loginSchema = z.object({
 export function LoginForm() {
   const { login } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -46,7 +47,8 @@ export function LoginForm() {
     try {
       await login(values.email, values.password);
       toast({ title: 'Login Successful', description: "Welcome back!" });
-      router.push('/dashboard');
+      const redirectUrl = searchParams.get('redirect') || '/dashboard';
+      router.push(redirectUrl);
     } catch (error: any) {
       toast({
         variant: 'destructive',

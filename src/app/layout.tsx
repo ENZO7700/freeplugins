@@ -7,6 +7,7 @@ import { CartProvider } from '@/context/cart-context';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { AuthProvider } from '@/context/auth-context';
+import { DashboardProvider } from '@/context/dashboard-context';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -46,12 +47,14 @@ export default function RootLayout({
         >
           <AuthProvider>
             <CartProvider>
-              <Header />
-              <main className="flex-grow">
-                {children}
-              </main>
-              <Footer />
-              <Toaster />
+              <DashboardProvider>
+                <Header />
+                <main className="flex-grow">
+                  {children}
+                </main>
+                <Footer />
+                <Toaster />
+              </DashboardProvider>
             </CartProvider>
           </AuthProvider>
         </ThemeProvider>

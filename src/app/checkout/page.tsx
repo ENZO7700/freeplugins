@@ -1,9 +1,9 @@
-
 'use client';
 
 import * as React from 'react';
 import { useAuth } from '@/context/auth-context';
 import { useCart } from '@/context/cart-context';
+import { useDashboard } from '@/context/dashboard-context';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
@@ -17,15 +17,16 @@ import { Label } from '@/components/ui/label';
 export default function CheckoutPage() {
   const { user, loading } = useAuth();
   const { cart, total, clearCart } = useCart();
+  const { addOrder } = useDashboard();
   const router = useRouter();
   const { toast } = useToast();
   const [isProcessing, setIsProcessing] = React.useState(false);
 
   React.useEffect(() => {
     if (!loading && !user) {
-      router.push('/login');
+      router.push('/login?redirect=/checkout');
     }
-    if (!loading && cart.length === 0) {
+    if (!loading && user && cart.length === 0) {
         router.push('/');
     }
   }, [user, loading, cart, router]);
@@ -36,6 +37,14 @@ export default function CheckoutPage() {
     
     // Simulate API call to process payment and create order
     await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // Add order to dashboard context (which saves to localStorage)
+    addOrder({
+      id: new Date().toISOString(), // simple unique id
+      date: new Date().toLocaleDateString(),
+      items: cart,
+      total: total,
+    });
 
     setIsProcessing(false);
     clearCart();
@@ -86,7 +95,7 @@ export default function CheckoutPage() {
                         </div>
                     </CardContent>
                     <CardFooter>
-                         <Button type="submit" className="w-full" size="lg" disabled={isProcessing}>
+                         <Button type="submit" className="w-full" size="lg" disabled={isProcessing || cart.length === 0}>
                             {isProcessing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                             Place Order
                         </Button>
@@ -100,14 +109,18 @@ export default function CheckoutPage() {
                         <CardTitle>Order Summary</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <ul className="divide-y divide-border">
-                            {cart.map(item => (
-                                <li key={item.slug} className="flex justify-between items-center py-3">
-                                    <span>{item.name}</span>
-                                    <span className="font-medium">{item.price}</span>
-                                </li>
-                            ))}
-                        </ul>
+                        {cart.length > 0 ? (
+                           <ul className="divide-y divide-border">
+                                {cart.map(item => (
+                                    <li key={item.slug} className="flex justify-between items-center py-3">
+                                        <span>{item.name}</span>
+                                        <span className="font-medium">{item.price}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p className="text-muted-foreground">Your cart is empty.</p>
+                        )}
                     </CardContent>
                     <CardFooter className="flex justify-between font-bold text-lg border-t pt-4">
                         <p>Total</p>

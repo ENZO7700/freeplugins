@@ -2,8 +2,9 @@
 
 import { LoginForm } from '@/components/auth/login-form';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
+import { Suspense } from 'react';
 
-export default function LoginPage() {
+function LoginPageContent() {
   return (
     <PageTransitionWrapper>
       <main className="container mx-auto flex h-full items-center justify-center px-4 py-8">
@@ -11,4 +12,12 @@ export default function LoginPage() {
       </main>
     </PageTransitionWrapper>
   );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginPageContent />
+    </Suspense>
+  )
 }
