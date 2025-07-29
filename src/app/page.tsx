@@ -3,13 +3,23 @@
 import * as React from 'react';
 import { IntroAnimation } from '@/components/intro-animation';
 import { HeroSection } from '@/components/hero-section';
-import { PluginList } from '@/components/plugin-list';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
 import { BenefitsSection } from '@/components/benefits-section';
+import { CategoryGrid } from '@/components/category-grid';
+import { PluginList } from '@/components/plugin-list';
+import { useSearchParams } from 'next/navigation';
 
 export default function Home() {
   const [loading, setLoading] = React.useState(true);
+  const searchParams = useSearchParams();
+  const category = searchParams.get('category');
+  const [showPlugins, setShowPlugins] = React.useState(false);
 
+  // When category changes, decide whether to show plugins
+  React.useEffect(() => {
+    setShowPlugins(!!category);
+  }, [category]);
+  
   React.useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 2500); // 2.5s for intro
     return () => clearTimeout(timer);
@@ -28,7 +38,7 @@ export default function Home() {
           <>
             <HeroSection />
             <div className="container mx-auto px-4 py-8">
-              <PluginList />
+              {showPlugins ? <PluginList /> : <CategoryGrid />}
             </div>
             <BenefitsSection />
           </>
