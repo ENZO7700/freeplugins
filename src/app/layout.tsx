@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { CartProvider } from '@/context/cart-context';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import { AuthProvider } from '@/context/auth-context';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -43,14 +44,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <CartProvider>
-            <Header />
-            <main className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-            <Toaster />
-          </CartProvider>
+          <AuthProvider>
+            <CartProvider>
+              <Header />
+              <main className="flex-grow">
+                {children}
+              </main>
+              <Footer />
+              <Toaster />
+            </CartProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
