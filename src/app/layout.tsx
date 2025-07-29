@@ -8,6 +8,7 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { AuthProvider } from '@/context/auth-context';
 import { DashboardProvider } from '@/context/dashboard-context';
+import { AdaptiveUiProvider } from '@/context/adaptive-ui-context';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -48,12 +49,14 @@ export default function RootLayout({
           <AuthProvider>
             <CartProvider>
               <DashboardProvider>
-                <Header />
-                <main className="flex-grow">
-                  {children}
-                </main>
-                <Footer />
-                <Toaster />
+                 <AdaptiveUiProvider>
+                  <Header />
+                  <main className="flex-grow">
+                    {children}
+                  </main>
+                  <Footer />
+                  <Toaster />
+                </AdaptiveUiProvider>
               </DashboardProvider>
             </CartProvider>
           </AuthProvider>
