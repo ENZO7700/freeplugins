@@ -5,6 +5,7 @@ import { IntroAnimation } from '@/components/intro-animation';
 import { HeroSection } from '@/components/hero-section';
 import { PluginList } from '@/components/plugin-list';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
+import { BenefitsSection } from '@/components/benefits-section';
 
 export default function Home() {
   const [loading, setLoading] = React.useState(true);
@@ -29,6 +30,7 @@ export default function Home() {
             <div className="container mx-auto px-4 py-8">
               <PluginList />
             </div>
+            <BenefitsSection />
           </>
         </PageTransitionWrapper>
       </div>
