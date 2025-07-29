@@ -1,3 +1,4 @@
+
 'use client';
 
 import { ThemeToggle } from './theme-toggle';
@@ -94,7 +95,7 @@ export function Header() {
     );
   }
 
-  const isMarketplaceActive = pathname === '/' || (pathname.startsWith('/plugins') && !pathname.startsWith('/plugins/'));
+  const isMarketplaceActive = pathname === '/' || pathname.startsWith('/plugins');
 
   return (
     <motion.header 

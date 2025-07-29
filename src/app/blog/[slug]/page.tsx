@@ -1,3 +1,4 @@
+
 'use client';
 
 import { getPostBySlug } from '@/lib/blog-posts';
