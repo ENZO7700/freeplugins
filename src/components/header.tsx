@@ -4,10 +4,10 @@ import { ThemeToggle } from './theme-toggle';
 import { Cart } from './cart';
 import Link from 'next/link';
 import { Button } from './ui/button';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
-import { Menu, User, LogOut, Loader2 } from 'lucide-react';
+import { Menu, User, LogOut, Loader2, ChevronDown } from 'lucide-react';
 import * as React from 'react';
 import {
   Sheet,
@@ -24,16 +24,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { getPluginCategories } from './plugin-list';
 
 
 export function Header() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentCategory = searchParams.get('category');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const { user, loading, logout } = useAuth();
 
+  const categories = getPluginCategories();
+
   const navLinks = [
-    { href: '/', label: 'Marketplace' },
     { href: '/blog', label: 'Blog' },
+    { href: '/contact', label: 'Contact' },
   ];
   
   const getInitials = (email?: string | null) => {
@@ -89,6 +94,8 @@ export function Header() {
     );
   }
 
+  const isMarketplaceActive = pathname === '/' || (pathname.startsWith('/plugins') && !pathname.startsWith('/plugins/'));
+
   return (
     <motion.header 
       initial={{ y: -100 }}
@@ -104,10 +111,30 @@ export function Header() {
         </Link>
         
         <nav className="hidden md:flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant={isMarketplaceActive ? 'secondary' : 'ghost'}>
+                  Marketplace
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem asChild>
+                  <Link href="/">All Plugins</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                {categories.map((category) => (
+                  <DropdownMenuItem key={category} asChild>
+                    <Link href={`/?category=${encodeURIComponent(category)}`}>{category}</Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
           {navLinks.map((link) => (
             <Button 
               key={link.href}
-              variant={pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href)) ? 'secondary' : 'ghost'} 
+              variant={pathname === link.href ? 'secondary' : 'ghost'} 
               asChild
             >
               <Link href={link.href}>{link.label}</Link>
@@ -136,13 +163,38 @@ export function Header() {
                     </div>
                   </Link>
                   <nav className="flex flex-col gap-2">
+                    <p className="px-2 text-sm font-semibold text-muted-foreground">Marketplace</p>
+                    <Link
+                      href="/"
+                      className={cn(
+                        "text-lg p-2 rounded-md ml-2",
+                        isMarketplaceActive && !currentCategory ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-muted'
+                      )}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      All Plugins
+                    </Link>
+                    {categories.map((category) => (
+                       <Link
+                        key={category}
+                        href={`/?category=${encodeURIComponent(category)}`}
+                        className={cn(
+                          "text-lg p-2 rounded-md ml-2",
+                          currentCategory === category ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-muted'
+                        )}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {category}
+                      </Link>
+                    ))}
+                    <DropdownMenuSeparator className="my-2"/>
                     {navLinks.map((link) => (
                       <Link
                         key={link.href}
                         href={link.href}
                         className={cn(
                           "text-lg p-2 rounded-md",
-                          pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href)) 
+                          pathname === link.href
                             ? 'bg-secondary text-secondary-foreground' 
                             : 'text-muted-foreground hover:bg-muted'
                         )}

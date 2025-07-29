@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useCart } from '@/context/cart-context';
 import { useToast } from '@/hooks/use-toast';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 export interface Plugin {
   slug: string;
@@ -84,16 +85,37 @@ const plugins: Plugin[] = [
   },
 ];
 
+export function getPluginCategories() {
+    return [...new Set(plugins.map(p => p.category))];
+}
+
 export function PluginList() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = React.useState<string | null>(searchParams.get('category'));
   const { addToCart } = useCart();
   const { toast } = useToast();
   
-  const allCategories = ['All', ...Array.from(new Set(plugins.map(p => p.category)))];
+  React.useEffect(() => {
+    setSelectedCategory(searchParams.get('category'));
+  }, [searchParams]);
+
+  const allCategories = ['All', ...getPluginCategories()];
+
+  const handleCategoryChange = (category: string | null) => {
+    setSelectedCategory(category);
+    const params = new URLSearchParams(searchParams.toString());
+    if (category) {
+        params.set('category', category);
+    } else {
+        params.delete('category');
+    }
+    router.push(`?${params.toString()}`);
+  }
 
   const filteredPlugins = plugins.filter(plugin => {
-    const matchesCategory = selectedCategory === 'All' || !selectedCategory ? true : plugin.category === selectedCategory;
+    const matchesCategory = !selectedCategory || plugin.category === selectedCategory;
     const matchesSearch = plugin.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
@@ -126,8 +148,8 @@ export function PluginList() {
             {allCategories.map(category => (
                 <Button 
                     key={category}
-                    variant={selectedCategory === category || (!selectedCategory && category === 'All') ? "default" : "outline"}
-                    onClick={() => setSelectedCategory(category === 'All' ? null : category)}
+                    variant={selectedCategory === (category === 'All' ? null : category) ? "default" : "outline"}
+                    onClick={() => handleCategoryChange(category === 'All' ? null : category)}
                     className="whitespace-nowrap"
                 >
                     {category}
