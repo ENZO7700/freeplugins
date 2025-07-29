@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -7,6 +8,7 @@ interface CartContextType {
   cart: Plugin[];
   addToCart: (plugin: Plugin) => void;
   removeFromCart: (slug: string) => void;
+  clearCart: () => void;
   total: number;
 }
 
@@ -28,6 +30,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const removeFromCart = (slug: string) => {
     setCart(prevCart => prevCart.filter(item => item.slug !== slug));
   };
+  
+  const clearCart = () => {
+    setCart([]);
+  }
 
   const total = React.useMemo(() => {
     return cart.reduce((acc, item) => {
@@ -40,6 +46,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     cart,
     addToCart,
     removeFromCart,
+    clearCart,
     total,
   };
 

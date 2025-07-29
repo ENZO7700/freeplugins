@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useCart } from '@/context/cart-context';
@@ -5,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetFooter } from '@/components/ui/sheet';
 import { ShoppingCart, Trash2 } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export function Cart() {
   const { cart, removeFromCart, total } = useCart();
@@ -69,7 +71,9 @@ export function Cart() {
                         <p>${total.toFixed(2)}</p>
                     </div>
                     <p className="mt-0.5 text-sm text-muted-foreground">Shipping and taxes calculated at checkout.</p>
-                    <Button className='w-full'>Checkout</Button>
+                    <Button className='w-full' asChild>
+                      <Link href="/checkout">Checkout</Link>
+                    </Button>
                 </div>
             </SheetFooter>
         )}
