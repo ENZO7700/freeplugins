@@ -19,21 +19,13 @@ export function IntroAnimation({ isVisible }: IntroAnimationProps) {
     >
       <div className="text-center">
         <motion.h1 
-          className="text-4xl md:text-6xl font-bold font-headline text-primary"
+          className="text-5xl md:text-7xl font-bold font-headline text-primary"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
         >
-          Expresívny
+          FreePlugins
         </motion.h1>
-        <motion.h2 
-          className="text-5xl md:text-7xl font-bold font-headline text-foreground"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-        >
-          Navigátor
-        </motion.h2>
       </div>
     </motion.div>
   );
