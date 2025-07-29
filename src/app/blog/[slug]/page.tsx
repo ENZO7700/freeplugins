@@ -51,8 +51,11 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
             <div 
               className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
+            >
+              {post.content.split('\n\n').map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
           </article>
         </div>
       </main>
