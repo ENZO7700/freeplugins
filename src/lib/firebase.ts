@@ -4,14 +4,15 @@ import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration - REPLACE WITH YOUR ACTUAL CONFIG
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA_...REPLACE_ME",
-  authDomain: "your-project-id.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project-id.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "1:1234567890:web:abcdef1234567890"
+  "projectId": "expresvny-navigtor",
+  "appId": "1:981057554742:web:20df894353c4556f274b97",
+  "storageBucket": "expresvny-navigtor.firebasestorage.app",
+  "apiKey": "AIzaSyCUIm5P7z3sgmfxxESksDC32eSjsvfeKb0",
+  "authDomain": "expresvny-navigtor.firebaseapp.com",
+  "measurementId": "",
+  "messagingSenderId": "981057554742"
 };
 
 // Initialize Firebase
