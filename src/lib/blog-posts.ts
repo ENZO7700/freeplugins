@@ -50,6 +50,42 @@ Neriaďte sa len cenou. Niekedy sa oplatí investovať do plateného pluginu, kt
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'software puzzle',
   },
+  {
+    slug: 'automatizacia-marketingu-pluginmi',
+    title: 'Automatizácia marketingu pomocou pluginov',
+    summary: 'Objavte, ako môžu správne pluginy automatizovať vaše marketingové kampane, ušetriť čas a zvýšiť efektivitu.',
+    content: `Automatizácia marketingu už nie je len pre veľké korporácie. S pomocou správnych pluginov môžete aj vy nastaviť procesy, ktoré za vás budú pracovať 24/7. Od automatického odosielania e-mailov až po personalizované ponuky pre návštevníkov vášho webu.
+
+E-mailový marketing je jedným z najlepších kandidátov na automatizáciu. Pluginy vám umožnia vytvárať uvítacie série pre nových odberateľov, posielať pripomienky o opustenom košíku alebo segmentovať používateľov na základe ich správania a posielať im relevantný obsah.
+
+Ďalšou oblasťou je správa sociálnych sietí. Namiesto manuálneho prispievania na Facebook, Twitter či LinkedIn môžete použiť pluginy, ktoré naplánujú vaše príspevky na týždne dopredu. Ušetríte tak hodiny času a udržíte si konzistentnú prítomnosť online.
+
+Nezabúdajte ani na personalizáciu obsahu na webe. Niektoré pluginy dokážu dynamicky meniť obsah stránky podľa toho, odkiaľ návštevník prišiel alebo čo ho zaujímalo v minulosti. To vedie k vyššej miere konverzie a spokojnejším zákazníkom.`,
+    author: 'Martina Veselá',
+    authorImageUrl: 'https://placehold.co/100x100.png',
+    date: '25. júl 2024',
+    imageUrl: 'https://placehold.co/600x400.png',
+    dataAiHint: 'marketing automation',
+  },
+  {
+    slug: 'bezpecnost-pluginov-aktualizacie',
+    title: 'Bezpečnosť webu: Prečo je dôležité aktualizovať pluginy?',
+    summary: 'Neaktualizované pluginy sú jedným z najväčších bezpečnostných rizík. Prečítajte si, prečo by ste ich mali udržiavať v kondícii.',
+    content: `Predstavte si pluginy ako dvere a okná vášho domu. Ak ich necháte odomknuté alebo poškodené, dávate zlodejom ľahkú príležitosť na vstup. Podobne fungujú aj neaktualizované pluginy na vašom webe – stávajú sa vstupnou bránou pre hackerov.
+
+Vývojári pluginov pravidelne vydávajú aktualizácie, ktoré nielenže pridávajú nové funkcie, ale predovšetkým opravujú bezpečnostné diery. Hackeri tieto zraniteľnosti aktívne vyhľadávajú a zneužívajú na weboch, ktoré nemajú najnovšie verzie.
+
+Okrem bezpečnostných opráv prinášajú aktualizácie aj opravy chýb a vylepšenia výkonu. Váš web tak bude nielen bezpečnejší, ale aj rýchlejší a stabilnejší.
+
+Pravidelná aktualizácia tiež zaisťuje kompatibilitu s najnovšou verziou vášho redakčného systému a ostatnými pluginmi. Predídete tak konfliktom, ktoré by mohli spôsobiť pád stránky.
+
+Nastavte si pripomienky alebo využite funkcie automatických aktualizácií. Investícia niekoľkých minút do údržby vám môže ušetriť hodiny alebo aj dni riešenia problémov po hackerskom útoku.`,
+    author: 'Peter Bezpečný',
+    authorImageUrl: 'https://placehold.co/100x100.png',
+    date: '28. júl 2024',
+    imageUrl: 'https://placehold.co/600x400.png',
+    dataAiHint: 'cyber security',
+  },
 ];
 
 export function getAllPosts() {
