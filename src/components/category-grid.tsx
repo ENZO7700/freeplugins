@@ -3,41 +3,25 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { Card } from '@/components/ui/card';
-import { getPluginCategories } from '@/components/plugin-list';
+import { getPluginCategories, Category } from '@/components/plugin-list';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { GridPattern } from '@/components/ui/grid-pattern';
+import { BarChart, ShoppingCart, Share2, LineChart, Shield, Wrench, LucideIcon } from 'lucide-react';
 
 // Let's define some specific images and hints for our categories
-const categoryVisuals: { [key: string]: { imageUrl: string; dataAiHint: string } } = {
-  SEO: { imageUrl: 'https://placehold.co/600x400.png', dataAiHint: 'analytics chart' },
-  'E-commerce': { imageUrl: 'https://placehold.co/600x400.png', dataAiHint: 'online store' },
-  'Social Media': { imageUrl: 'https://placehold.co/600x400.png', dataAiHint: 'social network' },
-  Analytics: { imageUrl: 'https://placehold.co/600x400.png', dataAiHint: 'data graph' },
-  Security: { imageUrl: 'https://placehold.co/600x400.png', dataAiHint: 'security shield' },
-  Utilities: { imageUrl: 'https://placehold.co/600x400.png', dataAiHint: 'tools gears' },
+const categoryVisuals: { [key: string]: { icon: LucideIcon, colors: string } } = {
+  SEO: { icon: BarChart, colors: 'from-green-500 to-cyan-500' },
+  'E-commerce': { icon: ShoppingCart, colors: 'from-blue-500 to-indigo-500' },
+  'Social Media': { icon: Share2, colors: 'from-purple-500 to-pink-500' },
+  Analytics: { icon: LineChart, colors: 'from-yellow-500 to-orange-500' },
+  Security: { icon: Shield, colors: 'from-red-500 to-rose-500' },
+  Utilities: { icon: Wrench, colors: 'from-gray-500 to-slate-500' },
 };
 
 
 export function CategoryGrid() {
   const categories = getPluginCategories();
-
-  const cardVariants = {
-    offscreen: {
-      y: 50,
-      opacity: 0,
-    },
-    onscreen: (i: number) => ({
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 40,
-        damping: 10,
-        delay: i * 0.1,
-      },
-    }),
-  };
 
   return (
     <section className="py-12 md:py-24">
@@ -48,36 +32,41 @@ export function CategoryGrid() {
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {categories.map((category, index) => {
-            const visual = categoryVisuals[category] || { imageUrl: 'https://placehold.co/600x400.png', dataAiHint: 'abstract tech' };
+        {categories.map((category) => {
+            const visual = categoryVisuals[category.name] || { icon: Wrench, colors: 'from-gray-500 to-slate-500' };
+            const Icon = visual.icon;
+            
             return (
-                <motion.div
-                    key={category}
-                    custom={index}
-                    variants={cardVariants}
-                    initial="offscreen"
-                    whileInView="onscreen"
-                    viewport={{ once: true, amount: 0.3 }}
-                >
-                    <Link href={`/?category=${encodeURIComponent(category)}`} passHref>
-                        <Card className="relative group block overflow-hidden rounded-lg h-64 cursor-pointer shadow-lg hover:shadow-primary/30 transition-shadow duration-300">
-                            <Image
-                                src={visual.imageUrl}
-                                alt={`${category} background`}
-                                fill
-                                style={{ objectFit: 'cover' }}
-                                data-ai-hint={visual.dataAiHint}
-                                className="z-0 group-hover:scale-110 transition-transform duration-500 ease-in-out"
-                            />
-                            <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-colors duration-300 z-10" />
-                            <div className="relative z-20 flex items-center justify-center h-full">
-                                <h3 className="text-3xl font-bold font-headline text-white drop-shadow-lg">
-                                    {category}
+                <Link key={category.name} href={`/?category=${encodeURIComponent(category.name)}`} passHref>
+                    <div className="relative group rounded-xl">
+                        <div
+                            className={cn(
+                                "absolute -inset-0.5 rounded-xl blur-lg opacity-50 group-hover:opacity-100 transition duration-300 animate-border-spin",
+                                visual.colors
+                            )}
+                            style={{
+                                background: `linear-gradient(120deg, var(--tw-gradient-from), var(--tw-gradient-to))`,
+                                backgroundSize: '400% 400%'
+                            }}
+                        />
+                        <div className="relative bg-card rounded-xl p-6 h-64 flex flex-col justify-between items-start overflow-hidden cursor-pointer shadow-lg">
+                            <GridPattern className="absolute inset-0 w-full h-full" />
+                            <motion.div
+                                className="z-10"
+                                whileHover={{ scale: 1.2, rotate: -15 }}
+                                transition={{ type: 'spring', stiffness: 300 }}
+                            >
+                                <Icon className="h-12 w-12 text-foreground/80" />
+                            </motion.div>
+                             <div className="relative z-10">
+                                <h3 className="text-2xl font-bold font-headline text-foreground">
+                                    {category.name}
                                 </h3>
+                                <p className="text-muted-foreground mt-1">{category.description}</p>
                             </div>
-                        </Card>
-                    </Link>
-                </motion.div>
+                        </div>
+                    </div>
+                </Link>
             )
         })}
       </div>

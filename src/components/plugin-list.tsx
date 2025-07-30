@@ -23,6 +23,20 @@ export interface Plugin {
   dataAiHint: string;
 }
 
+export interface Category {
+  name: string;
+  description: string;
+}
+
+const categories: Category[] = [
+    { name: 'SEO', description: 'Boost your search rankings.' },
+    { name: 'E-commerce', description: 'Power up your online store.' },
+    { name: 'Social Media', description: 'Automate social interactions.' },
+    { name: 'Analytics', description: 'Visualize and understand data.' },
+    { name: 'Security', description: 'Protect your application.' },
+    { name: 'Utilities', description: 'Tools to simplify your workflow.' },
+];
+
 const plugins: Plugin[] = [
   {
     slug: 'seo-optimizer-pro',
@@ -87,7 +101,7 @@ const plugins: Plugin[] = [
 ];
 
 export function getPluginCategories() {
-    return [...new Set(plugins.map(p => p.category))];
+    return categories;
 }
 
 export function PluginList() {
@@ -102,7 +116,7 @@ export function PluginList() {
     setSelectedCategory(searchParams.get('category'));
   }, [searchParams]);
 
-  const allCategories = ['All', ...getPluginCategories()];
+  const allCategories = ['All', ...getPluginCategories().map(c => c.name)];
 
   const handleCategoryChange = (category: string | null) => {
     const newCategory = category === 'All' ? null : category;

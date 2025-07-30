@@ -125,8 +125,8 @@ export function Header() {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 {categories.map((category) => (
-                  <DropdownMenuItem key={category} asChild>
-                    <Link href={`/?category=${encodeURIComponent(category)}`}>{category}</Link>
+                  <DropdownMenuItem key={category.name} asChild>
+                    <Link href={`/?category=${encodeURIComponent(category.name)}`}>{category.name}</Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -177,15 +177,15 @@ export function Header() {
                     </Link>
                     {categories.map((category) => (
                        <Link
-                        key={category}
-                        href={`/?category=${encodeURIComponent(category)}`}
+                        key={category.name}
+                        href={`/?category=${encodeURIComponent(category.name)}`}
                         className={cn(
                           "text-lg p-2 rounded-md ml-2",
-                          currentCategory === category ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-muted'
+                          currentCategory === category.name ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-muted'
                         )}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
-                        {category}
+                        {category.name}
                       </Link>
                     ))}
                     <DropdownMenuSeparator className="my-2"/>
