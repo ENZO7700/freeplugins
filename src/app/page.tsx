@@ -1,10 +1,10 @@
+
 'use client';
 
 import * as React from 'react';
 import { IntroAnimation } from '@/components/intro-animation';
 import { HeroSection } from '@/components/hero-section';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
-import { BenefitsSection } from '@/components/benefits-section';
 import { CategoryGrid } from '@/components/category-grid';
 import { PluginList } from '@/components/plugin-list';
 import { useSearchParams } from 'next/navigation';
@@ -41,7 +41,6 @@ export default function Home() {
             <div className="container mx-auto px-4 py-8">
               {showPlugins ? <PluginList /> : <CategoryGrid />}
             </div>
-            <BenefitsSection />
           </>
         </PageTransitionWrapper>
       </div>
