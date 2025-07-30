@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Mail, Phone } from 'lucide-react';
+import { Loader2, Mail, Phone, MapPin } from 'lucide-react';
 import * as React from 'react';
 import Image from 'next/image';
 
@@ -94,11 +94,15 @@ export default function ContactPage() {
                                     <Phone className="h-6 w-6 text-primary" />
                                     <a href="tel:+1234567890" className="hover:underline">+1 (234) 567-890</a>
                                 </div>
+                                 <div className="flex items-center gap-4">
+                                    <MapPin className="h-6 w-6 text-primary" />
+                                    <span>Bratislava, Slovakia</span>
+                                </div>
                             </CardContent>
                         </Card>
 
                         <div className="relative h-64 w-full rounded-lg overflow-hidden shadow-lg">
-                             <Image src="https://placehold.co/600x400.png" alt="Contact Us" fill style={{objectFit: 'cover'}} data-ai-hint="map location" />
+                             <Image src="https://placehold.co/600x400.png" alt="Bratislava" fill style={{objectFit: 'cover'}} data-ai-hint="Bratislava city" />
                         </div>
                     </div>
                 </div>

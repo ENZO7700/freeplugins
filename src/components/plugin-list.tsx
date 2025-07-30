@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -51,7 +52,7 @@ const plugins: Plugin[] = [
     longDescription: 'With SocialConnect, you can schedule posts across multiple platforms, track engagement, and analyze your social media performance. Save time and grow your online presence effectively.',
     price: '$29',
     imageUrl: 'https://placehold.co/600x400.png',
-    dataAiHint: 'people network',
+    dataAiHint: 'social network',
   },
   {
     slug: 'datavisualizer',
