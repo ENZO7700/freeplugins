@@ -29,19 +29,21 @@ export interface Category {
 }
 
 const categories: Category[] = [
-    { name: 'SEO', description: 'Boost your search rankings.' },
-    { name: 'E-commerce', description: 'Power up your online store.' },
-    { name: 'Social Media', description: 'Automate social interactions.' },
-    { name: 'Analytics', description: 'Visualize and understand data.' },
-    { name: 'Security', description: 'Protect your application.' },
-    { name: 'Utilities', description: 'Tools to simplify your workflow.' },
+    { name: 'Wordpress', description: 'Pluginy a nástroje pre WordPress.' },
+    { name: 'Plugins', description: 'Rozšírte funkcionalitu vašich aplikácií.' },
+    { name: 'Downloads', description: 'Stiahnite si užitočné nástroje.' },
+    { name: 'Windows', description: 'Aplikácie a utility pre Windows.' },
+    { name: 'Linux', description: 'Softvér pre distribúcie Linuxu.' },
+    { name: 'macOS', description: 'Nástroje a aplikácie pre macOS.' },
+    { name: 'Android', description: 'Aplikácie pre vaše Android zariadenia.' },
+    { name: 'iPhone', description: 'Aplikácie pre váš iPhone.' },
 ];
 
 const plugins: Plugin[] = [
   {
     slug: 'seo-optimizer-pro',
     name: 'SEO Optimizer Pro',
-    category: 'SEO',
+    category: 'Plugins',
     description: 'Boost your search engine rankings with our advanced SEO toolkit.',
     longDescription: 'Our SEO Optimizer Pro offers a complete suite of tools including keyword research, backlink analysis, on-page optimization, and performance tracking. Ideal for businesses of all sizes looking to improve their online visibility.',
     price: '$49',
@@ -51,7 +53,7 @@ const plugins: Plugin[] = [
   {
     slug: 'ecommerceify',
     name: 'E-commerceify',
-    category: 'E-commerce',
+    category: 'Plugins',
     description: 'Turn your website into a powerful online store in minutes.',
     longDescription: 'E-commerceify provides everything you need to start selling online. Features include product management, secure payment gateways, inventory tracking, and customer management. Fully customizable to match your brand.',
     price: '$99',
@@ -61,7 +63,7 @@ const plugins: Plugin[] = [
   {
     slug: 'socialconnect',
     name: 'SocialConnect',
-    category: 'Social Media',
+    category: 'Plugins',
     description: 'Automate your social media posts and grow your audience.',
     longDescription: 'With SocialConnect, you can schedule posts across multiple platforms, track engagement, and analyze your social media performance. Save time and grow your online presence effectively.',
     price: '$29',
@@ -71,7 +73,7 @@ const plugins: Plugin[] = [
   {
     slug: 'datavisualizer',
     name: 'DataVisualizer',
-    category: 'Analytics',
+    category: 'Windows',
     description: 'Create stunning charts and graphs from your data effortlessly.',
     longDescription: 'DataVisualizer connects to your data sources and allows you to build interactive dashboards with a simple drag-and-drop interface. Make data-driven decisions with beautiful and insightful visualizations.',
     price: '$39',
@@ -91,7 +93,7 @@ const plugins: Plugin[] = [
   {
     slug: 'formbuilder-plus',
     name: 'FormBuilder+',
-    category: 'Utilities',
+    category: 'Wordpress',
     description: 'Build custom forms with advanced logic and integrations.',
     longDescription: 'Create any type of form, from simple contact forms to complex surveys with conditional logic. FormBuilder+ integrates with your favorite apps to streamline your data collection process.',
     price: '$19',
