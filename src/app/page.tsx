@@ -8,6 +8,7 @@ import { CategoryGrid } from '@/components/category-grid';
 import { PluginList } from '@/components/plugin-list';
 import { useSearchParams } from 'next/navigation';
 import { AiAssistant } from '@/components/ai-assistant';
+import { FeaturedPlugins } from '@/components/featured-plugins';
 
 export default function Home() {
   const searchParams = useSearchParams();
@@ -26,6 +27,7 @@ export default function Home() {
         <HeroSection />
         <div className="container mx-auto px-4 py-8">
           <AiAssistant />
+          <FeaturedPlugins />
           {showPlugins ? <PluginList /> : <CategoryGrid />}
         </div>
       </>

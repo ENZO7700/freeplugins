@@ -50,7 +50,7 @@ const categories: Category[] = [
     { name: 'iPhone', description: 'Aplikácie pre váš iPhone.' },
 ];
 
-const plugins: Plugin[] = [
+export const plugins: Plugin[] = [
   {
     slug: 'seo-optimizer-pro',
     name: 'SEO Optimizer Pro',
