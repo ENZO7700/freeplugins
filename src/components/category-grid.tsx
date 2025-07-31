@@ -3,9 +3,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { getPluginCategories, Category } from '@/components/plugin-list';
-import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { getPluginCategories } from '@/components/plugin-list';
 import { AppWindow, Download, ToyBrick, Smartphone, LucideIcon, Code, Monitor, Wind } from 'lucide-react';
 
 const categoryVisuals: { [key: string]: { icon: LucideIcon } } = {
@@ -38,15 +36,11 @@ export function CategoryGrid() {
             
             return (
                 <Link key={category.name} href={`/?category=${encodeURIComponent(category.name)}`} passHref>
-                    <div className="bg-card rounded-lg p-6 h-64 flex flex-col justify-between items-start cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1">
-                        <motion.div
-                            className="z-10"
-                            whileHover={{ scale: 1.2, rotate: -15 }}
-                            transition={{ type: 'spring', stiffness: 300 }}
-                        >
+                    <div className="bg-card rounded-lg p-6 h-64 flex flex-col justify-between items-start cursor-pointer">
+                        <div>
                             <Icon className="h-12 w-12 text-foreground/80" />
-                        </motion.div>
-                         <div className="relative z-10">
+                        </div>
+                         <div>
                             <h3 className="text-2xl font-bold font-headline text-foreground">
                                 {category.name}
                             </h3>
