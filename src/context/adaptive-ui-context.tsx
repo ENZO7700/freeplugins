@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -9,6 +10,8 @@ type AnimationSpeed = 'fast' | 'medium' | 'slow';
 interface AdaptiveUiContextType {
   settings: AdaptAnimationsToUserBehaviorOutput | null;
   animationSpeed: AnimationSpeed;
+  fontSize: string;
+  elementSpacing: string;
   loading: boolean;
 }
 
@@ -18,10 +21,15 @@ export function AdaptiveUiProvider({ children }: { children: React.ReactNode }) 
   const { settings, loading } = useAdaptiveUiHook();
   
   const animationSpeed = settings?.animationSettings?.animationSpeed || 'medium';
+  const fontSize = settings?.uiElementAdjustments?.fontSize || '16px';
+  const elementSpacing = settings?.uiElementAdjustments?.elementSpacing || '10px';
+
 
   const value = {
     settings,
     animationSpeed,
+    fontSize,
+    elementSpacing,
     loading,
   };
 
