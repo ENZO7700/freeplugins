@@ -9,6 +9,7 @@ export interface BlogPost {
   date: string;
   imageUrl: string;
   dataAiHint: string;
+  category: string;
 }
 
 const blogPosts: BlogPost[] = [
@@ -30,6 +31,7 @@ Väčšina používateľov dnes prehliada web na mobilných zariadeniach. Respon
     date: '15. júl 2024',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'seo analytics',
+    category: 'SEO',
   },
   {
     slug: 'ako-vybrat-spravny-plugin',
@@ -49,6 +51,7 @@ Neriaďte sa len cenou. Niekedy sa oplatí investovať do plateného pluginu, kt
     date: '10. júl 2024',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'software puzzle',
+    category: 'Plugins',
   },
   {
     slug: 'automatizacia-marketingu-pluginmi',
@@ -66,6 +69,7 @@ Nezabúdajte ani na personalizáciu obsahu na webe. Niektoré pluginy dokážu d
     date: '25. júl 2024',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'marketing automation',
+    category: 'Marketing',
   },
   {
     slug: 'bezpecnost-pluginov-aktualizacie',
@@ -85,6 +89,7 @@ Nastavte si pripomienky alebo využite funkcie automatických aktualizácií. In
     date: '28. júl 2024',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'cyber security',
+    category: 'Bezpečnosť',
   },
 ];
 
@@ -94,4 +99,9 @@ export function getAllPosts() {
 
 export function getPostBySlug(slug: string) {
   return blogPosts.find(p => p.slug === slug);
+}
+
+export function getBlogCategories() {
+  const categories = blogPosts.map(post => post.category);
+  return [...new Set(categories)]; // Return unique categories
 }
