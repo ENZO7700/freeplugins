@@ -184,7 +184,7 @@ export function PluginList() {
                     alt={plugin.name}
                     fill
                     style={{objectFit: "cover"}}
-                    data-ai-hint={plugin.dataAiHint}
+                    dataAiHint={plugin.dataAiHint}
                     className="hover:scale-105 transition-transform duration-300"
                   />
                 </div>

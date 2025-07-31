@@ -6,17 +6,15 @@ import Link from 'next/link';
 import { getPluginCategories, Category } from '@/components/plugin-list';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { GridPattern } from '@/components/ui/grid-pattern';
 import { BarChart, ShoppingCart, Share2, LineChart, Shield, Wrench, LucideIcon } from 'lucide-react';
 
-// Let's define some specific images and hints for our categories
-const categoryVisuals: { [key: string]: { icon: LucideIcon, colors: string } } = {
-  SEO: { icon: BarChart, colors: 'from-green-500 to-cyan-500' },
-  'E-commerce': { icon: ShoppingCart, colors: 'from-blue-500 to-indigo-500' },
-  'Social Media': { icon: Share2, colors: 'from-purple-500 to-pink-500' },
-  Analytics: { icon: LineChart, colors: 'from-yellow-500 to-orange-500' },
-  Security: { icon: Shield, colors: 'from-red-500 to-rose-500' },
-  Utilities: { icon: Wrench, colors: 'from-gray-500 to-slate-500' },
+const categoryVisuals: { [key: string]: { icon: LucideIcon, gradient: string } } = {
+  SEO: { icon: BarChart, gradient: 'from-blue-400 to-cyan-300' },
+  'E-commerce': { icon: ShoppingCart, gradient: 'from-green-400 to-teal-300' },
+  'Social Media': { icon: Share2, gradient: 'from-purple-400 to-pink-400' },
+  Analytics: { icon: LineChart, gradient: 'from-yellow-400 to-orange-300' },
+  Security: { icon: Shield, gradient: 'from-red-500 to-rose-400' },
+  Utilities: { icon: Wrench, gradient: 'from-gray-400 to-slate-300' },
 };
 
 
@@ -33,24 +31,17 @@ export function CategoryGrid() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {categories.map((category) => {
-            const visual = categoryVisuals[category.name] || { icon: Wrench, colors: 'from-gray-500 to-slate-500' };
+            const visual = categoryVisuals[category.name] || { icon: Wrench, gradient: 'from-gray-400 to-slate-300' };
             const Icon = visual.icon;
             
             return (
                 <Link key={category.name} href={`/?category=${encodeURIComponent(category.name)}`} passHref>
-                    <div className="relative group rounded-xl">
-                        <div
-                            className={cn(
-                                "absolute -inset-0.5 rounded-xl blur-lg opacity-50 group-hover:opacity-100 transition duration-300 animate-border-spin",
-                                visual.colors
-                            )}
-                            style={{
-                                background: `linear-gradient(120deg, var(--tw-gradient-from), var(--tw-gradient-to))`,
-                                backgroundSize: '400% 400%'
-                            }}
-                        />
-                        <div className="relative bg-card rounded-xl p-6 h-64 flex flex-col justify-between items-start overflow-hidden cursor-pointer shadow-lg">
-                            <GridPattern className="absolute inset-0 w-full h-full" />
+                    <div className={cn(
+                        "p-0.5 rounded-xl bg-gradient-to-br transition-all duration-300 group",
+                        visual.gradient,
+                        "hover:shadow-xl hover:shadow-primary/20"
+                    )}>
+                        <div className="bg-card rounded-lg p-6 h-64 flex flex-col justify-between items-start cursor-pointer">
                             <motion.div
                                 className="z-10"
                                 whileHover={{ scale: 1.2, rotate: -15 }}
