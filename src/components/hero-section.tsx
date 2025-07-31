@@ -48,39 +48,35 @@ export function HeroSection() {
 
   return (
     <section className="relative overflow-hidden bg-background py-20 md:py-32">
-      <div className="relative flex min-h-[50vh] flex-col items-center justify-center">
-        <div 
-          className="text-center max-w-4xl mx-auto mb-20 relative z-10"
+      <div className="text-center max-w-4xl mx-auto mb-20 relative z-10">
+        <motion.h2 
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-4xl md:text-6xl font-bold font-headline tracking-tighter"
         >
-          <motion.h2 
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-4xl md:text-6xl font-bold font-headline tracking-tighter animate-glow"
-          >
-            The Ultimate Software Marketplace
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="mt-6 text-lg md:text-xl text-muted-foreground"
-          >
-            Find, share, and sell software plugins and tools that power your projects.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-block mt-8"
-          >
-            <Button size="lg" className="shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-shadow">
-              Explore Plugins <ArrowRight className="ml-2" />
-            </Button>
-          </motion.div>
-        </div>
+          The Ultimate Software Marketplace
+        </motion.h2>
+        <motion.p 
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="mt-6 text-lg md:text-xl text-muted-foreground"
+        >
+          Find, share, and sell software plugins and tools that power your projects.
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="inline-block mt-8"
+        >
+          <Button size="lg" className="shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-shadow">
+            Explore Plugins <ArrowRight className="ml-2" />
+          </Button>
+        </motion.div>
       </div>
 
       <div className="relative z-10 bg-transparent">
