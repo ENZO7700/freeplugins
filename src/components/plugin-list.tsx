@@ -12,6 +12,14 @@ import { useCart } from '@/context/cart-context';
 import { useToast } from '@/hooks/use-toast';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { Star, StarHalf } from 'lucide-react';
+
+export interface Review {
+  author: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
 
 export interface Plugin {
   slug: string;
@@ -22,6 +30,8 @@ export interface Plugin {
   price: string;
   imageUrl: string;
   dataAiHint: string;
+  rating: number;
+  reviews: Review[];
 }
 
 export interface Category {
@@ -50,6 +60,11 @@ const plugins: Plugin[] = [
     price: '$49',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'chart graph',
+    rating: 4.5,
+    reviews: [
+      { author: 'Alice', rating: 5, comment: 'Absolutely transformed my site\'s traffic!', date: '2024-07-20' },
+      { author: 'Bob', rating: 4, comment: 'Great tool, a bit of a learning curve.', date: '2024-07-18' },
+    ],
   },
   {
     slug: 'ecommerceify',
@@ -60,6 +75,10 @@ const plugins: Plugin[] = [
     price: '$99',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'shopping cart',
+    rating: 5,
+    reviews: [
+       { author: 'Charlie', rating: 5, comment: 'Super easy to set up and works flawlessly.', date: '2024-07-22' },
+    ],
   },
   {
     slug: 'socialconnect',
@@ -70,6 +89,8 @@ const plugins: Plugin[] = [
     price: '$29',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'social network',
+    rating: 4,
+    reviews: [],
   },
   {
     slug: 'datavisualizer',
@@ -80,6 +101,8 @@ const plugins: Plugin[] = [
     price: '$39',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'data analytics',
+    rating: 4.5,
+    reviews: [],
   },
   {
     slug: 'codeguardian',
@@ -90,6 +113,8 @@ const plugins: Plugin[] = [
     price: '$59',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'security shield',
+    rating: 5,
+    reviews: [],
   },
   {
     slug: 'formbuilder-plus',
@@ -100,12 +125,33 @@ const plugins: Plugin[] = [
     price: '$19',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'form survey',
+    rating: 3.5,
+    reviews: [],
   },
 ];
 
 export function getPluginCategories() {
     return categories;
 }
+
+export const StarRating = ({ rating, className }: { rating: number; className?: string }) => {
+  const fullStars = Math.floor(rating);
+  const halfStar = rating % 1 !== 0;
+  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+  return (
+    <div className={`flex items-center ${className}`}>
+      {[...Array(fullStars)].map((_, i) => (
+        <Star key={`full-${i}`} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+      ))}
+      {halfStar && <StarHalf className="w-5 h-5 fill-yellow-400 text-yellow-400" />}
+      {[...Array(emptyStars)].map((_, i) => (
+        <Star key={`empty-${i}`} className="w-5 h-5 text-gray-300" />
+      ))}
+    </div>
+  );
+};
+
 
 export function PluginList() {
   const searchParams = useSearchParams();
@@ -202,6 +248,10 @@ export function PluginList() {
                 <Link href={`/plugins/${plugin.slug}`} passHref>
                   <h3 className="text-xl font-bold font-headline mb-2 cursor-pointer hover:underline">{plugin.name}</h3>
                 </Link>
+                <div className="flex items-center gap-2 mb-2">
+                  <StarRating rating={plugin.rating} />
+                  <span className="text-sm text-muted-foreground">({plugin.reviews.length} reviews)</span>
+                </div>
                 <p className="text-muted-foreground text-sm">{plugin.description}</p>
               </CardContent>
               <CardFooter className="p-6 pt-0 flex justify-between items-center">
