@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input';
 import { useCart } from '@/context/cart-context';
 import { useToast } from '@/hooks/use-toast';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 export interface Plugin {
   slug: string;
@@ -178,7 +179,12 @@ export function PluginList() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredPlugins.map((plugin) => (
-            <Card key={plugin.slug} className="flex flex-col overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-transform duration-300 ease-in-out">
+          <motion.div
+            key={plugin.slug}
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ type: 'spring', stiffness: 300 }}
+          >
+            <Card className="flex flex-col overflow-hidden h-full shadow-md hover:shadow-xl transition-shadow">
               <Link href={`/plugins/${plugin.slug}`} passHref>
                 <div className="relative h-48 w-full cursor-pointer">
                   <Image
@@ -187,7 +193,7 @@ export function PluginList() {
                     fill
                     style={{objectFit: "cover"}}
                     dataAiHint={plugin.dataAiHint}
-                    className="hover:scale-105 transition-transform duration-300"
+                    className="transition-transform duration-300"
                   />
                 </div>
               </Link>
@@ -203,6 +209,7 @@ export function PluginList() {
                 <Button onClick={() => handleAddToCart(plugin)}>Add to Cart</Button>
               </CardFooter>
             </Card>
+          </motion.div>
         ))}
       </div>
       {filteredPlugins.length === 0 && (

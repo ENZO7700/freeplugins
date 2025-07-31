@@ -6,8 +6,23 @@ import { useAdaptiveUi } from "@/context/adaptive-ui-context";
 
 const animationDurations = {
   fast: 0.2,
-  medium: 0.5,
-  slow: 0.8,
+  medium: 0.4,
+  slow: 0.7,
+};
+
+const pageVariants = {
+  initial: {
+    opacity: 0,
+    y: 15,
+  },
+  in: {
+    opacity: 1,
+    y: 0,
+  },
+  out: {
+    opacity: 0,
+    y: -15,
+  },
 };
 
 export function PageTransitionWrapper({
@@ -17,15 +32,16 @@ export function PageTransitionWrapper({
 }) {
   const pathname = usePathname();
   const { animationSpeed } = useAdaptiveUi();
-  const duration = animationDurations[animationSpeed] || 0.5;
+  const duration = animationDurations[animationSpeed] || 0.4;
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
         key={pathname}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
+        initial="initial"
+        animate="in"
+        exit="out"
+        variants={pageVariants}
         transition={{ duration, ease: "easeInOut" }}
       >
         {children}
