@@ -56,7 +56,7 @@ export default function CheckoutPage() {
     router.push('/dashboard');
   };
 
-  if (loading || !user) {
+  if (loading || !user || cart.length === 0) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Loader2 className="h-8 w-8 animate-spin" />
