@@ -5,18 +5,19 @@ import * as React from 'react';
 import Link from 'next/link';
 import { getPluginCategories } from '@/components/plugin-list';
 import { AppWindow, Download, ToyBrick, Smartphone, LucideIcon, Code, Monitor, Wind } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
-const categoryVisuals: { [key: string]: { icon: LucideIcon } } = {
-  Wordpress: { icon: Code },
-  Plugins: { icon: ToyBrick },
-  Downloads: { icon: Download },
-  Windows: { icon: Monitor },
-  Linux: { icon: Wind },
-  macOS: { icon: AppWindow },
-  Android: { icon: Smartphone },
-  iPhone: { icon: Smartphone },
+const categoryVisuals: { [key: string]: { icon: LucideIcon, color: string } } = {
+  Wordpress: { icon: Code, color: 'hover:border-blue-400' },
+  Plugins: { icon: ToyBrick, color: 'hover:border-purple-400' },
+  Downloads: { icon: Download, color: 'hover:border-green-400' },
+  Windows: { icon: Monitor, color: 'hover:border-sky-400' },
+  Linux: { icon: Wind, color: 'hover:border-orange-400' },
+  macOS: { icon: AppWindow, color: 'hover:border-gray-400' },
+  Android: { icon: Smartphone, color: 'hover:border-emerald-400' },
+  iPhone: { icon: Smartphone, color: 'hover:border-indigo-400' },
 };
-
 
 export function CategoryGrid() {
   const categories = getPluginCategories();
@@ -31,14 +32,19 @@ export function CategoryGrid() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {categories.map((category) => {
-            const visual = categoryVisuals[category.name] || { icon: Code };
+            const visual = categoryVisuals[category.name] || { icon: Code, color: 'hover:border-primary' };
             const Icon = visual.icon;
             
             return (
                 <Link key={category.name} href={`/?category=${encodeURIComponent(category.name)}`} passHref>
-                    <div className="bg-card rounded-lg p-6 h-64 flex flex-col justify-between items-start cursor-pointer">
+                    <motion.div 
+                        className={cn("bg-card border-2 border-transparent rounded-lg p-6 h-64 flex flex-col justify-between items-start cursor-pointer transition-colors duration-300", visual.color)}
+                        whileHover={{ y: -5, boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }}
+                    >
                         <div>
-                            <Icon className="h-12 w-12 text-foreground/80" />
+                            <motion.div whileHover={{ scale: 1.1, rotate: 5 }}>
+                                <Icon className="h-12 w-12 text-foreground/80" />
+                            </motion.div>
                         </div>
                          <div>
                             <h3 className="text-2xl font-bold font-headline text-foreground">
@@ -46,7 +52,7 @@ export function CategoryGrid() {
                             </h3>
                             <p className="text-muted-foreground mt-1">{category.description}</p>
                         </div>
-                    </div>
+                    </motion.div>
                 </Link>
             )
         })}

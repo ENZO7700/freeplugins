@@ -10,13 +10,13 @@
     --card-foreground: 234 6% 16%;
     --popover: 0 0% 100%;
     --popover-foreground: 234 6% 16%;
-    --primary: 283 63% 54%;
+    --primary: 283 63% 54%; /* #9F43D1 */
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
-    --accent: 198 78% 60%;
+    --accent: 198 78% 60%; /* #4DB9E7 */
     --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
@@ -32,19 +32,19 @@
   }
  
   .dark {
-    --background: 234 6% 16%;
+    --background: 234 6% 16%; /* #26272B */
     --foreground: 0 0% 98%;
     --card: 234 6% 20%;
     --card-foreground: 0 0% 98%;
     --popover: 234 6% 16%;
     --popover-foreground: 0 0% 98%;
-    --primary: 283 63% 54%;
+    --primary: 283 63% 54%; /* #9F43D1 */
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 24.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 24.9%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 198 78% 60%;
+    --accent: 198 78% 60%; /* #4DB9E7 */
     --accent-foreground: 234 6% 16%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
@@ -66,5 +66,12 @@
   body {
     @apply bg-background text-foreground;
     scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .bg-grid-pattern {
+    background-image: linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
+    background-size: 40px 40px;
   }
 }

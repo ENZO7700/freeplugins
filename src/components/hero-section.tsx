@@ -4,7 +4,8 @@
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { GridPattern } from '@/components/ui/grid-pattern';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -82,39 +83,32 @@ const AnimatedWords = ({ text }: { text: string }) => {
 };
 
 export function HeroSection() {
-    const { scrollYProgress } = useScroll();
-    const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
-    const scale = useTransform(scrollYProgress, [0, 0.3], [1, 0.9]);
-    const y = useTransform(scrollYProgress, [0, 0.3], [0, 50]);
-
   return (
-    <motion.section 
-      style={{ opacity, scale, y }}
-      className="bg-background py-20 md:py-32"
-    >
-      <div className="container mx-auto px-4 text-center max-w-4xl">
-        <AnimatedWords text="The Ultimate Software Marketplace" />
-        <motion.p 
-          className="mt-6 text-lg md:text-xl text-muted-foreground"
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          transition={{ delay: 1 }}
-        >
-          Find, share, and sell software plugins and tools that power your projects.
-        </motion.p>
-        <motion.div 
-          className="inline-block mt-8"
-          variants={itemVariants}
-           initial="hidden"
-          animate="visible"
-          transition={{ delay: 1.2 }}
-        >
-          <Button size="lg">
-            Explore Plugins <ArrowRight className="ml-2" />
-          </Button>
+    <section className="relative w-full overflow-hidden bg-background py-20 md:py-32">
+      <GridPattern
+        className="absolute inset-0 z-0 h-full w-full fill-primary/10 stroke-border [mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]"
+        yOffset={-1}
+        interactive
+      />
+      <div className="container relative z-10 mx-auto px-4 text-center max-w-4xl">
+        <motion.div initial="hidden" animate="visible" variants={containerVariants}>
+          <AnimatedWords text="The Ultimate Software Marketplace" />
+          <motion.p 
+            className="mt-6 text-lg md:text-xl text-muted-foreground"
+            variants={itemVariants}
+          >
+            Find, share, and sell software plugins and tools that power your projects.
+          </motion.p>
+          <motion.div 
+            className="inline-block mt-8"
+            variants={itemVariants}
+          >
+            <Button size="lg">
+              Explore Plugins <ArrowRight className="ml-2" />
+            </Button>
+          </motion.div>
         </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 }
