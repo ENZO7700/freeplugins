@@ -88,11 +88,11 @@ export default function ContactPage() {
                             <CardContent className="space-y-4 text-lg">
                                 <div className="flex items-center gap-4">
                                     <Mail className="h-6 w-6 text-primary" />
-                                    <a href="mailto:support@freeplugins.org" className="hover:underline">support@freeplugins.org</a>
+                                    <a href="mailto:info@seo4web.sk" className="hover:underline">info@seo4web.sk</a>
                                 </div>
                                 <div className="flex items-center gap-4">
                                     <Phone className="h-6 w-6 text-primary" />
-                                    <a href="tel:+1234567890" className="hover:underline">+1 (234) 567-890</a>
+                                    <a href="tel:+421950491856" className="hover:underline">+421 950 491 856</a>
                                 </div>
                                  <div className="flex items-center gap-4">
                                     <MapPin className="h-6 w-6 text-primary" />

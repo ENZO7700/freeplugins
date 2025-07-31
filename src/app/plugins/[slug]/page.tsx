@@ -205,7 +205,7 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
                     <CardTitle>Chcete zanechať recenziu?</CardTitle>
                     <CardDescription className="mt-2">Prosím, prihláste sa, aby ste sa mohli podeliť o svoje myšlienky s komunitou.</CardDescription>
                     <Button asChild className="mt-4">
-                        <Link href="/login">Prihlásiť sa a hodnotiť</Link>
+                        <Link href="/login?redirect=/plugins/${plugin.slug}">Prihlásiť sa a hodnotiť</Link>
                     </Button>
                 </Card>
             )}

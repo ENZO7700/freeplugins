@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 function LoginPageContent() {
   return (
     <PageTransitionWrapper>
-      <main className="container mx-auto flex h-full items-center justify-center px-4 py-8">
+      <main className="container mx-auto flex h-full min-h-[calc(100vh-200px)] items-center justify-center px-4 py-8">
         <LoginForm />
       </main>
     </PageTransitionWrapper>
