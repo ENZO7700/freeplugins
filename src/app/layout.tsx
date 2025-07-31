@@ -23,7 +23,7 @@ const ptSans = PT_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'FreePlugins',
+  title: 'Expresívny Navigátor',
   description: 'The ultimate marketplace for software plugins and tools.',
 };
 
