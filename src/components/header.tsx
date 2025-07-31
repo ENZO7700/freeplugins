@@ -13,7 +13,10 @@ import * as React from 'react';
 import {
   Sheet,
   SheetContent,
+  SheetHeader,
+  SheetTitle,
   SheetTrigger,
+  SheetDescription
 } from "@/components/ui/sheet"
 import { useAuth } from '@/context/auth-context';
 import {
@@ -156,9 +159,13 @@ export function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right">
+                <SheetHeader>
+                  <SheetTitle className="sr-only">Menu</SheetTitle>
+                  <SheetDescription className="sr-only">Main navigation menu</SheetDescription>
+                </SheetHeader>
                 <div className="flex flex-col gap-4 py-6">
                    <Link href="/" passHref>
-                    <div className="mb-4 text-lg font-bold font-headline text-primary cursor-pointer">
+                    <div className="mb-4 text-lg font-bold font-headline text-primary cursor-pointer" onClick={() => setIsMobileMenuOpen(false)}>
                       Freeplugins.org
                     </div>
                   </Link>

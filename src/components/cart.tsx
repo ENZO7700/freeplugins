@@ -3,7 +3,7 @@
 
 import { useCart } from '@/context/cart-context';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetFooter } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetFooter, SheetDescription } from '@/components/ui/sheet';
 import { ShoppingCart, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -26,6 +26,9 @@ export function Cart() {
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Your Cart</SheetTitle>
+          <SheetDescription>
+            Review the items in your shopping cart before proceeding to checkout.
+          </SheetDescription>
         </SheetHeader>
         <div className="flex-1 overflow-y-auto py-6">
           {cart.length === 0 ? (
