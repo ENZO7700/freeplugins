@@ -8,15 +8,15 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { AppWindow, Download, ToyBrick, Smartphone, LucideIcon, Code, Monitor, Wind } from 'lucide-react';
 
-const categoryVisuals: { [key: string]: { icon: LucideIcon, gradient: string } } = {
-  Wordpress: { icon: Code, gradient: 'from-blue-400 to-cyan-300' },
-  Plugins: { icon: ToyBrick, gradient: 'from-green-400 to-teal-300' },
-  Downloads: { icon: Download, gradient: 'from-purple-400 to-pink-400' },
-  Windows: { icon: Monitor, gradient: 'from-sky-400 to-blue-500' },
-  Linux: { icon: Wind, gradient: 'from-yellow-400 to-orange-300' },
-  macOS: { icon: AppWindow, gradient: 'from-gray-400 to-slate-300' },
-  Android: { icon: Smartphone, gradient: 'from-lime-400 to-green-500' },
-  iPhone: { icon: Smartphone, gradient: 'from-red-500 to-rose-400' },
+const categoryVisuals: { [key: string]: { icon: LucideIcon } } = {
+  Wordpress: { icon: Code },
+  Plugins: { icon: ToyBrick },
+  Downloads: { icon: Download },
+  Windows: { icon: Monitor },
+  Linux: { icon: Wind },
+  macOS: { icon: AppWindow },
+  Android: { icon: Smartphone },
+  iPhone: { icon: Smartphone },
 };
 
 
@@ -33,30 +33,24 @@ export function CategoryGrid() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {categories.map((category) => {
-            const visual = categoryVisuals[category.name] || { icon: Code, gradient: 'from-gray-400 to-slate-300' };
+            const visual = categoryVisuals[category.name] || { icon: Code };
             const Icon = visual.icon;
             
             return (
                 <Link key={category.name} href={`/?category=${encodeURIComponent(category.name)}`} passHref>
-                    <div className={cn(
-                        "relative p-0.5 rounded-xl bg-gradient-to-br transition-all duration-300 group overflow-hidden",
-                        visual.gradient,
-                        "hover:shadow-xl hover:shadow-primary/20"
-                    )}>
-                        <div className="bg-card rounded-lg p-6 h-64 flex flex-col justify-between items-start cursor-pointer">
-                            <motion.div
-                                className="z-10"
-                                whileHover={{ scale: 1.2, rotate: -15 }}
-                                transition={{ type: 'spring', stiffness: 300 }}
-                            >
-                                <Icon className="h-12 w-12 text-foreground/80" />
-                            </motion.div>
-                             <div className="relative z-10">
-                                <h3 className="text-2xl font-bold font-headline text-foreground">
-                                    {category.name}
-                                </h3>
-                                <p className="text-muted-foreground mt-1">{category.description}</p>
-                            </div>
+                    <div className="bg-card rounded-lg p-6 h-64 flex flex-col justify-between items-start cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1">
+                        <motion.div
+                            className="z-10"
+                            whileHover={{ scale: 1.2, rotate: -15 }}
+                            transition={{ type: 'spring', stiffness: 300 }}
+                        >
+                            <Icon className="h-12 w-12 text-foreground/80" />
+                        </motion.div>
+                         <div className="relative z-10">
+                            <h3 className="text-2xl font-bold font-headline text-foreground">
+                                {category.name}
+                            </h3>
+                            <p className="text-muted-foreground mt-1">{category.description}</p>
                         </div>
                     </div>
                 </Link>

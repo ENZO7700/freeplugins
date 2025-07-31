@@ -5,20 +5,9 @@ import * as React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Zap, Wind, Eye } from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { GridPattern } from '@/components/ui/grid-pattern';
+import { motion } from 'framer-motion';
 
 export function HeroSection() {
-  const targetRef = React.useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ['start start', 'end start'],
-  });
-
-  // Parallax for the main headline and button
-  const yContent = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
-  const opacityContent = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
   const featureCards = [
     {
       icon: <Zap className="w-8 h-8 text-primary" />,
@@ -58,18 +47,9 @@ export function HeroSection() {
   };
 
   return (
-    <section ref={targetRef} className="relative overflow-hidden bg-background py-20 md:py-32">
+    <section className="relative overflow-hidden bg-background py-20 md:py-32">
       <div className="relative flex min-h-[50vh] flex-col items-center justify-center">
-        <GridPattern
-            width={40}
-            height={40}
-            x={-1}
-            y={-1}
-            className="absolute inset-0 h-full w-full -z-10"
-        />
-        
-        <motion.div 
-          style={{ y: yContent, opacity: opacityContent }}
+        <div 
           className="text-center max-w-4xl mx-auto mb-20 relative z-10"
         >
           <motion.h2 
@@ -100,7 +80,7 @@ export function HeroSection() {
               Explore Plugins <ArrowRight className="ml-2" />
             </Button>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
 
       <div className="relative z-10 bg-transparent">
