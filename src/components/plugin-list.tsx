@@ -192,7 +192,7 @@ export function PluginList() {
                     alt={plugin.name}
                     fill
                     style={{objectFit: "cover"}}
-                    dataAiHint={plugin.dataAiHint}
+                    data-ai-hint={plugin.dataAiHint}
                     className="transition-transform duration-300"
                   />
                 </div>
