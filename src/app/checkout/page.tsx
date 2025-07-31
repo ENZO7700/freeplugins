@@ -23,10 +23,11 @@ export default function CheckoutPage() {
   const [isProcessing, setIsProcessing] = React.useState(false);
 
   React.useEffect(() => {
-    if (!loading && !user) {
+    if (loading) return;
+
+    if (!user) {
       router.push('/login?redirect=/checkout');
-    }
-    if (!loading && user && cart.length === 0) {
+    } else if (cart.length === 0) {
         router.push('/');
     }
   }, [user, loading, cart, router]);

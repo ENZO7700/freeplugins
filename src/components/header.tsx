@@ -31,7 +31,6 @@ import { getPluginCategories } from './plugin-list';
 export function Header() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentCategory = searchParams.get('category');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const { user, loading, logout } = useAuth();
 
@@ -169,7 +168,7 @@ export function Header() {
                       href="/"
                       className={cn(
                         "text-lg p-2 rounded-md ml-2",
-                        isMarketplaceActive && !currentCategory ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-muted'
+                        isMarketplaceActive && !searchParams.get('category') ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-muted'
                       )}
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
@@ -181,7 +180,7 @@ export function Header() {
                         href={`/?category=${encodeURIComponent(category.name)}`}
                         className={cn(
                           "text-lg p-2 rounded-md ml-2",
-                          currentCategory === category.name ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-muted'
+                          searchParams.get('category') === category.name ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-muted'
                         )}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >

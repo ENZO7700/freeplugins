@@ -1,7 +1,6 @@
-
 import type {Config} from 'tailwindcss';
 
-export default {
+const config = {
   darkMode: ['class'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -97,7 +96,7 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'glow': 'glow 2.5s ease-in-out infinite',
       },
-      typography: (theme) => ({
+      typography: (theme: any) => ({
         DEFAULT: {
           css: {
             color: theme('colors.muted.foreground'),
@@ -129,3 +128,5 @@ export default {
     require('@tailwindcss/typography'),
   ],
 } satisfies Config;
+
+export default config;
