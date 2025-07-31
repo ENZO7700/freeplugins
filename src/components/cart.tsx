@@ -3,7 +3,7 @@
 
 import { useCart } from '@/context/cart-context';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetFooter, SheetDescription } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import { ShoppingCart, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -25,14 +25,14 @@ export function Cart() {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Your Cart</SheetTitle>
+          <SheetTitle>Váš košík</SheetTitle>
           <SheetDescription>
-            Review the items in your shopping cart before proceeding to checkout.
+            Skontrolujte položky v nákupnom košíku pred pokračovaním k pokladni.
           </SheetDescription>
         </SheetHeader>
         <div className="flex-1 overflow-y-auto py-6">
           {cart.length === 0 ? (
-            <p className="text-center text-muted-foreground">Your cart is empty.</p>
+            <p className="text-center text-muted-foreground">Váš košík je prázdny.</p>
           ) : (
             <ul className="divide-y divide-border">
               {cart.map(item => (
@@ -49,7 +49,7 @@ export function Cart() {
                       <p className="mt-1 text-sm text-muted-foreground">{item.category}</p>
                     </div>
                     <div className="flex flex-1 items-end justify-between text-sm">
-                      <p className="text-muted-foreground">Qty 1</p>
+                      <p className="text-muted-foreground">Ks 1</p>
                       <div className="flex">
                         <Button
                           variant="ghost"
@@ -70,12 +70,12 @@ export function Cart() {
             <SheetFooter>
                 <div className='w-full space-y-4'>
                     <div className="flex justify-between text-base font-medium">
-                        <p>Subtotal</p>
+                        <p>Medzisúčet</p>
                         <p>${total.toFixed(2)}</p>
                     </div>
-                    <p className="mt-0.5 text-sm text-muted-foreground">Shipping and taxes calculated at checkout.</p>
+                    <p className="mt-0.5 text-sm text-muted-foreground">Poštovné a dane budú vypočítané pri pokladni.</p>
                     <Button className='w-full' asChild>
-                      <Link href="/checkout">Checkout</Link>
+                      <Link href="/checkout">Pokladňa</Link>
                     </Button>
                 </div>
             </SheetFooter>

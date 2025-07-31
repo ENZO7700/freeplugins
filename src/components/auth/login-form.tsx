@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -23,8 +24,8 @@ import { Loader2 } from 'lucide-react';
 
 
 const loginSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address.' }),
-  password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
+  email: z.string().email({ message: 'Neplatná e-mailová adresa.' }),
+  password: z.string().min(6, { message: 'Heslo musí mať aspoň 6 znakov.' }),
 });
 
 export function LoginForm() {
@@ -46,14 +47,14 @@ export function LoginForm() {
     setIsLoading(true);
     try {
       await login(values.email, values.password);
-      toast({ title: 'Login Successful', description: "Welcome back!" });
+      toast({ title: 'Prihlásenie úspešné', description: "Vitajte späť!" });
       const redirectUrl = searchParams.get('redirect') || '/dashboard';
       router.push(redirectUrl);
     } catch (error: any) {
       toast({
         variant: 'destructive',
-        title: 'Login Failed',
-        description: error.message || 'An unexpected error occurred.',
+        title: 'Prihlásenie zlyhalo',
+        description: error.message || 'Vyskytla sa neočakávaná chyba.',
       });
     } finally {
       setIsLoading(false);
@@ -65,8 +66,8 @@ export function LoginForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <CardHeader>
-            <CardTitle>Login</CardTitle>
-            <CardDescription>Enter your credentials to access your account.</CardDescription>
+            <CardTitle>Prihlásenie</CardTitle>
+            <CardDescription>Zadajte svoje prihlasovacie údaje pre prístup k vášmu účtu.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <FormField
@@ -76,7 +77,7 @@ export function LoginForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="name@example.com" {...field} />
+                    <Input placeholder="meno@example.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -87,7 +88,7 @@ export function LoginForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Heslo</FormLabel>
                   <FormControl>
                     <Input type="password" placeholder="••••••••" {...field} />
                   </FormControl>
@@ -99,12 +100,12 @@ export function LoginForm() {
           <CardFooter className="flex flex-col gap-4">
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Login
+              Prihlásiť sa
             </Button>
             <p className="text-sm text-center text-muted-foreground">
-              Don&apos;t have an account?{' '}
+              Nemáte účet?{' '}
               <Link href="/signup" className="text-primary hover:underline">
-                Sign up
+                Zaregistrujte sa
               </Link>
             </p>
           </CardFooter>

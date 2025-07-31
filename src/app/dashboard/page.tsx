@@ -8,7 +8,7 @@ import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
-import { Loader2, User, ShoppingBag, History, Download, Edit, Save } from 'lucide-react';
+import { Loader2, User, ShoppingBag, History, Download, Edit, Save, LogOut } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
@@ -64,6 +64,7 @@ export default function DashboardPage() {
           <div className="flex justify-between items-center">
              <h1 className="text-3xl font-bold font-headline">Welcome, {user.displayName || user.email}!</h1>
              <Button onClick={logout} variant="outline">
+                <LogOut className="mr-2 h-4 w-4" />
                 Log Out
               </Button>
           </div>
@@ -164,7 +165,10 @@ export default function DashboardPage() {
                                         {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
                                         Save
                                     </Button>
-                                    <Button variant="outline" onClick={() => setIsEditing(false)}>Cancel</Button>
+                                    <Button variant="outline" onClick={() => {
+                                      setIsEditing(false);
+                                      setDisplayName(user.displayName || '');
+                                    }}>Cancel</Button>
                                 </div>
                             )}
                         </form>

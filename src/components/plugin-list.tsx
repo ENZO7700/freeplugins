@@ -55,37 +55,37 @@ const plugins: Plugin[] = [
     slug: 'seo-optimizer-pro',
     name: 'SEO Optimizer Pro',
     category: 'Plugins',
-    description: 'Boost your search engine rankings with our advanced SEO toolkit.',
-    longDescription: 'Our SEO Optimizer Pro offers a complete suite of tools including keyword research, backlink analysis, on-page optimization, and performance tracking. Ideal for businesses of all sizes looking to improve their online visibility.',
+    description: 'Zvýšte svoje pozície vo vyhľadávačoch s naším pokročilým SEO nástrojom.',
+    longDescription: 'Náš SEO Optimizer Pro ponúka kompletnú sadu nástrojov vrátane výskumu kľúčových slov, analýzy spätných odkazov, on-page optimalizácie a sledovania výkonu. Ideálne pre firmy všetkých veľkostí, ktoré chcú zlepšiť svoju online viditeľnosť.',
     price: '$49',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'chart graph',
     rating: 4.5,
     reviews: [
-      { author: 'Alice', rating: 5, comment: 'Absolutely transformed my site\'s traffic!', date: '2024-07-20' },
-      { author: 'Bob', rating: 4, comment: 'Great tool, a bit of a learning curve.', date: '2024-07-18' },
+      { author: 'Alice', rating: 5, comment: 'Absolútne zmenilo návštevnosť mojej stránky!', date: '2024-07-20' },
+      { author: 'Bob', rating: 4, comment: 'Skvelý nástroj, trochu strmá krivka učenia.', date: '2024-07-18' },
     ],
   },
   {
     slug: 'ecommerceify',
     name: 'E-commerceify',
     category: 'Plugins',
-    description: 'Turn your website into a powerful online store in minutes.',
-    longDescription: 'E-commerceify provides everything you need to start selling online. Features include product management, secure payment gateways, inventory tracking, and customer management. Fully customizable to match your brand.',
+    description: 'Premeňte svoju webovú stránku na výkonný online obchod v priebehu niekoľkých minút.',
+    longDescription: 'E-commerceify poskytuje všetko, čo potrebujete na začatie online predaja. Medzi funkcie patrí správa produktov, bezpečné platobné brány, sledovanie zásob a správa zákazníkov. Plne prispôsobiteľné, aby zodpovedalo vašej značke.',
     price: '$99',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'shopping cart',
     rating: 5,
     reviews: [
-       { author: 'Charlie', rating: 5, comment: 'Super easy to set up and works flawlessly.', date: '2024-07-22' },
+       { author: 'Charlie', rating: 5, comment: 'Super jednoduché na nastavenie a funguje bezchybne.', date: '2024-07-22' },
     ],
   },
   {
     slug: 'socialconnect',
     name: 'SocialConnect',
     category: 'Plugins',
-    description: 'Automate your social media posts and grow your audience.',
-    longDescription: 'With SocialConnect, you can schedule posts across multiple platforms, track engagement, and analyze your social media performance. Save time and grow your online presence effectively.',
+    description: 'Automatizujte svoje príspevky na sociálnych sieťach a rozšírte svoje publikum.',
+    longDescription: 'So SocialConnect môžete plánovať príspevky na viacerých platformách, sledovať zapojenie a analyzovať svoj výkon na sociálnych sieťach. Ušetrite čas a efektívne rozširujte svoju online prítomnosť.',
     price: '$29',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'social network',
@@ -96,8 +96,8 @@ const plugins: Plugin[] = [
     slug: 'datavisualizer',
     name: 'DataVisualizer',
     category: 'Windows',
-    description: 'Create stunning charts and graphs from your data effortlessly.',
-    longDescription: 'DataVisualizer connects to your data sources and allows you to build interactive dashboards with a simple drag-and-drop interface. Make data-driven decisions with beautiful and insightful visualizations.',
+    description: 'Vytvárajte úžasné grafy a diagramy z vašich dát bez námahy.',
+    longDescription: 'DataVisualizer sa pripája k vašim dátovým zdrojom a umožňuje vám vytvárať interaktívne dashboardy pomocou jednoduchého rozhrania drag-and-drop. Robte rozhodnutia založené na dátach s krásnymi a prehľadnými vizualizáciami.',
     price: '$39',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'data analytics',
@@ -107,9 +107,9 @@ const plugins: Plugin[] = [
   {
     slug: 'codeguardian',
     name: 'CodeGuardian',
-    category: 'Security',
-    description: 'Protect your website from malware and security threats.',
-    longDescription: 'CodeGuardian offers real-time threat detection, malware scanning, and a powerful firewall to protect your application. Get peace of mind with 24/7 security monitoring.',
+    category: 'Bezpečnosť',
+    description: 'Chráňte svoju webovú stránku pred malware a bezpečnostnými hrozbami.',
+    longDescription: 'CodeGuardian ponúka detekciu hrozieb v reálnom čase, skenovanie malware a výkonný firewall na ochranu vašej aplikácie. Získajte pokoj v duši s 24/7 bezpečnostným monitorovaním.',
     price: '$59',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'security shield',
@@ -120,8 +120,8 @@ const plugins: Plugin[] = [
     slug: 'formbuilder-plus',
     name: 'FormBuilder+',
     category: 'Wordpress',
-    description: 'Build custom forms with advanced logic and integrations.',
-    longDescription: 'Create any type of form, from simple contact forms to complex surveys with conditional logic. FormBuilder+ integrates with your favorite apps to streamline your data collection process.',
+    description: 'Vytvárajte vlastné formuláre s pokročilou logikou a integráciami.',
+    longDescription: 'Vytvorte akýkoľvek typ formulára, od jednoduchých kontaktných formulárov až po zložité prieskumy s podmienenou logikou. FormBuilder+ sa integruje s vašimi obľúbenými aplikáciami na zefektívnenie procesu zberu dát.',
     price: '$19',
     imageUrl: 'https://placehold.co/600x400.png',
     dataAiHint: 'form survey',
@@ -165,10 +165,10 @@ export function PluginList() {
     setSelectedCategory(searchParams.get('category'));
   }, [searchParams]);
 
-  const allCategories = ['All', ...getPluginCategories().map(c => c.name)];
+  const allCategories = ['Všetko', ...getPluginCategories().map(c => c.name)];
 
   const handleCategoryChange = (category: string | null) => {
-    const newCategory = category === 'All' ? null : category;
+    const newCategory = category === 'Všetko' ? null : category;
     setSelectedCategory(newCategory);
     const params = new URLSearchParams(window.location.search);
     if (newCategory) {
@@ -188,23 +188,23 @@ export function PluginList() {
   const handleAddToCart = (plugin: Plugin) => {
     addToCart(plugin);
     toast({
-      title: "Added to cart",
-      description: `${plugin.name} has been added to your cart.`,
+      title: "Pridané do košíka",
+      description: `${plugin.name} bol pridaný do vášho košíka.`,
     })
   };
 
   return (
     <section className="py-12 md:py-24">
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold font-headline">Featured Plugins</h2>
+        <h2 className="text-3xl md:text-4xl font-bold font-headline">Odporúčané pluginy</h2>
         <p className="mt-4 text-lg text-muted-foreground">
-          Discover tools that will supercharge your workflow.
+          Objavte nástroje, ktoré vylepšia váš pracovný postup.
         </p>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 mb-8">
         <Input 
-          placeholder="Search plugins..."
+          placeholder="Hľadať pluginy..."
           className="flex-grow"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -213,7 +213,7 @@ export function PluginList() {
             {allCategories.map(category => (
                 <Button 
                     key={category}
-                    variant={selectedCategory === (category === 'All' ? null : category) ? "default" : "outline"}
+                    variant={selectedCategory === (category === 'Všetko' ? null : category) ? "default" : "outline"}
                     onClick={() => handleCategoryChange(category)}
                     className="whitespace-nowrap"
                 >
@@ -250,13 +250,13 @@ export function PluginList() {
                 </Link>
                 <div className="flex items-center gap-2 mb-2">
                   <StarRating rating={plugin.rating} />
-                  <span className="text-sm text-muted-foreground">({plugin.reviews.length} reviews)</span>
+                  <span className="text-sm text-muted-foreground">({plugin.reviews.length} recenzií)</span>
                 </div>
                 <p className="text-muted-foreground text-sm">{plugin.description}</p>
               </CardContent>
               <CardFooter className="p-6 pt-0 flex justify-between items-center">
                 <p className="text-lg font-semibold">{plugin.price}</p>
-                <Button onClick={() => handleAddToCart(plugin)}>Add to Cart</Button>
+                <Button onClick={() => handleAddToCart(plugin)}>Pridať do košíka</Button>
               </CardFooter>
             </Card>
           </motion.div>
@@ -264,8 +264,8 @@ export function PluginList() {
       </div>
       {filteredPlugins.length === 0 && (
         <div className="text-center py-16">
-            <h3 className="text-2xl font-bold font-headline">No Plugins Found</h3>
-            <p className="text-muted-foreground mt-2">Try adjusting your search or filters.</p>
+            <h3 className="text-2xl font-bold font-headline">Nenašli sa žiadne pluginy</h3>
+            <p className="text-muted-foreground mt-2">Skúste upraviť vyhľadávanie alebo filtre.</p>
         </div>
       )}
     </section>

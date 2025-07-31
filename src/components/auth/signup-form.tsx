@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -22,11 +23,11 @@ import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 
 const signupSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address.' }),
-  password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
+  email: z.string().email({ message: 'Neplatná e-mailová adresa.' }),
+  password: z.string().min(6, { message: 'Heslo musí mať aspoň 6 znakov.' }),
   confirmPassword: z.string(),
 }).refine(data => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
+  message: "Heslá sa nezhodujú",
   path: ['confirmPassword'],
 });
 
@@ -49,13 +50,13 @@ export function SignupForm() {
     setIsLoading(true);
     try {
       await signup(values.email, values.password);
-      toast({ title: 'Account Created', description: "You have been successfully signed up." });
+      toast({ title: 'Účet vytvorený', description: "Boli ste úspešne zaregistrovaný." });
       router.push('/dashboard');
     } catch (error: any) {
       toast({
         variant: 'destructive',
-        title: 'Sign Up Failed',
-        description: error.message || 'An unexpected error occurred.',
+        title: 'Registrácia zlyhala',
+        description: error.message || 'Vyskytla sa neočakávaná chyba.',
       });
     } finally {
       setIsLoading(false);
@@ -67,8 +68,8 @@ export function SignupForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <CardHeader>
-            <CardTitle>Create an Account</CardTitle>
-            <CardDescription>Enter your details to get started.</CardDescription>
+            <CardTitle>Vytvoriť účet</CardTitle>
+            <CardDescription>Zadajte svoje údaje a začnite.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <FormField
@@ -78,7 +79,7 @@ export function SignupForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="name@example.com" {...field} />
+                    <Input placeholder="meno@example.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -89,7 +90,7 @@ export function SignupForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Heslo</FormLabel>
                   <FormControl>
                     <Input type="password" placeholder="••••••••" {...field} />
                   </FormControl>
@@ -102,7 +103,7 @@ export function SignupForm() {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
+                  <FormLabel>Potvrdiť heslo</FormLabel>
                   <FormControl>
                     <Input type="password" placeholder="••••••••" {...field} />
                   </FormControl>
@@ -114,12 +115,12 @@ export function SignupForm() {
           <CardFooter className="flex flex-col gap-4">
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Sign Up
+              Zaregistrovať sa
             </Button>
             <p className="text-sm text-center text-muted-foreground">
-              Already have an account?{' '}
+              Už máte účet?{' '}
               <Link href="/login" className="text-primary hover:underline">
-                Login
+                Prihlásiť sa
               </Link>
             </p>
           </CardFooter>

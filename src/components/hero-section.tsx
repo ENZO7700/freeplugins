@@ -92,19 +92,19 @@ export function HeroSection() {
       />
       <div className="container relative z-10 mx-auto px-4 text-center max-w-4xl">
         <motion.div initial="hidden" animate="visible" variants={containerVariants}>
-          <AnimatedWords text="The Ultimate Software Marketplace" />
+          <AnimatedWords text="Dokonalé softvérové trhovisko" />
           <motion.p 
             className="mt-6 text-lg md:text-xl text-muted-foreground"
             variants={itemVariants}
           >
-            Find, share, and sell software plugins and tools that power your projects.
+            Nájdite, zdieľajte a predávajte softvérové pluginy a nástroje, ktoré poháňajú vaše projekty.
           </motion.p>
           <motion.div 
             className="inline-block mt-8"
             variants={itemVariants}
           >
             <Button size="lg">
-              Explore Plugins <ArrowRight className="ml-2" />
+              Preskúmať pluginy <ArrowRight className="ml-2" />
             </Button>
           </motion.div>
         </motion.div>

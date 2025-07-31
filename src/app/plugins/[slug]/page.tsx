@@ -37,8 +37,8 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
   const handleAddToCart = () => {
     addToCart(plugin as Plugin);
     toast({
-      title: "Added to cart",
-      description: `${plugin.name} has been added to your cart.`,
+      title: "Pridané do košíka",
+      description: `${plugin.name} bol pridaný do vášho košíka.`,
     })
   };
 
@@ -54,11 +54,11 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
       });
       setMarketingCopy(result.copy);
     } catch (error) {
-      console.error('Failed to generate marketing copy:', error);
+      console.error('Nepodarilo sa vygenerovať marketingový text:', error);
       toast({
         variant: 'destructive',
-        title: 'An error occurred',
-        description: 'Failed to generate marketing copy. Please try again.',
+        title: 'Vyskytla sa chyba',
+        description: 'Nepodarilo sa vygenerovať marketingový text. Skúste to znova.',
       });
     } finally {
       setIsGenerating(false);
@@ -70,8 +70,8 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
     if (reviewRating === 0 || !reviewComment.trim()) {
         toast({
             variant: "destructive",
-            title: "Incomplete Review",
-            description: "Please provide a rating and a comment.",
+            title: "Neúplná recenzia",
+            description: "Prosím, zadajte hodnotenie a komentár.",
         });
         return;
     }
@@ -82,7 +82,7 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     const newReview = {
-        author: user?.displayName || user?.email || 'Anonymous',
+        author: user?.displayName || user?.email || 'Anonym',
         rating: reviewRating,
         comment: reviewComment,
         date: new Date().toISOString().split('T')[0],
@@ -104,8 +104,8 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
     setReviewRating(0);
     setReviewComment('');
     toast({
-        title: "Review Submitted!",
-        description: "Thank you for your feedback.",
+        title: "Recenzia odoslaná!",
+        description: "Ďakujeme za vašu spätnú väzbu.",
     });
   };
 
@@ -117,7 +117,7 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
             <Link href="/" passHref>
                <Button variant="outline">
                   <ArrowLeft className="mr-2" />
-                  Back to Marketplace
+                  Späť na trhovisko
                </Button>
             </Link>
           </div>
@@ -138,17 +138,17 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
               <div className="flex items-center gap-2 mb-4">
                   <StarRating rating={plugin.rating} />
                   <span className="text-muted-foreground">
-                    {plugin.rating.toFixed(1)} ({plugin.reviews.length} reviews)
+                    {plugin.rating.toFixed(1)} ({plugin.reviews.length} recenzií)
                   </span>
               </div>
               <p className="text-2xl font-semibold mb-6">{plugin.price}</p>
               <p className="text-lg text-muted-foreground mb-6">{plugin.description}</p>
-              <Button size="lg" onClick={handleAddToCart}>Add to Cart</Button>
+              <Button size="lg" onClick={handleAddToCart}>Pridať do košíka</Button>
             </div>
           </div>
 
           <div className="mt-16">
-            <h2 className="text-3xl font-bold font-headline mb-4">Product Details</h2>
+            <h2 className="text-3xl font-bold font-headline mb-4">Detaily produktu</h2>
             <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground mb-8">
               <p>{plugin.longDescription}</p>
             </div>
@@ -158,19 +158,19 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
 
           {/* Reviews Section */}
           <div className="mt-12">
-             <h2 className="text-3xl font-bold font-headline mb-8">Ratings & Reviews</h2>
+             <h2 className="text-3xl font-bold font-headline mb-8">Hodnotenia a recenzie</h2>
 
              {/* Review Form */}
             {user ? (
                  <Card className="mb-8 bg-secondary/30">
                     <CardHeader>
-                        <CardTitle>Write a Review</CardTitle>
-                        <CardDescription>Share your experience with this plugin.</CardDescription>
+                        <CardTitle>Napísať recenziu</CardTitle>
+                        <CardDescription>Podeľte sa o svoje skúsenosti s týmto pluginom.</CardDescription>
                     </CardHeader>
                     <form onSubmit={handleReviewSubmit}>
                       <CardContent className="space-y-4">
                           <div>
-                              <Label className="mb-2 block">Your Rating</Label>
+                              <Label className="mb-2 block">Vaše hodnotenie</Label>
                               <div className="flex gap-1">
                                   {[1, 2, 3, 4, 5].map((star) => (
                                       <Star
@@ -182,10 +182,10 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
                               </div>
                           </div>
                           <div>
-                              <Label htmlFor="review-comment">Your Comment</Label>
+                              <Label htmlFor="review-comment">Váš komentár</Label>
                               <Textarea 
                                   id="review-comment" 
-                                  placeholder="What did you like or dislike?" 
+                                  placeholder="Čo sa vám páčilo alebo nepáčilo?" 
                                   value={reviewComment}
                                   onChange={(e) => setReviewComment(e.target.value)}
                                   required
@@ -195,17 +195,17 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
                       <CardFooter>
                            <Button type="submit" disabled={isSubmittingReview}>
                               {isSubmittingReview && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                              Submit Review
+                              Odoslať recenziu
                            </Button>
                       </CardFooter>
                     </form>
                 </Card>
             ) : (
                  <Card className="mb-8 text-center p-8 bg-secondary/30">
-                    <CardTitle>Want to leave a review?</CardTitle>
-                    <CardDescription className="mt-2">Please log in to share your thoughts with the community.</CardDescription>
+                    <CardTitle>Chcete zanechať recenziu?</CardTitle>
+                    <CardDescription className="mt-2">Prosím, prihláste sa, aby ste sa mohli podeliť o svoje myšlienky s komunitou.</CardDescription>
                     <Button asChild className="mt-4">
-                        <Link href="/login">Login to Review</Link>
+                        <Link href="/login">Prihlásiť sa a hodnotiť</Link>
                     </Button>
                 </Card>
             )}
@@ -226,7 +226,7 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
                         </Card>
                     ))
                 ) : (
-                    <p className="text-center text-muted-foreground py-8">Be the first to review this plugin!</p>
+                    <p className="text-center text-muted-foreground py-8">Buďte prvý, kto ohodnotí tento plugin!</p>
                 )}
              </div>
           </div>
@@ -236,22 +236,22 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Sparkles className="text-primary" />
-                <span>AI-Powered Marketing Assistant</span>
+                <span>Marketingový asistent s AI</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4">Generate engaging marketing copy for this plugin with a single click.</p>
+              <p className="text-muted-foreground mb-4">Vygenerujte pútavý marketingový text pre tento plugin jediným kliknutím.</p>
               <Button onClick={handleGenerateCopy} disabled={isGenerating}>
                 {isGenerating ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
                   <Sparkles className="mr-2 h-4 w-4" />
                 )}
-                Generate Marketing Copy
+                Generovať marketingový text
               </Button>
 
               {isGenerating && (
-                 <div className="mt-4 text-muted-foreground">Generating...</div>
+                 <div className="mt-4 text-muted-foreground">Generujem...</div>
               )}
 
               {marketingCopy && (

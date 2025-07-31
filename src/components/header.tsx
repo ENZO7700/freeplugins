@@ -41,7 +41,7 @@ export function Header() {
 
   const navLinks = [
     { href: '/blog', label: 'Blog' },
-    { href: '/contact', label: 'Contact' },
+    { href: '/contact', label: 'Kontakt' },
   ];
   
   const getInitials = (email?: string | null) => {
@@ -67,7 +67,7 @@ export function Header() {
           <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none">My Account</p>
+                <p className="text-sm font-medium leading-none">Môj účet</p>
                 <p className="text-xs leading-none text-muted-foreground">
                   {user.email}
                 </p>
@@ -75,11 +75,11 @@ export function Header() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href="/dashboard"><User className="mr-2 h-4 w-4" />Dashboard</Link>
+              <Link href="/dashboard"><User className="mr-2 h-4 w-4" />Panel</Link>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={logout}>
               <LogOut className="mr-2 h-4 w-4" />
-              Log out
+              Odhlásiť sa
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -88,10 +88,10 @@ export function Header() {
     return (
       <div className='hidden md:flex'>
         <Button variant="ghost" asChild>
-          <Link href="/login">Login</Link>
+          <Link href="/login">Prihlásiť sa</Link>
         </Button>
         <Button asChild>
-          <Link href="/signup">Sign Up</Link>
+          <Link href="/signup">Zaregistrovať sa</Link>
         </Button>
       </div>
     );
@@ -117,13 +117,13 @@ export function Header() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant={isMarketplaceActive ? 'secondary' : 'ghost'}>
-                  Marketplace
+                  Trhovisko
                   <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem asChild>
-                  <Link href="/">All Plugins</Link>
+                  <Link href="/">Všetky pluginy</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 {categories.map((category) => (
@@ -155,13 +155,13 @@ export function Header() {
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <Menu />
-                  <span className="sr-only">Open menu</span>
+                  <span className="sr-only">Otvoriť menu</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="right">
                 <SheetHeader>
                   <SheetTitle className="sr-only">Menu</SheetTitle>
-                  <SheetDescription className="sr-only">Main navigation menu</SheetDescription>
+                  <SheetDescription className="sr-only">Hlavné navigačné menu</SheetDescription>
                 </SheetHeader>
                 <div className="flex flex-col gap-4 py-6">
                    <Link href="/" passHref>
@@ -170,7 +170,7 @@ export function Header() {
                     </div>
                   </Link>
                   <nav className="flex flex-col gap-2">
-                    <p className="px-2 text-sm font-semibold text-muted-foreground">Marketplace</p>
+                    <p className="px-2 text-sm font-semibold text-muted-foreground">Trhovisko</p>
                     <Link
                       href="/"
                       className={cn(
@@ -179,7 +179,7 @@ export function Header() {
                       )}
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
-                      All Plugins
+                      Všetky pluginy
                     </Link>
                     {categories.map((category) => (
                        <Link
@@ -216,8 +216,8 @@ export function Header() {
                       <Loader2 className="h-6 w-6 animate-spin" />
                     ) : !user ? (
                        <div className="flex flex-col gap-2">
-                          <Link href="/login" className="text-lg p-2 rounded-md text-muted-foreground hover:bg-muted" onClick={() => setIsMobileMenuOpen(false)}>Login</Link>
-                          <Link href="/signup" className="text-lg p-2 rounded-md text-muted-foreground hover:bg-muted" onClick={() => setIsMobileMenuOpen(false)}>Sign Up</Link>
+                          <Link href="/login" className="text-lg p-2 rounded-md text-muted-foreground hover:bg-muted" onClick={() => setIsMobileMenuOpen(false)}>Prihlásiť sa</Link>
+                          <Link href="/signup" className="text-lg p-2 rounded-md text-muted-foreground hover:bg-muted" onClick={() => setIsMobileMenuOpen(false)}>Zaregistrovať sa</Link>
                        </div>
                     ) : null }
                   </div>

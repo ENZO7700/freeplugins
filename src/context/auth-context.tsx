@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -49,9 +50,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (auth.currentUser) {
       await updateProfile(auth.currentUser, profile);
       // Manually update the user state to reflect changes immediately
-      setUser({ ...auth.currentUser });
+      setUser(prevUser => (prevUser ? { ...prevUser, ...auth.currentUser } : null) as User);
     } else {
-      throw new Error("No user is signed in to update the profile.");
+      throw new Error("Na aktualizáciu profilu nie je prihlásený žiadny používateľ.");
     }
   };
 
@@ -71,7 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
   const context = React.useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error('useAuth musí byť použité v rámci AuthProvider');
   }
   return context;
 }

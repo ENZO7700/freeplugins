@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -50,8 +51,8 @@ export default function CheckoutPage() {
     setIsProcessing(false);
     clearCart();
     toast({
-      title: 'Order Successful!',
-      description: 'Your plugins are on their way. Thank you for your purchase.',
+      title: 'Objednávka úspešná!',
+      description: 'Vaše pluginy sú na ceste. Ďakujeme za nákup.',
     });
     router.push('/dashboard');
   };
@@ -72,7 +73,7 @@ export default function CheckoutPage() {
             <Link href="/" passHref>
                <Button variant="outline">
                   <ArrowLeft className="mr-2" />
-                  Continue Shopping
+                  Pokračovať v nákupe
                </Button>
             </Link>
           </div>
@@ -81,24 +82,24 @@ export default function CheckoutPage() {
             
             <Card>
                 <CardHeader>
-                    <CardTitle>Billing Information</CardTitle>
-                    <CardDescription>Enter your details to complete the purchase.</CardDescription>
+                    <CardTitle>Fakturačné údaje</CardTitle>
+                    <CardDescription>Zadajte svoje údaje na dokončenie nákupu.</CardDescription>
                 </CardHeader>
                 <form onSubmit={handlePlaceOrder}>
                     <CardContent className="space-y-4">
                         <div className="space-y-2">
-                            <Label htmlFor="name">Full Name</Label>
+                            <Label htmlFor="name">Celé meno</Label>
                             <Input id="name" defaultValue={user.displayName || ''} required />
                         </div>
                          <div className="space-y-2">
-                            <Label htmlFor="email">Email Address</Label>
+                            <Label htmlFor="email">E-mailová adresa</Label>
                             <Input id="email" type="email" defaultValue={user.email || ''} required disabled />
                         </div>
                     </CardContent>
                     <CardFooter>
                          <Button type="submit" className="w-full" size="lg" disabled={isProcessing || cart.length === 0}>
                             {isProcessing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                            Place Order
+                            Zadať objednávku
                         </Button>
                     </CardFooter>
                 </form>
@@ -107,7 +108,7 @@ export default function CheckoutPage() {
             <div className="space-y-6">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Order Summary</CardTitle>
+                        <CardTitle>Súhrn objednávky</CardTitle>
                     </CardHeader>
                     <CardContent>
                         {cart.length > 0 ? (
@@ -120,11 +121,11 @@ export default function CheckoutPage() {
                                 ))}
                             </ul>
                         ) : (
-                            <p className="text-muted-foreground">Your cart is empty.</p>
+                            <p className="text-muted-foreground">Váš košík je prázdny.</p>
                         )}
                     </CardContent>
                     <CardFooter className="flex justify-between font-bold text-lg border-t pt-4">
-                        <p>Total</p>
+                        <p>Celkom</p>
                         <p>${total.toFixed(2)}</p>
                     </CardFooter>
                 </Card>
