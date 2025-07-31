@@ -107,7 +107,7 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" passHref>
           <div className="text-xl font-bold font-headline text-primary cursor-pointer hover:animate-glow">
-            Expresívny Navigátor
+            Freeplugins.org
           </div>
         </Link>
         
@@ -160,7 +160,7 @@ export function Header() {
                 <div className="flex flex-col gap-4 py-6">
                    <Link href="/" passHref>
                     <div className="mb-4 text-lg font-bold font-headline text-primary cursor-pointer">
-                      Expresívny Navigátor
+                      Freeplugins.org
                     </div>
                   </Link>
                   <nav className="flex flex-col gap-2">
