@@ -15,8 +15,6 @@ export function HeroSection() {
     offset: ['start start', 'end start'],
   });
 
-  // Parallax for the grid background
-  const yBg = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
   // Parallax for the main headline and button
   const yContent = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
   const opacityContent = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
@@ -62,17 +60,13 @@ export function HeroSection() {
   return (
     <section ref={targetRef} className="relative overflow-hidden bg-background py-20 md:py-32 h-[150vh]">
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center">
-        <motion.div style={{ y: yBg }} className="absolute inset-0 z-0">
-          <GridPattern
-            width={40}
-            height={40}
-            x={-1}
-            y={-1}
-            className="[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)] "
-          />
-          <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-background via-background/80 to-transparent"></div>
-          <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
-        </motion.div>
+        <GridPattern
+          width={40}
+          height={40}
+          x={-1}
+          y={-1}
+          className="[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]"
+        />
         
         <motion.div 
           style={{ y: yContent, opacity: opacityContent }}
