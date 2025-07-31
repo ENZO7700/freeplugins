@@ -75,6 +75,7 @@ export function GridPattern({
               d={`M.5 ${height}V.5H${width}`}
               fill="none"
               stroke="hsl(var(--border) / 0.2)"
+              strokeDasharray={strokeDasharray}
             />
           </pattern>
         </defs>
