@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Zap, Wind, Eye } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { GridPattern } from '@/components/ui/grid-pattern';
 
 export function HeroSection() {
   const targetRef = React.useRef<HTMLDivElement>(null);
@@ -62,7 +63,13 @@ export function HeroSection() {
     <section ref={targetRef} className="relative overflow-hidden bg-background py-20 md:py-32 h-[150vh]">
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center">
         <motion.div style={{ y: yBg }} className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-grid-pattern opacity-5 dark:opacity-[0.07]"></div>
+          <GridPattern
+            width={40}
+            height={40}
+            x={-1}
+            y={-1}
+            className="[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)] "
+          />
           <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-background via-background/80 to-transparent"></div>
           <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
         </motion.div>

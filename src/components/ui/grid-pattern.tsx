@@ -23,7 +23,7 @@ export function GridPattern({
   height = 40,
   x = -1,
   y = -1,
-  strokeDasharray = 4,
+  strokeDasharray = 0,
   numSquares = 50,
   className,
   maxOpacity = 0.5,
@@ -44,24 +44,6 @@ export function GridPattern({
     WebkitMaskImage: maskImage,
   };
 
-  const squares = React.useMemo(() => {
-    return Array.from({ length: numSquares }).map((_, i) => {
-      const col = Math.floor(i / (Math.sqrt(numSquares)));
-      const row = i % Math.floor(Math.sqrt(numSquares));
-      return (
-        <rect
-            key={i}
-            width={width}
-            height={height}
-            x={col * width}
-            y={row * height}
-            strokeDasharray={strokeDasharray}
-            {...props}
-        />
-      )
-    });
-  }, [width, height, numSquares, strokeDasharray, props]);
-
   return (
     <div
       onMouseMove={onMouseMove}
@@ -70,9 +52,9 @@ export function GridPattern({
         className,
       )}
     >
-      <div className="absolute inset-0 z-0 h-full w-full bg-gradient-to-b from-background/90 to-background"></div>
+      <div className="absolute inset-0 z-0 h-full w-full bg-background"></div>
       <motion.div
-        className="absolute inset-0 z-10 h-full w-full bg-gradient-to-b from-primary/20 to-primary/5"
+        className="absolute inset-0 z-10 h-full w-full bg-gradient-to-b from-primary/10 to-primary/20"
         style={style}
       />
       <svg
@@ -92,8 +74,7 @@ export function GridPattern({
            <path
               d={`M.5 ${height}V.5H${width}`}
               fill="none"
-              stroke="hsl(var(--border) / 0.5)"
-              strokeDasharray={strokeDasharray}
+              stroke="hsl(var(--border) / 0.2)"
             />
           </pattern>
         </defs>
