@@ -13,6 +13,7 @@ interface GridPatternProps {
   strokeDasharray?: any;
   interactive?: boolean;
   className?: string;
+  yOffset?: number;
   [key: string]: any;
 }
 
@@ -24,6 +25,7 @@ export function GridPattern({
   strokeDasharray = 0,
   interactive = false,
   className,
+  yOffset, // Destructure yOffset here
   ...props
 }: GridPatternProps) {
   const id = useId();
