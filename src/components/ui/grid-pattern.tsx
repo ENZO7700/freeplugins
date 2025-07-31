@@ -48,13 +48,13 @@ export function GridPattern({
     <div
       onMouseMove={onMouseMove}
       className={cn(
-        "absolute inset-0 h-full w-full skew-y-12 overflow-hidden",
+        "absolute inset-0 h-full w-full overflow-hidden",
         className,
       )}
     >
       <div className="absolute inset-0 z-0 h-full w-full bg-background"></div>
       <motion.div
-        className="absolute inset-0 z-10 h-full w-full bg-gradient-to-b from-primary/10 to-primary/20"
+        className="absolute inset-0 z-10 h-full w-full bg-gradient-to-b from-primary/10 to-primary/20 opacity-50 dark:opacity-[0.07]"
         style={style}
       />
       <svg

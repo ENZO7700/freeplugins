@@ -58,14 +58,14 @@ export function HeroSection() {
   };
 
   return (
-    <section ref={targetRef} className="relative overflow-hidden bg-background py-20 md:py-32 h-[150vh]">
-      <div className="sticky top-0 flex h-screen flex-col items-center justify-center">
+    <section ref={targetRef} className="relative overflow-hidden bg-background py-20 md:py-32">
+      <div className="relative flex min-h-[50vh] flex-col items-center justify-center">
         <GridPattern
-          width={40}
-          height={40}
-          x={-1}
-          y={-1}
-          className="[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]"
+            width={40}
+            height={40}
+            x={-1}
+            y={-1}
+            className="absolute inset-0 h-full w-full -z-10"
         />
         
         <motion.div 
@@ -103,7 +103,7 @@ export function HeroSection() {
         </motion.div>
       </div>
 
-      <div className="relative z-10 bg-background">
+      <div className="relative z-10 bg-transparent">
         <div className="container mx-auto px-4 pb-20">
           <div className="grid md:grid-cols-3 gap-8">
             {featureCards.map((feature, index) => (
