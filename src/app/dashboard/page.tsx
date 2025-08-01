@@ -16,7 +16,7 @@ import { Separator } from '@/components/ui/separator';
 import { SpendingChart } from '@/components/dashboard/spending-chart';
 import { CategoryChart } from '@/components/dashboard/category-chart';
 import { Balancer } from 'react-wrap-balancer';
-import { getPluginData, plugins, Plugin } from '@/components/plugin-list';
+import { plugins, Plugin } from '@/components/plugin-list';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';

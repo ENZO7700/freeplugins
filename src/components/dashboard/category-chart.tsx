@@ -3,7 +3,6 @@
 
 import * as React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import type { Plugin } from '@/components/plugin-list';
 
 interface CategoryChartProps {
@@ -66,4 +65,3 @@ export function CategoryChart({ data: plugins }: CategoryChartProps) {
     </div>
   );
 }
-
