@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview A flow to adapt animations and UI elements based on user behavior.
@@ -67,11 +68,11 @@ const prompt = ai.definePrompt({
   Network Speed: {{{networkSpeed}}}
 
   Consider the following:
-  - High network speed and powerful devices should enable more complex and visually appealing animations.
-  - Low network speed and less powerful devices should simplify animations to improve performance.
-  - User behavior should inform UI element adjustments, such as font size and element spacing, to improve readability and ease of use.
-
-  Return the animation settings and UI element adjustments as structured JSON objects.
+  - For 'fast' networkSpeed on 'desktop', set animationSpeed to 'fast', fontSize to '16px' and elementSpacing to '12px'.
+  - For 'medium' networkSpeed or 'tablet', set animationSpeed to 'medium', fontSize to '15px' and elementSpacing to '10px'.
+  - For 'slow' networkSpeed or 'mobile', set animationSpeed to 'slow', fontSize to '14px' and elementSpacing to '8px'.
+  - Always return 'fade' for transitionEffect and 'visible' for elementVisibility.
+  - Return the animation settings and UI element adjustments as structured JSON objects.
 `,
 });
 
