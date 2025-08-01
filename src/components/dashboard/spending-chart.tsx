@@ -22,13 +22,13 @@ export function SpendingChart({ data: orders }: SpendingChartProps) {
     return Object.entries(monthlySpending).map(([name, total]) => ({
       name,
       total,
-    })).sort((a,b) => new Date(a.name).getTime() - new Date(b.name).getTime());
+    })).sort((a,b) => new Date(`1 ${a.name}`).getTime() - new Date(`1 ${b.name}`).getTime());
   }, [orders]);
 
    if (chartData.length === 0) {
     return (
         <div className="flex items-center justify-center h-64 text-muted-foreground">
-            No spending data to display.
+            Žiadne údaje o výdavkoch na zobrazenie.
         </div>
     );
   }
@@ -57,7 +57,7 @@ export function SpendingChart({ data: orders }: SpendingChartProps) {
                     }}
                 />
                 <Legend wrapperStyle={{fontSize: "14px"}}/>
-                <Bar dataKey="total" fill="hsl(var(--primary))" name="Total Spent ($)" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="total" fill="hsl(var(--primary))" name="Celková útrata ($)" radius={[4, 4, 0, 0]} />
             </BarChart>
         </ResponsiveContainer>
     </div>

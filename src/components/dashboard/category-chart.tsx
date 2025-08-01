@@ -9,7 +9,7 @@ interface CategoryChartProps {
   data: Plugin[];
 }
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF', '#FF19A3'];
+const COLORS = ['hsl(var(--chart-1))', 'hsl(var(--chart-2))', 'hsl(var(--chart-3))', 'hsl(var(--chart-4))', 'hsl(var(--chart-5))'];
 
 export function CategoryChart({ data: plugins }: CategoryChartProps) {
   const chartData = React.useMemo(() => {
@@ -29,7 +29,7 @@ export function CategoryChart({ data: plugins }: CategoryChartProps) {
   if (chartData.length === 0) {
     return (
         <div className="flex items-center justify-center h-64 text-muted-foreground">
-            No category data to display.
+            Žiadne dáta kategórií na zobrazenie.
         </div>
     );
   }
@@ -44,7 +44,7 @@ export function CategoryChart({ data: plugins }: CategoryChartProps) {
             cy="50%"
             labelLine={false}
             outerRadius={80}
-            fill="#8884d8"
+            fill="hsl(var(--primary))"
             dataKey="value"
             nameKey="name"
           >
@@ -59,7 +59,7 @@ export function CategoryChart({ data: plugins }: CategoryChartProps) {
                 borderRadius: "var(--radius)" 
             }}
           />
-          <Legend />
+          <Legend wrapperStyle={{fontSize: "14px"}}/>
         </PieChart>
       </ResponsiveContainer>
     </div>

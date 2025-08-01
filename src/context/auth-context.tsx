@@ -50,7 +50,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (auth.currentUser) {
       await updateProfile(auth.currentUser, profile);
       // Manually update the user state to reflect changes immediately
-      setUser(prevUser => (prevUser ? { ...prevUser, ...auth.currentUser } : null) as User);
+      const updatedUser = { ...auth.currentUser };
+      setUser(updatedUser as User);
     } else {
       throw new Error("Na aktualizáciu profilu nie je prihlásený žiadny používateľ.");
     }

@@ -47,10 +47,10 @@ export default function DashboardPage() {
     setIsSaving(true);
     try {
         await updateUserProfile({ displayName: displayName });
-        toast({ title: "Profile Updated", description: "Your display name has been updated." });
+        toast({ title: "Profil aktualizovaný", description: "Vaše zobrazované meno bolo aktualizované." });
         setIsEditing(false);
     } catch (error: any) {
-        toast({ variant: "destructive", title: "Update Failed", description: error.message });
+        toast({ variant: "destructive", title: "Aktualizácia zlyhala", description: error.message });
     } finally {
         setIsSaving(false);
     }
@@ -99,11 +99,11 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
              <h1 className="text-3xl font-bold font-headline">
-              <Balancer>Welcome back, {user.displayName || user.email}!</Balancer>
+              <Balancer>Vitajte späť, {user.displayName || user.email}!</Balancer>
             </h1>
              <Button onClick={logout} variant="outline" className='w-full sm:w-auto'>
                 <LogOut className="mr-2 h-4 w-4" />
-                Log Out
+                Odhlásiť sa
               </Button>
           </div>
           
@@ -111,7 +111,7 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Spent</CardTitle>
+                <CardTitle className="text-sm font-medium">Celková útrata</CardTitle>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
@@ -120,7 +120,7 @@ export default function DashboardPage() {
             </Card>
              <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Plugins Purchased</CardTitle>
+                <CardTitle className="text-sm font-medium">Zakúpené pluginy</CardTitle>
                 <Package className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
@@ -129,7 +129,7 @@ export default function DashboardPage() {
             </Card>
              <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Favorite Category</CardTitle>
+                <CardTitle className="text-sm font-medium">Obľúbená kategória</CardTitle>
                 <Tag className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
@@ -147,7 +147,7 @@ export default function DashboardPage() {
                              <CardHeader>
                                 <div className="flex items-center gap-2">
                                 <BarChart2 className="h-6 w-6" />
-                                <CardTitle>Monthly Spending</CardTitle>
+                                <CardTitle>Mesačné výdavky</CardTitle>
                                 </div>
                             </CardHeader>
                             <CardContent>
@@ -158,7 +158,7 @@ export default function DashboardPage() {
                              <CardHeader>
                                  <div className="flex items-center gap-2">
                                     <PieChart className="h-6 w-6" />
-                                    <CardTitle>Plugins by Category</CardTitle>
+                                    <CardTitle>Pluginy podľa kategórie</CardTitle>
                                 </div>
                             </CardHeader>
                             <CardContent>
@@ -172,9 +172,9 @@ export default function DashboardPage() {
                 <CardHeader>
                   <div className='flex items-center gap-2'>
                     <ShoppingBag className="h-6 w-6" />
-                    <CardTitle>My Purchased Plugins</CardTitle>
+                    <CardTitle>Moje zakúpené pluginy</CardTitle>
                   </div>
-                  <CardDescription>All your awesome plugins in one place.</CardDescription>
+                  <CardDescription>Všetky vaše úžasné pluginy na jednom mieste.</CardDescription>
                 </CardHeader>
                 <CardContent>
                   {purchasedPlugins.length > 0 ? (
@@ -189,17 +189,17 @@ export default function DashboardPage() {
                             </div>
                           </div>
                           <div className='flex gap-2 self-end sm:self-center'>
-                             <Button size="sm" variant="ghost"><KeyRound className="mr-2 h-4 w-4" /> Manage License</Button>
-                             <Button size="sm" variant="outline"><Download className="mr-2 h-4 w-4" /> Download</Button>
+                             <Button size="sm" variant="ghost"><KeyRound className="mr-2 h-4 w-4" /> Spravovať licenciu</Button>
+                             <Button size="sm" variant="outline"><Download className="mr-2 h-4 w-4" /> Stiahnuť</Button>
                           </div>
                         </li>
                       ))}
                     </ul>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-muted-foreground mb-4">You haven't purchased any plugins yet.</p>
+                      <p className="text-muted-foreground mb-4">Zatiaľ ste si nekúpili žiadne pluginy.</p>
                        <Button asChild>
-                         <Link href="/">Explore Marketplace</Link>
+                         <Link href="/">Preskúmať trhovisko</Link>
                        </Button>
                     </div>
                   )}
@@ -211,9 +211,9 @@ export default function DashboardPage() {
                     <CardHeader>
                       <div className='flex items-center gap-2'>
                         <Sparkles className="h-6 w-6 text-primary" />
-                        <CardTitle>Recommended For You</CardTitle>
+                        <CardTitle>Odporúčané pre vás</CardTitle>
                       </div>
-                      <CardDescription>Based on your purchase history, you might like these!</CardDescription>
+                      <CardDescription>Na základe vašej histórie nákupov by sa vám mohli páčiť tieto!</CardDescription>
                     </CardHeader>
                     <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {recommendedPlugins.map(plugin => (
@@ -239,18 +239,18 @@ export default function DashboardPage() {
                     <CardHeader>
                         <div className='flex items-center gap-2'>
                             <User className="h-6 w-6" />
-                            <CardTitle>My Profile</CardTitle>
+                            <CardTitle>Môj profil</CardTitle>
                         </div>
-                        <CardDescription>Manage your account details.</CardDescription>
+                        <CardDescription>Spravujte podrobnosti svojho účtu.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleProfileUpdate} className="space-y-4">
                             <div className="space-y-2">
-                                <Label htmlFor="email">Email Address</Label>
+                                <Label htmlFor="email">E-mailová adresa</Label>
                                 <Input id="email" type="email" value={user.email || ''} disabled />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="displayName">Display Name</Label>
+                                <Label htmlFor="displayName">Zobrazované meno</Label>
                                 <div className="flex items-center gap-2">
                                     <Input 
                                         id="displayName" 
@@ -269,18 +269,18 @@ export default function DashboardPage() {
                                 <div className="flex gap-2">
                                     <Button type="submit" disabled={isSaving}>
                                         {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
-                                        Save
+                                        Uložiť
                                     </Button>
                                     <Button variant="outline" onClick={() => {
                                       setIsEditing(false);
                                       setDisplayName(user.displayName || '');
-                                    }}>Cancel</Button>
+                                    }}>Zrušiť</Button>
                                 </div>
                             )}
                         </form>
                          <Separator className="my-6" />
                         <p className="text-xs text-muted-foreground">
-                            User ID: <code className="bg-muted p-1 rounded-sm">{user.uid}</code>
+                            ID používateľa: <code className="bg-muted p-1 rounded-sm">{user.uid}</code>
                         </p>
                     </CardContent>
                 </Card>
@@ -290,9 +290,9 @@ export default function DashboardPage() {
                       <CardHeader>
                           <div className='flex items-center gap-2'>
                               <BadgeCheck className="h-6 w-6" />
-                              <CardTitle>My Badges</CardTitle>
+                              <CardTitle>Moje odznaky</CardTitle>
                           </div>
-                          <CardDescription>Your achievements on our platform.</CardDescription>
+                          <CardDescription>Vaše úspechy na našej platforme.</CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-4">
                           {getBadges.map(badge => {
