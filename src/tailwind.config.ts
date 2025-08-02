@@ -93,9 +93,9 @@ const config = {
           },
         },
         'glow': {
-          '0%': { textShadow: '0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary))' },
-          '50%': { textShadow: '0 0 20px hsl(var(--primary) / 0.8), 0 0 30px hsl(var(--primary) / 0.6)' },
-          '100%': { textShadow: '0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary))' },
+          '0%': { boxShadow: '0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary))' },
+          '50%': { boxShadow: '0 0 20px hsl(var(--primary) / 0.8), 0 0 30px hsl(var(--primary) / 0.6)' },
+          '100%': { boxShadow: '0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary))' },
         },
       },
       animation: {

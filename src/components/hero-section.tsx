@@ -4,8 +4,9 @@
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { GridPattern } from '@/components/ui/grid-pattern';
+import { Balancer } from 'react-wrap-balancer';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -63,33 +64,45 @@ const AnimatedWords = ({ text }: { text: string }) => {
     };
   
     return (
-      <motion.h2
+      <motion.h1
         className="text-4xl md:text-6xl font-bold font-headline tracking-tighter"
         variants={container}
         initial="hidden"
         animate="visible"
       >
-        {words.map((word, index) => (
-          <motion.span
-            variants={child}
-            style={{ marginRight: "1rem" }}
-            key={index}
-          >
-            {word}
-          </motion.span>
-        ))}
-      </motion.h2>
+        <Balancer>
+            {words.map((word, index) => (
+            <motion.span
+                variants={child}
+                style={{ marginRight: "1rem" }}
+                key={index}
+            >
+                {word}
+            </motion.span>
+            ))}
+        </Balancer>
+      </motion.h1>
     );
 };
 
 export function HeroSection() {
+  const targetRef = React.useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+
   return (
-    <section className="relative w-full overflow-hidden bg-background py-20 md:py-32">
-      <GridPattern
-        className="absolute inset-0 z-0 h-full w-full fill-primary/10 stroke-border [mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]"
-        yOffset={-1}
-        interactive
-      />
+    <section ref={targetRef} className="relative w-full overflow-hidden bg-background py-20 md:py-32">
+      <motion.div style={{ y }}>
+        <GridPattern
+            className="absolute inset-0 z-0 h-full w-full fill-primary/10 stroke-border [mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]"
+            yOffset={-1}
+            interactive
+        />
+      </motion.div>
       <div className="container relative z-10 mx-auto px-4 text-center max-w-4xl">
         <motion.div initial="hidden" animate="visible" variants={containerVariants}>
           <AnimatedWords text="Dokonalé softvérové trhovisko" />
@@ -97,13 +110,15 @@ export function HeroSection() {
             className="mt-6 text-lg md:text-xl text-muted-foreground"
             variants={itemVariants}
           >
-            Nájdite, zdieľajte a predávajte softvérové pluginy a nástroje, ktoré poháňajú vaše projekty.
+            <Balancer>
+                Nájdite, zdieľajte a predávajte softvérové pluginy a nástroje, ktoré poháňajú vaše projekty.
+            </Balancer>
           </motion.p>
           <motion.div 
             className="inline-block mt-8"
             variants={itemVariants}
           >
-            <Button size="lg">
+            <Button size="lg" className="animate-glow">
               Preskúmať pluginy <ArrowRight className="ml-2" />
             </Button>
           </motion.div>
