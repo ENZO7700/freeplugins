@@ -25,9 +25,7 @@ export function CategoryGrid() {
   return (
     <section className="py-12 md:py-24">
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <div className="inline-block [filter:drop-shadow(0_0_8px_hsl(var(--primary)/0.8))]">
-            <h2 className="text-3xl md:text-4xl font-bold font-headline">Archív produktov</h2>
-        </div>
+        <h2 className="text-3xl md:text-4xl font-bold font-headline">Archív produktov</h2>
         <p className="mt-4 text-lg text-muted-foreground">
           Preskúmajte naše pluginy podľa kategórie.
         </p>
