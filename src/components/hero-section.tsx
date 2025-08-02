@@ -65,7 +65,10 @@ const AnimatedWords = ({ text }: { text: string }) => {
   
     return (
       <motion.h1
-        className="text-4xl md:text-6xl font-bold font-headline tracking-tighter"
+        className="text-6xl md:text-8xl font-bold font-headline tracking-tighter animate-text-glow"
+        style={{
+          textShadow: '0 2px 4px rgba(0,0,0,0.2), 0 5px 15px rgba(0,0,0,0.1), 0 10px 30px rgba(0,0,0,0.1)'
+        }}
         variants={container}
         initial="hidden"
         animate="visible"
@@ -93,6 +96,8 @@ export function HeroSection() {
   });
 
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '-20%']);
+
 
   return (
     <section ref={targetRef} className="relative w-full overflow-hidden bg-background py-20 md:py-32">
@@ -105,7 +110,9 @@ export function HeroSection() {
       </motion.div>
       <div className="container relative z-10 mx-auto px-4 text-center max-w-4xl">
         <motion.div initial="hidden" animate="visible" variants={containerVariants}>
-          <AnimatedWords text="Dokonalé softvérové trhovisko" />
+          <motion.div style={{ y: textY }}>
+            <AnimatedWords text="SOFTW4R3" />
+          </motion.div>
           <motion.p 
             className="mt-6 text-lg md:text-xl text-muted-foreground"
             variants={itemVariants}
