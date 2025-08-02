@@ -102,7 +102,7 @@ export default function ContactPage() {
                         </Card>
 
                         <div className="relative h-64 w-full rounded-lg overflow-hidden shadow-lg">
-                             <Image src="https://placehold.co/600x400.png" alt="Bratislava" fill style={{objectFit: 'cover'}} data-ai-hint="Bratislava city" />
+                             <Image src="https://images.unsplash.com/photo-1599209248411-188c1cb83a48?q=80&w=600&h=400&fit=crop" alt="Bratislava" fill style={{objectFit: 'cover'}} data-ai-hint="Bratislava city" />
                         </div>
                     </div>
                 </div>
