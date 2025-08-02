@@ -182,7 +182,9 @@ export default function DashboardPage() {
                       {purchasedPlugins.map(plugin => (
                         <li key={plugin.slug} className="flex flex-col sm:flex-row justify-between sm:items-center p-3 bg-secondary/50 rounded-lg gap-4">
                           <div className='flex items-center gap-4'>
-                            <Image src={plugin.imageUrl} alt={plugin.name} width={40} height={40} className='rounded-md' data-ai-hint={plugin.dataAiHint}/>
+                            {plugin.imageUrl && (
+                                <Image src={plugin.imageUrl} alt={plugin.name} width={40} height={40} className='rounded-md' data-ai-hint={plugin.dataAiHint}/>
+                            )}
                             <div>
                                 <p className="font-semibold">{plugin.name}</p>
                                 <p className="text-sm text-muted-foreground">{plugin.category}</p>
@@ -220,7 +222,9 @@ export default function DashboardPage() {
                            <Link key={plugin.slug} href={`/plugins/${plugin.slug}`} className='group'>
                              <Card className="overflow-hidden h-full hover:shadow-lg transition-shadow">
                                 <div className='relative h-32 w-full'>
-                                  <Image src={plugin.imageUrl} alt={plugin.name} fill style={{objectFit: 'cover'}} data-ai-hint={plugin.dataAiHint} />
+                                  {plugin.imageUrl && (
+                                    <Image src={plugin.imageUrl} alt={plugin.name} fill style={{objectFit: 'cover'}} data-ai-hint={plugin.dataAiHint} />
+                                  )}
                                 </div>
                                 <div className="p-4">
                                   <p className="font-semibold text-sm group-hover:underline">{plugin.name}</p>

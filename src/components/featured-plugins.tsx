@@ -49,14 +49,16 @@ export function FeaturedPlugins() {
             <Card className="flex flex-col overflow-hidden h-full shadow-md hover:shadow-xl transition-shadow">
               <Link href={`/plugins/${plugin.slug}`} passHref>
                 <div className="relative h-48 w-full cursor-pointer">
-                  <Image
-                    src={plugin.imageUrl}
-                    alt={plugin.name}
-                    fill
-                    style={{ objectFit: 'cover' }}
-                    data-ai-hint={plugin.dataAiHint}
-                    className="transition-transform duration-300"
-                  />
+                  {plugin.imageUrl && (
+                    <Image
+                      src={plugin.imageUrl}
+                      alt={plugin.name}
+                      fill
+                      style={{ objectFit: 'cover' }}
+                      data-ai-hint={plugin.dataAiHint}
+                      className="transition-transform duration-300"
+                    />
+                  )}
                 </div>
               </Link>
               <CardContent className="p-6 flex-grow">

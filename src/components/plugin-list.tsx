@@ -73,8 +73,8 @@ export const plugins: Plugin[] = [
     description: 'Premeňte svoju webovú stránku na výkonný online obchod v priebehu niekoľkých minút.',
     longDescription: 'E-commerceify poskytuje všetko, čo potrebujete na začatie online predaja. Medzi funkcie patrí správa produktov, bezpečné platobné brány, sledovanie zásob a správa zákazníkov. Plne prispôsobiteľné, aby zodpovedalo vašej značke.',
     price: '$99',
-    imageUrl: 'https://images.unsplash.com/photo-1580974928064-7f374c8163a3?q=80&w=600&h=400&fit=crop',
-    dataAiHint: 'shopping cart',
+    imageUrl: '',
+    dataAiHint: '',
     rating: 5,
     reviews: [
        { author: 'Charlie', rating: 5, comment: 'Super jednoduché na nastavenie a funguje bezchybne.', date: '2024-07-22' },
@@ -233,14 +233,16 @@ export function PluginList() {
             <Card className="flex flex-col overflow-hidden h-full shadow-md hover:shadow-xl transition-shadow">
               <Link href={`/plugins/${plugin.slug}`} passHref>
                 <div className="relative h-48 w-full cursor-pointer">
-                  <Image
-                    src={plugin.imageUrl}
-                    alt={plugin.name}
-                    fill
-                    style={{objectFit: "cover"}}
-                    data-ai-hint={plugin.dataAiHint}
-                    className="transition-transform duration-300"
-                  />
+                  {plugin.imageUrl && (
+                    <Image
+                      src={plugin.imageUrl}
+                      alt={plugin.name}
+                      fill
+                      style={{objectFit: "cover"}}
+                      data-ai-hint={plugin.dataAiHint}
+                      className="transition-transform duration-300"
+                    />
+                  )}
                 </div>
               </Link>
               <CardContent className="p-6 flex-grow">

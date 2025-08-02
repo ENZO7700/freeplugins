@@ -38,7 +38,9 @@ export function Cart() {
               {cart.map(item => (
                 <li key={item.slug} className="flex py-6">
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border">
-                    <Image src={item.imageUrl} alt={item.name} width={96} height={96} style={{objectFit: "cover"}} data-ai-hint={item.dataAiHint} />
+                    {item.imageUrl && (
+                      <Image src={item.imageUrl} alt={item.name} width={96} height={96} style={{objectFit: "cover"}} data-ai-hint={item.dataAiHint} />
+                    )}
                   </div>
                   <div className="ml-4 flex flex-1 flex-col">
                     <div>

@@ -124,13 +124,15 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             <div className="relative h-80 w-full rounded-lg overflow-hidden shadow-lg">
-              <Image
-                src={plugin.imageUrl}
-                alt={plugin.name}
-                fill
-                style={{objectFit: "cover"}}
-                data-ai-hint={plugin.dataAiHint}
-              />
+              {plugin.imageUrl && (
+                <Image
+                  src={plugin.imageUrl}
+                  alt={plugin.name}
+                  fill
+                  style={{objectFit: "cover"}}
+                  data-ai-hint={plugin.dataAiHint}
+                />
+              )}
             </div>
             <div className="flex flex-col justify-center">
               <Badge variant="secondary" className="w-fit mb-2">{plugin.category}</Badge>
