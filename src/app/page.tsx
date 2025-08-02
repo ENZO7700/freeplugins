@@ -14,11 +14,13 @@ export default function Home() {
   const searchParams = useSearchParams();
   const category = searchParams.get('category');
   const [showPlugins, setShowPlugins] = React.useState(false);
+  const [key, setKey] = React.useState(Date.now());
 
   // When category changes, decide whether to show plugins
   React.useEffect(() => {
     // Show PluginList if a category is present in the URL
     setShowPlugins(!!category);
+    setKey(Date.now()); // Force re-render of PluginList when category changes
   }, [category]);
   
   return (
@@ -28,7 +30,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-8">
           <AiAssistant />
           <FeaturedPlugins />
-          {showPlugins ? <PluginList /> : <CategoryGrid />}
+          {showPlugins ? <PluginList key={key} /> : <CategoryGrid />}
         </div>
       </>
     </PageTransitionWrapper>

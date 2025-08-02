@@ -110,7 +110,7 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" passHref>
           <div className="text-xl font-bold font-headline text-primary cursor-pointer hover:animate-glow">
-            Freeplugins.org
+            SOFTW4R3
           </div>
         </Link>
         
@@ -167,13 +167,14 @@ export function Header() {
                 <div className="flex flex-col gap-4 py-6">
                    <Link href="/" passHref>
                     <div className="mb-4 text-lg font-bold font-headline text-primary cursor-pointer" onClick={() => setIsMobileMenuOpen(false)}>
-                      Freeplugins.org
+                      SOFTW4R3
                     </div>
                   </Link>
                   <nav className="flex flex-col gap-2">
                     <p className="px-2 text-sm font-semibold text-muted-foreground">Trhovisko</p>
                     <Link
                       href="/"
+                      key="all-plugins-mobile"
                       className={cn(
                         "text-lg p-2 rounded-md ml-2",
                         isMarketplaceActive && !searchParams.get('category') ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-muted'

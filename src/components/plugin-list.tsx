@@ -73,7 +73,7 @@ export const plugins: Plugin[] = [
     description: 'Premeňte svoju webovú stránku na výkonný online obchod v priebehu niekoľkých minút.',
     longDescription: 'E-commerceify poskytuje všetko, čo potrebujete na začatie online predaja. Medzi funkcie patrí správa produktov, bezpečné platobné brány, sledovanie zásob a správa zákazníkov. Plne prispôsobiteľné, aby zodpovedalo vašej značke.',
     price: '$99',
-    imageUrl: 'https://images.unsplash.com/photo-1578680671729-908b8883584e?q=80&w=600&h=400&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1580974928064-7f374c8163a3?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'shopping cart',
     rating: 5,
     reviews: [
@@ -107,7 +107,7 @@ export const plugins: Plugin[] = [
   {
     slug: 'codeguardian',
     name: 'CodeGuardian',
-    category: 'Bezpečnosť',
+    category: 'Plugins',
     description: 'Chráňte svoju webovú stránku pred malware a bezpečnostnými hrozbami.',
     longDescription: 'CodeGuardian ponúka detekciu hrozieb v reálnom čase, skenovanie malware a výkonný firewall na ochranu vašej aplikácie. Získajte pokoj v duši s 24/7 bezpečnostným monitorovaním.',
     price: '$59',

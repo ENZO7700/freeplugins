@@ -13,7 +13,7 @@ export function Footer() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           <div>
-            <h3 className="text-lg font-bold font-headline text-primary mb-4">Freeplugins.org</h3>
+            <h3 className="text-lg font-bold font-headline text-primary mb-4">SOFTW4R3</h3>
             <p className="text-muted-foreground">The Ultimate Software Marketplace for creators and developers.</p>
           </div>
           <div>
@@ -22,7 +22,7 @@ export function Footer() {
               <Link href="/" passHref><Button variant="link" className="text-muted-foreground justify-center md:justify-start p-0">Marketplace</Button></Link>
               <Link href="/blog" passHref><Button variant="link" className="text-muted-foreground justify-center md:justify-start p-0">Blog</Button></Link>
               <Link href="/about" passHref><Button variant="link" className="text-muted-foreground justify-center md:justify-start p-0">O nás</Button></Link>
-              <Link href="/contact" passHref><Button variant="link" className="text-muted-foreground justify-center md:justify-start p-0">Contact</Button></Link>
+              <Link href="/contact" passHref><Button variant="link" className="text-muted-foreground justify-center md:justify-start p-0">Kontakt</Button></Link>
             </nav>
           </div>
           <div>
@@ -47,7 +47,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t text-center text-muted-foreground text-sm">
-          <p>&copy; {currentYear} Freeplugins.org. All Rights Reserved.</p>
+          <p>&copy; {currentYear} SOFTW4R3. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
