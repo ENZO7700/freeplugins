@@ -41,6 +41,7 @@ export function Header() {
 
   const navLinks = [
     { href: '/blog', label: 'Blog' },
+    { href: '/about', label: 'O nás' },
     { href: '/contact', label: 'Kontakt' },
   ];
   
