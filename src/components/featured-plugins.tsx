@@ -18,7 +18,7 @@ export function FeaturedPlugins() {
 
   const featuredPlugins = [...plugins]
     .sort((a, b) => b.rating - a.rating)
-    .slice(0, 3);
+    .slice(0, 4);
 
   const handleAddToCart = (plugin: Plugin) => {
     addToCart(plugin);
@@ -39,7 +39,7 @@ export function FeaturedPlugins() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {featuredPlugins.map((plugin) => (
           <motion.div
             key={plugin.slug}
