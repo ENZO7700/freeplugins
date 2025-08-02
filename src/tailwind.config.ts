@@ -132,7 +132,6 @@ const config = {
             '--tw-prose-invert-counters': theme('colors.muted.foreground'),
             '--tw-prose-invert-bullets': theme('colors.muted.foreground'),
             '--tw-prose-invert-hr': theme('colors.border'),
-            '--tw-prose-invert-quotes': theme('colors.background'),
             '--tw-prose-invert-quote-borders': theme('colors.border'),
             '--tw-prose-invert-captions': theme('colors.muted.foreground'),
             '--tw-prose-invert-code': theme('colors.background'),
