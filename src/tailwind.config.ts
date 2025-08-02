@@ -17,6 +17,17 @@ const config = {
       },
     },
     extend: {
+      boxShadow: {
+        'glow-primary': '0 0 15px hsl(var(--primary))',
+        'glow-blue': '0 0 15px #60a5fa', // blue-400
+        'glow-purple': '0 0 15px #c084fc', // purple-400
+        'glow-green': '0 0 15px #4ade80', // green-400
+        'glow-sky': '0 0 15px #38bdf8', // sky-400
+        'glow-orange': '0 0 15px #fb923c', // orange-400
+        'glow-gray': '0 0 15px #9ca3af', // gray-400
+        'glow-emerald': '0 0 15px #34d399', // emerald-400
+        'glow-indigo': '0 0 15px #818cf8', // indigo-400
+      },
       fontSize: {
         'base-adaptive': 'var(--adaptive-font-size)',
       },
