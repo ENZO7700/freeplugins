@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader2, Sparkles, User, Bot } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { recommendPlugin } from '@/ai/flows/recommend-plugin';
+import { aiAssistant } from '@/ai/flows/ai-assistant';
 
 interface Message {
     role: 'user' | 'assistant';
@@ -30,7 +30,7 @@ export function AiAssistant() {
         setQuery('');
 
         try {
-            const response = await recommendPlugin(query);
+            const response = await aiAssistant(query);
             const assistantMessage: Message = { role: 'assistant', content: response.answer };
             setMessages(prev => [...prev, assistantMessage]);
         } catch (error) {
@@ -55,7 +55,7 @@ export function AiAssistant() {
                     <CardTitle className="font-headline text-3xl">AI Plugin Assistant</CardTitle>
                 </div>
                 <CardDescription className="text-lg">
-                    Tell me what you need, and I'll recommend the perfect plugin for you!
+                    Tell me what you need, and I'll recommend the perfect plugin or find a helpful article for you!
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -64,7 +64,7 @@ export function AiAssistant() {
                         {messages.length === 0 ? (
                              <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
                                 <Bot className="h-12 w-12 mb-2"/>
-                                <p>e.g., "I need a plugin for SEO" or "Find a good form builder"</p>
+                                <p>e.g., "Find a good form builder" or "How can I improve my SEO?"</p>
                             </div>
                         ) : (
                             messages.map((msg, index) => (
@@ -90,7 +90,7 @@ export function AiAssistant() {
                         <Input
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Describe the plugin you're looking for..."
+                            placeholder="Describe what you're looking for..."
                             disabled={isLoading}
                         />
                         <Button type="submit" disabled={isLoading}>
