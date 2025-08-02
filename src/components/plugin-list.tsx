@@ -73,8 +73,8 @@ export const plugins: Plugin[] = [
     description: 'Premeňte svoju webovú stránku na výkonný online obchod v priebehu niekoľkých minút.',
     longDescription: 'E-commerceify poskytuje všetko, čo potrebujete na začatie online predaja. Medzi funkcie patrí správa produktov, bezpečné platobné brány, sledovanie zásob a správa zákazníkov. Plne prispôsobiteľné, aby zodpovedalo vašej značke.',
     price: '$99',
-    imageUrl: 'https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?q=80&w=600&h=400&fit=crop',
-    dataAiHint: 'online store',
+    imageUrl: 'https://images.unsplash.com/photo-1556740772-1a28a2a7f2d4?q=80&w=600&h=400&fit=crop',
+    dataAiHint: 'online shopping',
     rating: 5,
     reviews: [
        { author: 'Charlie', rating: 5, comment: 'Super jednoduché na nastavenie a funguje bezchybne.', date: '2024-07-22' },
@@ -399,3 +399,5 @@ export function PluginList() {
 export const getPluginData = (slug: string) => {
   return plugins.find(p => p.slug === slug);
 }
+
+    
