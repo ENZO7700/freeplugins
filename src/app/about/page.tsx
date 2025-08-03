@@ -1,12 +1,14 @@
 
 'use client';
 
+import * as React from 'react';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Image from 'next/image';
 import { Balancer } from 'react-wrap-balancer';
 import { Users, Rocket, Target } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const teamMembers = [
     {
@@ -29,6 +31,24 @@ const teamMembers = [
     }
 ];
 
+function ParallaxImage() {
+    const ref = React.useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ["start end", "end start"]
+    });
+    const y = useTransform(scrollYProgress, [0, 1], ['-20%', '20%']);
+
+    return (
+        <div ref={ref} className="relative h-96 w-full rounded-lg overflow-hidden shadow-lg mb-24">
+            <motion.div className="absolute inset-0" style={{ y }}>
+                <Image src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&h=600&fit=crop" alt="Tím pri práci" fill style={{objectFit: 'cover', height: '140%'}} data-ai-hint="team working" />
+            </motion.div>
+        </div>
+    )
+}
+
+
 export default function AboutPage() {
     return (
         <PageTransitionWrapper>
@@ -44,10 +64,7 @@ export default function AboutPage() {
                     </p>
                 </div>
 
-                <div className="relative h-96 w-full rounded-lg overflow-hidden shadow-lg mb-24">
-                  <Image src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&h=600&fit=crop" alt="Tím pri práci" fill style={{objectFit: 'cover'}} data-ai-hint="team working" />
-                </div>
-
+                <ParallaxImage />
 
                 <div className="grid md:grid-cols-3 gap-8 text-center max-w-5xl mx-auto mb-24">
                     <Card>

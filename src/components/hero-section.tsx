@@ -95,39 +95,45 @@ export function HeroSection() {
     offset: ['start start', 'end start'],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+  // Parallax for the grid pattern
+  const gridY = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+  
+  // Stronger parallax for the text content
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '200%']);
-
+  const textOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   return (
-    <section ref={targetRef} className="relative w-full overflow-hidden bg-background py-20 md:py-32">
-      <motion.div style={{ y }}>
-        <GridPattern
-            className="absolute inset-0 z-0 h-full w-full fill-primary/10 stroke-border [mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]"
-            yOffset={-1}
-            interactive
-        />
-      </motion.div>
-      <div className="container relative z-10 mx-auto px-4 text-center max-w-4xl">
-        <motion.div initial="hidden" animate="visible" variants={containerVariants}>
-          <motion.div style={{ y: textY }}>
-            <AnimatedWords text="SOFTW4R3" />
-          </motion.div>
-          <motion.p 
-            className="mt-6 text-lg md:text-xl text-muted-foreground"
-            variants={itemVariants}
-          >
-            <Balancer>
-                Nájdite, zdieľajte a predávajte softvérové pluginy a nástroje, ktoré poháňajú vaše projekty.
-            </Balancer>
-          </motion.p>
-          <motion.div 
-            className="inline-block mt-8"
-            variants={itemVariants}
-          >
-            <Button size="lg" className="shadow-lg hover:shadow-primary/50">
-              Preskúmať pluginy <ArrowRight className="ml-2" />
-            </Button>
+    <section ref={targetRef} className="relative w-full overflow-hidden bg-background py-20 md:py-32 h-[150vh]">
+      <div className="sticky top-0 flex h-screen items-center justify-center">
+        <motion.div style={{ y: gridY }} className="absolute inset-0">
+          <GridPattern
+              className="absolute inset-0 z-0 h-full w-full fill-primary/10 stroke-border [mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]"
+              yOffset={-1}
+              interactive
+          />
+        </motion.div>
+        <motion.div 
+            className="container relative z-10 mx-auto px-4 text-center max-w-4xl"
+            style={{ y: textY, opacity: textOpacity }}
+        >
+          <motion.div initial="hidden" animate="visible" variants={containerVariants}>
+              <AnimatedWords text="SOFTW4R3" />
+            <motion.p 
+              className="mt-6 text-lg md:text-xl text-muted-foreground"
+              variants={itemVariants}
+            >
+              <Balancer>
+                  Nájdite, zdieľajte a predávajte softvérové pluginy a nástroje, ktoré poháňajú vaše projekty.
+              </Balancer>
+            </motion.p>
+            <motion.div 
+              className="inline-block mt-8"
+              variants={itemVariants}
+            >
+              <Button size="lg" className="shadow-lg hover:shadow-primary/50">
+                Preskúmať pluginy <ArrowRight className="ml-2" />
+              </Button>
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>
