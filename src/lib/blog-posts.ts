@@ -105,8 +105,8 @@ Vývojári tém a pluginov prispôsobujú svoje produkty najnovším verziám Wo
     author: 'Ján Kováč',
     authorImageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=100&h=100&fit=crop',
     date: '30. júl 2024',
-    imageUrl: 'https://images.unsplash.com/photo-1633355444131-2900a3f813a1?q=80&w=600&h=400&fit=crop',
-    dataAiHint: 'wordpress logo',
+    imageUrl: 'https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=600&h=400&fit=crop',
+    dataAiHint: 'wordpress design',
     category: 'Wordpress',
   },
   {
