@@ -96,7 +96,7 @@ export function HeroSection() {
   });
 
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
-  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '-20%']);
+  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '200%']);
 
 
   return (
@@ -118,7 +118,7 @@ export function HeroSection() {
             variants={itemVariants}
           >
             <Balancer>
-                Find, share, and sell software plugins and tools that power your projects.
+                Nájdite, zdieľajte a predávajte softvérové pluginy a nástroje, ktoré poháňajú vaše projekty.
             </Balancer>
           </motion.p>
           <motion.div 
@@ -126,7 +126,7 @@ export function HeroSection() {
             variants={itemVariants}
           >
             <Button size="lg" className="shadow-lg hover:shadow-primary/50">
-              Explore Plugins <ArrowRight className="ml-2" />
+              Preskúmať pluginy <ArrowRight className="ml-2" />
             </Button>
           </motion.div>
         </motion.div>

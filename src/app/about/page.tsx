@@ -12,19 +12,19 @@ const teamMembers = [
     {
         name: 'Alex Schwarz',
         role: 'CEO & Founder',
-        bio: 'Alex is the visionary behind SOFTW4R3. His goal is to create the best and most innovative marketplace for software tools.',
+        bio: 'Alex je vizionárom stojacim za SOFTW4R3. Jeho cieľom je vytvoriť najlepší a najinovatívnejší trh pre softvérové nástroje.',
         imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=150&h=150&fit=crop',
     },
     {
         name: 'Eva Coder',
         role: 'Lead Developer',
-        bio: 'Eva is the brain behind the entire operation. With a passion for clean code and the latest technologies, she ensures the platform runs like clockwork.',
+        bio: 'Eva je mozgom celej operácie. S vášňou pre čistý kód a najnovšie technológie zabezpečuje, aby platforma bežala ako hodinky.',
         imageUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&h=150&fit=crop',
     },
     {
         name: 'Peter Designer',
         role: 'Head of Design',
-        bio: 'Peter is the artist who gives SOFTW4R3 its unique look. He is responsible for making the user experience not only functional but also beautiful.',
+        bio: 'Peter je umelcom, ktorý dáva SOFTW4R3 jeho jedinečný vzhľad. Zodpovedá za to, aby bol používateľský zážitok nielen funkčný, ale aj krásny.',
         imageUrl: 'https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=150&h=150&fit=crop',
     }
 ];
@@ -35,17 +35,17 @@ export default function AboutPage() {
             <main className="container mx-auto px-4 py-12 md:py-24">
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h1 className="text-4xl md:text-5xl font-bold font-headline">
-                        <Balancer>About SOFTW4R3</Balancer>
+                        <Balancer>O SOFTW4R3</Balancer>
                     </h1>
                     <p className="mt-4 text-lg text-muted-foreground">
                         <Balancer>
-                           We are innovators, creators, and technology enthusiasts changing the way people discover and use software.
+                           Sme inovátori, tvorcovia a technologickí nadšenci, ktorí menia spôsob, akým ľudia objavujú a používajú softvér.
                         </Balancer>
                     </p>
                 </div>
 
                 <div className="relative h-96 w-full rounded-lg overflow-hidden shadow-lg mb-24">
-                  <Image src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&h=600&fit=crop" alt="Team at work" fill style={{objectFit: 'cover'}} data-ai-hint="team working" />
+                  <Image src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&h=600&fit=crop" alt="Tím pri práci" fill style={{objectFit: 'cover'}} data-ai-hint="team working" />
                 </div>
 
 
@@ -55,11 +55,11 @@ export default function AboutPage() {
                             <div className="flex justify-center mb-4">
                                 <Target className="h-12 w-12 text-primary" />
                             </div>
-                            <CardTitle>Our Mission</CardTitle>
+                            <CardTitle>Naša misia</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <p className="text-muted-foreground">
-                                To simplify access to high-quality software tools for creators and developers worldwide and to foster innovation.
+                                Zjednodušiť prístup ku kvalitným softvérovým nástrojom pre tvorcov a vývojárov po celom svete a podporovať inovácie.
                             </p>
                         </CardContent>
                     </Card>
@@ -68,11 +68,11 @@ export default function AboutPage() {
                             <div className="flex justify-center mb-4">
                                 <Rocket className="h-12 w-12 text-primary" />
                             </div>
-                            <CardTitle>Our Vision</CardTitle>
+                            <CardTitle>Naša vízia</CardTitle>
                         </CardHeader>
                         <CardContent>
                              <p className="text-muted-foreground">
-                                To become the most trusted and dynamic platform where the best ideas turn into real software.
+                                Stať sa najdôveryhodnejšou a najdynamickejšou platformou, kde sa najlepšie nápady menia na skutočný softvér.
                             </p>
                         </CardContent>
                     </Card>
@@ -81,11 +81,11 @@ export default function AboutPage() {
                            <div className="flex justify-center mb-4">
                                 <Users className="h-12 w-12 text-primary" />
                             </div>
-                            <CardTitle>Our Values</CardTitle>
+                            <CardTitle>Naše hodnoty</CardTitle>
                         </CardHeader>
                         <CardContent>
                              <p className="text-muted-foreground">
-                               Quality, innovation, community, and transparency. These principles are at the core of everything we do.
+                               Kvalita, inovácia, komunita a transparentnosť. Tieto princípy sú jadrom všetkého, čo robíme.
                             </p>
                         </CardContent>
                     </Card>
@@ -94,7 +94,7 @@ export default function AboutPage() {
 
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-3xl md:text-4xl font-bold font-headline text-center mb-12">
-                        Meet the Team
+                        Zoznámte sa s tímom
                     </h2>
                     <div className="space-y-8">
                         {teamMembers.map((member) => (

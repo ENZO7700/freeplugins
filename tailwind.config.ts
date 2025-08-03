@@ -35,9 +35,8 @@ const config = {
         'spacing-adaptive': 'var(--adaptive-spacing-unit)',
       },
       fontFamily: {
-        body: ['"PT Sans"', 'sans-serif'],
-        headline: ['Poppins', 'sans-serif'],
-        code: ['monospace'],
+        body: ['var(--font-pt-sans)', 'sans-serif'],
+        headline: ['var(--font-poppins)', 'sans-serif'],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -156,15 +155,15 @@ const config = {
               marginBottom: 'var(--adaptive-spacing-unit)',
             },
             h1: {
-              fontFamily: theme('fontFamily.headline'),
+              fontFamily: theme('fontFamily.headline').join(', '),
               color: 'hsl(var(--foreground))',
             },
             h2: {
-              fontFamily: theme('fontFamily.headline'),
+              fontFamily: theme('fontFamily.headline').join(', '),
               color: 'hsl(var(--foreground))',
             },
             h3: {
-              fontFamily: theme('fontFamily.headline'),
+              fontFamily: theme('fontFamily.headline').join(', '),
               color: 'hsl(var(--foreground))',
             },
             strong: {
