@@ -87,9 +87,45 @@ Nastavte si pripomienky alebo využite funkcie automatických aktualizácií. In
     author: 'Peter Bezpečný',
     authorImageUrl: 'https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=100&h=100&fit=crop',
     date: '28. júl 2024',
-    imageUrl: 'https://images.unsplash.com/photo-1526374965328-5f61d4dc16c6?q=80&w=600&h=400&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'cyber security',
     category: 'Plugins',
+  },
+  {
+    slug: 'preco-updatovat-wordpress',
+    title: 'Prečo je pravidelná aktualizácia WordPressu kľúčová?',
+    summary: 'Zanedbávanie aktualizácií WordPressu je risk. Zistite, prečo je dôležité udržiavať jadro vášho webu v top kondícii.',
+    content: `Každá nová verzia WordPressu prináša dôležité bezpečnostné záplaty. Ignorovaním aktualizácií vystavujete svoj web zbytočným rizikám a potenciálnym útokom, ktoré môžu viesť ku strate dát alebo poškodeniu reputácie.
+
+Aktualizácie často obsahujú optimalizácie kódu, ktoré zrýchľujú načítanie vášho webu. Rýchlejší web znamená lepšiu používateľskú skúsenosť a lepšie hodnotenie vo vyhľadávačoch ako Google.
+
+Nové verzie WordPressu prinášajú aj nové funkcie a vylepšenia existujúcich nástrojov. Môžete tak získať prístup k modernejším editorom, lepšej správe médií alebo pokročilejším možnostiam prispôsobenia.
+
+Vývojári tém a pluginov prispôsobujú svoje produkty najnovším verziám WordPressu. Ak svoj web neaktualizujete, riskujete, že vaše obľúbené nástroje prestanú správne fungovať alebo sa stanú nekompatibilnými.`,
+    author: 'Ján Kováč',
+    authorImageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=100&h=100&fit=crop',
+    date: '30. júl 2024',
+    imageUrl: 'https://images.unsplash.com/photo-1633355444131-2900a3f813a1?q=80&w=600&h=400&fit=crop',
+    dataAiHint: 'wordpress logo',
+    category: 'Wordpress',
+  },
+  {
+    slug: 'ai-chatbot-pre-eshopy',
+    title: 'AI Chatbot: Nevyhnutnosť pre každý e-shop budúcnosti',
+    summary: 'Umelá inteligencia mení pravidlá hry v e-commerce. Zistite, prečo by mal byť AI chatbot neoddeliteľnou súčasťou vášho online obchodu.',
+    content: `Zákazníci dnes očakávajú okamžité odpovede. AI chatbot je k dispozícii 24/7 a dokáže odpovedať na bežné otázky týkajúce sa produktov, objednávok či dopravy, čím uvoľňuje ruky vašim zamestnancom pre zložitejšie úlohy.
+
+Moderné AI chatboty dokážu analyzovať správanie zákazníka a proaktívne mu ponúkať relevantné produkty, zľavové kupóny alebo ho navigovať na správne miesto. Týmto spôsobom personalizujú nákupný zážitok a zvyšujú konverzie.
+
+Chatbot môže zákazníka sprevádzať celým nákupným procesom, od výberu produktu až po dokončenie objednávky. Pomáha pri vyhľadávaní, porovnávaní a môže dokonca asistovať pri riešení problémov s platbou, čím znižuje mieru opustenia košíka.
+
+Implementácia AI chatbotu je dnes vďaka moderným platformám a pluginom jednoduchšia a dostupnejšia ako kedykoľvek predtým. Investícia do tejto technológie sa rýchlo vráti v podobe spokojnejších zákazníkov a vyšších tržieb.`,
+    author: 'Martina Veselá',
+    authorImageUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100&h=100&fit=crop',
+    date: '2. august 2024',
+    imageUrl: 'https://images.unsplash.com/photo-1534723328310-e82dad3ee43f?q=80&w=600&h=400&fit=crop',
+    dataAiHint: 'robot assistant',
+    category: 'AI',
   },
 ];
 
