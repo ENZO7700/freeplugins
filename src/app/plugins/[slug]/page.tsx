@@ -218,7 +218,7 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
              {/* Existing Reviews */}
              <div className="space-y-6">
                 {plugin.reviews.length > 0 ? (
-                    plugin.reviews.map((review, index) => (
+                    plugin.reviews.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map((review, index) => (
                         <Card key={index} className="p-6">
                             <div className="flex items-start justify-between">
                                 <div>
