@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader2, Sparkles, User, Bot } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { aiAssistant } from '@/ai/flows/ai-assistant';
+// import { aiAssistant } from '@/ai/flows/ai-assistant'; // To be enabled later
 
 interface Message {
     role: 'user' | 'assistant';
@@ -29,22 +29,29 @@ export function AiAssistant() {
         setIsLoading(true);
         setQuery('');
 
-        try {
-            const response = await aiAssistant(query);
-            const assistantMessage: Message = { role: 'assistant', content: response.answer };
-            setMessages(prev => [...prev, assistantMessage]);
-        } catch (error) {
-            console.error('AI Assistant Error:', error);
-            toast({
-                variant: 'destructive',
-                title: 'An error occurred',
-                description: 'Failed to get a recommendation. Please try again.',
-            });
-             const assistantMessage: Message = { role: 'assistant', content: "I'm sorry, I'm having trouble connecting right now. Please try again later." };
-             setMessages(prev => [...prev, assistantMessage]);
-        } finally {
-            setIsLoading(false);
-        }
+        // Simulate API call for now
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        const assistantMessage: Message = { role: 'assistant', content: "Ospravedlňujeme sa, táto funkcia je dočasne nedostupná. Pracujeme na jej obnovení." };
+        setMessages(prev => [...prev, assistantMessage]);
+        setIsLoading(false);
+        
+        // try {
+            // const response = await aiAssistant(query); // To be enabled later
+            // const assistantMessage: Message = { role: 'assistant', content: response.answer };
+            // setMessages(prev => [...prev, assistantMessage]);
+        // } catch (error) {
+            // console.error('AI Assistant Error:', error);
+            // toast({
+                // variant: 'destructive',
+                // title: 'An error occurred',
+                // description: 'Failed to get a recommendation. Please try again.',
+            // });
+            //  const assistantMessage: Message = { role: 'assistant', content: "I'm sorry, I'm having trouble connecting right now. Please try again later." };
+            //  setMessages(prev => [...prev, assistantMessage]);
+        // } finally {
+            // setIsLoading(false);
+        // }
     };
 
     return (
