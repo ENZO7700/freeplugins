@@ -9,7 +9,7 @@
 
 import { ai } from '@/ai/genkit';
 import { findPlugins } from '@/services/plugin-service';
-import { getAllPosts, BlogPost } from '@/lib/blog-posts';
+import { getAllPosts } from '@/lib/blog-posts';
 import { z } from 'genkit';
 
 // Define the schema for the output of the recommendation flow.
@@ -40,7 +40,9 @@ const findPluginsTool = ai.defineTool(
     })),
   },
   async ({ query, category }) => {
-    return findPlugins(query, category);
+    const results = await findPlugins(query, category);
+    // Return a subset of the data to not overload the context
+    return results.map(p => ({ name: p.name, description: p.description, category: p.category, price: p.price }));
   }
 );
 
@@ -48,14 +50,13 @@ const findPluginsTool = ai.defineTool(
 const findBlogPostsTool = ai.defineTool(
   {
     name: 'findBlogPosts',
-    description: 'Finds blog posts based on a search query. Can be used to answer questions about topics covered in the blog like SEO, marketing, security, etc.',
+    description: 'Finds blog posts based on a search query. Can be used to answer questions about topics covered in the blog like SEO, marketing, security, wordpress, ai, etc.',
     inputSchema: z.object({
       query: z.string().describe('A search query to match against blog post titles, summaries, and content.'),
     }),
     outputSchema: z.array(z.object({
         title: z.string(),
         summary: z.string(),
-        content: z.string(),
     })),
   },
   async ({ query }) => {
@@ -67,7 +68,7 @@ const findBlogPostsTool = ai.defineTool(
         post.content.toLowerCase().includes(lowercasedQuery)
     );
     // Return a subset of the data to not overload the context
-    return results.map(p => ({ title: p.title, summary: p.summary, content: p.content }));
+    return results.map(p => ({ title: p.title, summary: p.summary }));
   }
 );
 
@@ -77,17 +78,18 @@ const assistantPrompt = ai.definePrompt({
   // Provide the tools to the AI.
   tools: [findPluginsTool, findBlogPostsTool],
   // The system message guides the AI's behavior.
-  system: `You are a friendly and knowledgeable assistant for an online plugin marketplace called Freeplugins.org.
+  system: `You are a friendly and knowledgeable assistant for an online plugin marketplace called SOFTW4R3.
 Your goal is to help users find the perfect plugin for their needs or answer their questions based on the available blog posts.
 - First, understand the user's request.
 - If the user is looking for a plugin, use the findPlugins tool to search for relevant plugins by keywords or category.
-- If the user is asking a question about a topic like SEO, marketing, security, or how to choose a plugin, use the findBlogPosts tool to find relevant articles.
+- If the user is asking a question about a topic like SEO, marketing, security, wordpress, or how to choose a plugin, use the findBlogPosts tool to find relevant articles.
 - Based on the tool results, formulate a helpful answer.
 - If you recommend plugins, list one or two of the best matches and briefly explain why each one is a good fit, including the name.
 - If you are answering based on a blog post, summarize the key points from the article to answer the user's question. Mention the title of the article you are referencing.
 - If you don't find any matching plugins or articles, politely inform the user and maybe suggest a broader search.
 - Keep your answers concise, helpful, and friendly. Do not use markdown.
 - Do not make up plugins or information. Only use information returned by the tools.
+- Your entire response MUST BE in the Slovak language.
 `,
 });
 

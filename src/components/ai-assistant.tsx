@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader2, Sparkles, User, Bot } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-// import { aiAssistant } from '@/ai/flows/ai-assistant'; // To be enabled later
+import { aiAssistant } from '@/ai/flows/ai-assistant';
 
 interface Message {
     role: 'user' | 'assistant';
@@ -27,31 +27,25 @@ export function AiAssistant() {
         const userMessage: Message = { role: 'user', content: query };
         setMessages(prev => [...prev, userMessage]);
         setIsLoading(true);
+        const currentQuery = query;
         setQuery('');
 
-        // Simulate API call for now
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        const assistantMessage: Message = { role: 'assistant', content: "Ospravedlňujeme sa, táto funkcia je dočasne nedostupná. Pracujeme na jej obnovení." };
-        setMessages(prev => [...prev, assistantMessage]);
-        setIsLoading(false);
-        
-        // try {
-            // const response = await aiAssistant(query); // To be enabled later
-            // const assistantMessage: Message = { role: 'assistant', content: response.answer };
-            // setMessages(prev => [...prev, assistantMessage]);
-        // } catch (error) {
-            // console.error('AI Assistant Error:', error);
-            // toast({
-                // variant: 'destructive',
-                // title: 'An error occurred',
-                // description: 'Failed to get a recommendation. Please try again.',
-            // });
-            //  const assistantMessage: Message = { role: 'assistant', content: "I'm sorry, I'm having trouble connecting right now. Please try again later." };
-            //  setMessages(prev => [...prev, assistantMessage]);
-        // } finally {
-            // setIsLoading(false);
-        // }
+        try {
+            const response = await aiAssistant(currentQuery); 
+            const assistantMessage: Message = { role: 'assistant', content: response.answer };
+            setMessages(prev => [...prev, assistantMessage]);
+        } catch (error) {
+            console.error('AI Assistant Error:', error);
+            toast({
+                variant: 'destructive',
+                title: 'Vyskytla sa chyba',
+                description: 'Nepodarilo sa získať odpoveď. Skúste to prosím znova.',
+            });
+             const assistantMessage: Message = { role: 'assistant', content: "Ospravedlňujeme sa, momentálne mám problém s pripojením. Skúste to prosím neskôr." };
+             setMessages(prev => [...prev, assistantMessage]);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -59,10 +53,10 @@ export function AiAssistant() {
             <CardHeader className="text-center">
                 <div className="flex justify-center items-center gap-2 mb-2">
                     <Sparkles className="h-8 w-8 text-primary" />
-                    <CardTitle className="font-headline text-3xl">AI Plugin Assistant</CardTitle>
+                    <CardTitle className="font-headline text-3xl">AI asistent pre pluginy</CardTitle>
                 </div>
                 <CardDescription className="text-lg">
-                    Tell me what you need, and I'll recommend the perfect plugin or find a helpful article for you!
+                    Povedzte mi, čo potrebujete, a ja vám odporučím perfektný plugin alebo nájdem užitočný článok!
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -71,7 +65,7 @@ export function AiAssistant() {
                         {messages.length === 0 ? (
                              <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
                                 <Bot className="h-12 w-12 mb-2"/>
-                                <p>e.g., "Find a good form builder" or "How can I improve my SEO?"</p>
+                                <p>napr. "Nájdi mi dobrý nástroj na tvorbu formulárov" alebo "Ako môžem zlepšiť svoje SEO?"</p>
                             </div>
                         ) : (
                             messages.map((msg, index) => (
@@ -97,11 +91,11 @@ export function AiAssistant() {
                         <Input
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Describe what you're looking for..."
+                            placeholder="Opíšte, čo hľadáte..."
                             disabled={isLoading}
                         />
-                        <Button type="submit" disabled={isLoading}>
-                            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Send'}
+                        <Button type="submit" disabled={isLoading || !query.trim()}>
+                            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Odoslať'}
                         </Button>
                     </form>
                 </div>
