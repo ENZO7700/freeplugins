@@ -125,7 +125,7 @@ export const plugins: Plugin[] = [
     description: 'Vytvárajte vlastné formuláre s pokročilou logikou a integráciami.',
     longDescription: 'Vytvorte akýkoľvek typ formulára, od jednoduchých kontaktných formulárov až po zložité prieskumy s podmienenou logikou. FormBuilder+ sa integruje s vašimi obľúbenými aplikáciami na zefektívnenie procesu zberu dát.',
     price: '$19',
-    imageUrl: 'https://images.unsplash.com/photo-1556740738-b6a63e2775d2?q=80&w=600&h=400&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'form survey',
     rating: 3.5,
     reviews: [],
@@ -408,5 +408,3 @@ export const getPluginData = (slug: string) => {
       reviews: plugin.reviews.map(r => ({...r}))
   };
 }
-
-    

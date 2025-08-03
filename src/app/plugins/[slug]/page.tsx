@@ -272,5 +272,3 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
     </PageTransitionWrapper>
   );
 }
-
-    

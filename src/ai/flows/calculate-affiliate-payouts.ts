@@ -80,5 +80,3 @@ const calculateAffiliatePayoutsFlow = ai.defineFlow(
 export async function calculateAffiliatePayouts(): Promise<z.infer<typeof PayoutSummarySchema>> {
     return await calculateAffiliatePayoutsFlow();
 }
-
-    

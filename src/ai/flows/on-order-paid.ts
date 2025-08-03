@@ -96,5 +96,3 @@ const onOrderPaidFlow = ai.defineFlow(
 export async function onOrderPaid(input: OnOrderPaidInput): Promise<void> {
   await onOrderPaidFlow(input);
 }
-
-    
