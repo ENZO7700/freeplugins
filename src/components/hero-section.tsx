@@ -118,7 +118,7 @@ export function HeroSection() {
             variants={itemVariants}
           >
             <Balancer>
-                Nájdite, zdieľajte a predávajte softvérové pluginy a nástroje, ktoré poháňajú vaše projekty.
+                Find, share, and sell software plugins and tools that power your projects.
             </Balancer>
           </motion.p>
           <motion.div 
@@ -126,7 +126,7 @@ export function HeroSection() {
             variants={itemVariants}
           >
             <Button size="lg" className="shadow-lg hover:shadow-primary/50">
-              Preskúmať pluginy <ArrowRight className="ml-2" />
+              Explore Plugins <ArrowRight className="ml-2" />
             </Button>
           </motion.div>
         </motion.div>

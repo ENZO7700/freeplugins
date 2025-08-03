@@ -156,12 +156,15 @@ const config = {
               marginBottom: 'var(--adaptive-spacing-unit)',
             },
             h1: {
+              fontFamily: theme('fontFamily.headline'),
               color: 'hsl(var(--foreground))',
             },
             h2: {
+              fontFamily: theme('fontFamily.headline'),
               color: 'hsl(var(--foreground))',
             },
             h3: {
+              fontFamily: theme('fontFamily.headline'),
               color: 'hsl(var(--foreground))',
             },
             strong: {
