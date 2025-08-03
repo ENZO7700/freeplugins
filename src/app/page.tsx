@@ -7,7 +7,6 @@ import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
 import { CategoryGrid } from '@/components/category-grid';
 import { PluginList } from '@/components/plugin-list';
 import { useSearchParams } from 'next/navigation';
-import { AiAssistant } from '@/components/ai-assistant';
 import { FeaturedPlugins } from '@/components/featured-plugins';
 import { PluginIdeaGenerator } from '@/components/plugin-idea-generator';
 
@@ -31,7 +30,6 @@ export default function Home() {
           <>
             <HeroSection />
             <div className="container mx-auto px-4 py-8">
-              <AiAssistant />
               <FeaturedPlugins />
               <PluginIdeaGenerator />
               <CategoryGrid />
