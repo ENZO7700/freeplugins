@@ -1160,7 +1160,7 @@ export const plugins: Plugin[] = [
     description: 'Rýchly a funkciami nabitý klient pre Reddit.',
     longDescription: 'Apollo je navrhnutý od základov pre iOS. Ponúka rýchle a intuitívne ovládanie gestami, prispôsobiteľný vzhľad a výkonné funkcie pre náročných používateľov Redditu.',
     price: 'Free (Pro available)',
-    imageUrl: 'https://images.unsplash.com/photo-1634575386981-a63d7634f1b4?q=80&w=600&h=400&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1634575386981-a63d765b1b4?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'social browsing',
     rating: 4.9,
     reviews: [],
