@@ -9,3 +9,5 @@ import '@/ai/flows/on-order-paid.ts';
 import '@/ai/flows/calculate-affiliate-payouts.ts';
 import '@/ai/flows/ai-assistant.ts';
 import '@/ai/flows/generate-plugin-idea.ts';
+import '@/ai/flows/generate-audio-from-text.ts';
+
