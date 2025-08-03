@@ -89,7 +89,7 @@ Nastavte si pripomienky alebo využite funkcie automatických aktualizácií. In
     date: '28. júl 2024',
     imageUrl: 'https://images.unsplash.com/photo-1526374965328-5f61d4dc16c6?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'cyber security',
-    category: 'Bezpečnosť',
+    category: 'Plugins',
   },
 ];
 

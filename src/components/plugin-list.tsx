@@ -62,8 +62,8 @@ export const plugins: Plugin[] = [
     dataAiHint: 'chart graph',
     rating: 4.5,
     reviews: [
-      { author: 'Alice', rating: 5, comment: 'Absolútne zmenilo návštevnosť mojej stránky!', date: '2024-07-20' },
-      { author: 'Bob', rating: 4, comment: 'Skvelý nástroj, trochu strmá krivka učenia.', date: '2024-07-18' },
+      { author: 'Alice', rating: 5, comment: 'Absolútne zmenilo návštevnosť mojej stránky!', date: '2024-07-20T10:00:00Z' },
+      { author: 'Bob', rating: 4, comment: 'Skvelý nástroj, trochu strmá krivka učenia.', date: '2024-07-18T14:30:00Z' },
     ],
   },
   {
@@ -73,11 +73,11 @@ export const plugins: Plugin[] = [
     description: 'Premeňte svoju webovú stránku na výkonný online obchod v priebehu niekoľkých minút.',
     longDescription: 'E-commerceify poskytuje všetko, čo potrebujete na začatie online predaja. Medzi funkcie patrí správa produktov, bezpečné platobné brány, sledovanie zásob a správa zákazníkov. Plne prispôsobiteľné, aby zodpovedalo vašej značke.',
     price: '$99',
-    imageUrl: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=600&h=400&fit=crop',
-    dataAiHint: 'online shopping',
+    imageUrl: 'https://images.unsplash.com/photo-1580974910344-96b9918342fb?q=80&w=600&h=400&fit=crop',
+    dataAiHint: 'online payment',
     rating: 5,
     reviews: [
-       { author: 'Charlie', rating: 5, comment: 'Super jednoduché na nastavenie a funguje bezchybne.', date: '2024-07-22' },
+       { author: 'Charlie', rating: 5, comment: 'Super jednoduché na nastavenie a funguje bezchybne.', date: '2024-07-22T09:00:00Z' },
     ],
   },
   {
@@ -139,7 +139,7 @@ export const plugins: Plugin[] = [
     dataAiHint: 'website builder',
     rating: 4.9,
     reviews: [
-      { author: 'David', rating: 5, comment: 'Najlepší page builder pre WordPress, bodka.', date: '2024-07-29' }
+      { author: 'David', rating: 5, comment: 'Najlepší page builder pre WordPress, bodka.', date: '2024-07-29T11:00:00Z' }
     ],
   },
   {

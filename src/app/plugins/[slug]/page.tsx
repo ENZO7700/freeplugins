@@ -18,6 +18,9 @@ import { useAuth } from '@/context/auth-context';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { format } from 'date-fns';
+import { sk } from 'date-fns/locale';
+
 
 export default function PluginDetailPage({ params }: { params: { slug: string } }) {
   const { user } = useAuth();
@@ -85,7 +88,7 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
         author: user?.displayName || user?.email || 'Anonym',
         rating: reviewRating,
         comment: reviewComment,
-        date: new Date().toISOString().split('T')[0],
+        date: new Date().toISOString(),
     };
     
     // This update is local to the client. In a real app, you'd send this to a backend.
@@ -220,7 +223,7 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
                             <div className="flex items-start justify-between">
                                 <div>
                                     <p className="font-semibold">{review.author}</p>
-                                    <p className="text-sm text-muted-foreground">{new Date(review.date).toLocaleDateString()}</p>
+                                    <p className="text-sm text-muted-foreground">{format(new Date(review.date), "d. M. yyyy", { locale: sk })}</p>
                                 </div>
                                 <StarRating rating={review.rating} />
                             </div>
