@@ -5,7 +5,6 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import {
-  Sidebar,
   SidebarContent,
   SidebarHeader,
   SidebarMenu,
@@ -13,21 +12,17 @@ import {
   SidebarMenuButton,
   SidebarFooter,
   useSidebar,
-  SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem
 } from "@/components/ui/sidebar"
 import {
-  Home,
   BookOpen,
   Users,
   Mail,
   ShoppingBag,
   ChevronDown
 } from "lucide-react"
-import { Button } from "./ui/button"
 import { getPluginCategories } from "./plugin-list"
 
 export function MainNav() {
@@ -87,7 +82,7 @@ export function MainNav() {
                 <SidebarMenuSubItem>
                   <Link href="/" onClick={handleClose} passHref>
                     <SidebarMenuSubButton asChild isActive={isMarketplaceActive()}>
-                      <a>Všetky pluginy</a>
+                       Všetky pluginy
                     </SidebarMenuSubButton>
                   </Link>
                 </SidebarMenuSubItem>
@@ -95,7 +90,7 @@ export function MainNav() {
                     <SidebarMenuSubItem key={category.name}>
                         <Link href={`/?category=${encodeURIComponent(category.name)}`} onClick={handleClose} passHref>
                             <SidebarMenuSubButton asChild isActive={isMarketplaceActive(category.name)}>
-                                <a>{category.name}</a>
+                                {category.name}
                             </SidebarMenuSubButton>
                         </Link>
                     </SidebarMenuSubItem>
