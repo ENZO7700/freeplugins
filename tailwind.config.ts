@@ -133,8 +133,6 @@ const config = {
             '--tw-prose-code': theme('colors.foreground'),
             '--tw-prose-pre-code': theme('colors.foreground'),
             '--tw-prose-pre-bg': theme('colors.muted.DEFAULT'),
-            '--tw-prose-th-borders': theme('colors.border'),
-            '--tw-prose-td-borders': theme('colors.border'),
             '--tw-prose-invert-body': theme('colors.muted.foreground'),
             '--tw-prose-invert-headings': theme('colors.background'),
             '--tw-prose-invert-lead': theme('colors.muted.foreground'),
