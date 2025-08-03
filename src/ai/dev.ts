@@ -10,4 +10,5 @@ import '@/ai/flows/calculate-affiliate-payouts.ts';
 import '@/ai/flows/ai-assistant.ts';
 import '@/ai/flows/generate-plugin-idea.ts';
 import '@/ai/flows/generate-audio-from-text.ts';
+import '@/ai/flows/generate-plugin-logo.ts';
 

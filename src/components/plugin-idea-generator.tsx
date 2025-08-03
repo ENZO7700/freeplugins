@@ -8,12 +8,16 @@ import { Button } from '@/components/ui/button';
 import { Loader2, Lightbulb, Sparkles, User, Tag, DollarSign, Target } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { generatePluginIdea, type GeneratePluginIdeaOutput } from '@/ai/flows/generate-plugin-idea';
+import { generatePluginLogo } from '@/ai/flows/generate-plugin-logo';
 import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
 
 export function PluginIdeaGenerator() {
     const [concept, setConcept] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);
+    const [isLogoLoading, setIsLogoLoading] = React.useState(false);
     const [idea, setIdea] = React.useState<GeneratePluginIdeaOutput | null>(null);
+    const [logoUrl, setLogoUrl] = React.useState<string | null>(null);
     const { toast } = useToast();
 
     const handleIdeaSubmit = async (e: React.FormEvent) => {
@@ -22,10 +26,32 @@ export function PluginIdeaGenerator() {
 
         setIsLoading(true);
         setIdea(null);
+        setLogoUrl(null);
 
         try {
             const response = await generatePluginIdea({ concept });
             setIdea(response);
+            
+            // Now, generate the logo
+            setIsLogoLoading(true);
+            try {
+                const logoResponse = await generatePluginLogo({ 
+                    name: response.name, 
+                    description: response.description 
+                });
+                setLogoUrl(logoResponse);
+            } catch (logoError) {
+                console.error('Plugin Logo Generation Error:', logoError);
+                // Non-critical error, so we just toast without failing the whole process
+                toast({
+                    variant: 'destructive',
+                    title: 'Chyba pri generovaní loga',
+                    description: 'Nepodarilo sa vygenerovať logo, ale detaily nápadu sú pripravené.',
+                });
+            } finally {
+                setIsLogoLoading(false);
+            }
+
         } catch (error) {
             console.error('Plugin Idea Generator Error:', error);
             toast({
@@ -82,7 +108,20 @@ export function PluginIdeaGenerator() {
                             transition={{ duration: 0.5 }}
                         >
                         <CardFooter className="flex flex-col items-start gap-6 pt-6 border-t">
-                             <h3 className="text-2xl font-bold font-headline text-primary">{idea.name}</h3>
+                            <div className="flex flex-col sm:flex-row items-center gap-4">
+                                {isLogoLoading ? (
+                                    <div className="w-24 h-24 bg-muted rounded-md flex items-center justify-center">
+                                        <Loader2 className="w-8 h-8 animate-spin text-primary"/>
+                                    </div>
+                                ) : logoUrl ? (
+                                    <Image src={logoUrl} alt={`${idea.name} logo`} width={96} height={96} className="rounded-md shadow-md"/>
+                                ) : (
+                                    <div className="w-24 h-24 bg-muted rounded-md flex items-center justify-center">
+                                         <Lightbulb className="w-8 h-8 text-muted-foreground"/>
+                                    </div>
+                                )}
+                                <h3 className="text-2xl font-bold font-headline text-primary text-center sm:text-left">{idea.name}</h3>
+                            </div>
 
                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                                  <div className="flex items-start gap-3">
