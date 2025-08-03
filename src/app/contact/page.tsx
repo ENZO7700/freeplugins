@@ -25,8 +25,8 @@ export default function ContactPage() {
 
         setIsLoading(false);
         toast({
-            title: 'Message Sent!',
-            description: "We'll get back to you as soon as possible.",
+            title: 'Správa odoslaná!',
+            description: "Odpovieme vám čo najskôr.",
         });
         
         // Reset form - for a real app, you'd use react-hook-form
@@ -37,9 +37,9 @@ export default function ContactPage() {
         <PageTransitionWrapper>
             <main className="container mx-auto px-4 py-12 md:py-24">
                 <div className="text-center max-w-3xl mx-auto mb-12">
-                    <h1 className="text-4xl md:text-5xl font-bold font-headline">Contact Us</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold font-headline">Kontaktujte nás</h1>
                     <p className="mt-4 text-lg text-muted-foreground">
-                        Have questions? We'd love to hear from you.
+                        Máte otázky? Radi vám na ne odpovieme.
                     </p>
                 </div>
 
@@ -47,32 +47,32 @@ export default function ContactPage() {
                     <div className="space-y-8">
                         <Card>
                             <CardHeader>
-                                <CardTitle>Send us a message</CardTitle>
-                                <CardDescription>Fill out the form and our team will get back to you.</CardDescription>
+                                <CardTitle>Napíšte nám správu</CardTitle>
+                                <CardDescription>Vyplňte formulár a náš tím sa vám čo najskôr ozve.</CardDescription>
                             </CardHeader>
                             <CardContent>
                                 <form onSubmit={handleSubmit} className="space-y-4">
                                     <div className="grid sm:grid-cols-2 gap-4">
                                         <div className="space-y-2">
-                                            <Label htmlFor="name">Name</Label>
-                                            <Input id="name" placeholder="John Doe" required />
+                                            <Label htmlFor="name">Meno</Label>
+                                            <Input id="name" placeholder="Ján Vzor" required />
                                         </div>
                                         <div className="space-y-2">
                                             <Label htmlFor="email">Email</Label>
-                                            <Input id="email" type="email" placeholder="john@example.com" required />
+                                            <Input id="email" type="email" placeholder="jan@example.com" required />
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <Label htmlFor="subject">Subject</Label>
-                                        <Input id="subject" placeholder="Question about plugins" required />
+                                        <Label htmlFor="subject">Predmet</Label>
+                                        <Input id="subject" placeholder="Otázka ohľadom pluginov" required />
                                     </div>
                                     <div className="space-y-2">
-                                        <Label htmlFor="message">Message</Label>
-                                        <Textarea id="message" placeholder="Your message..." required />
+                                        <Label htmlFor="message">Správa</Label>
+                                        <Textarea id="message" placeholder="Vaša správa..." required />
                                     </div>
                                     <Button type="submit" className="w-full" disabled={isLoading}>
                                         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                        Send Message
+                                        Odoslať správu
                                     </Button>
                                 </form>
                             </CardContent>
@@ -82,8 +82,8 @@ export default function ContactPage() {
                      <div className="space-y-8">
                         <Card className="bg-secondary/50 dark:bg-secondary/20 border-primary/20">
                             <CardHeader>
-                                <CardTitle>Our Contact Details</CardTitle>
-                                <CardDescription>Get in touch with us directly.</CardDescription>
+                                <CardTitle>Naše kontaktné údaje</CardTitle>
+                                <CardDescription>Spojte sa s nami priamo.</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4 text-lg">
                                 <div className="flex items-center gap-4">
@@ -92,11 +92,11 @@ export default function ContactPage() {
                                 </div>
                                 <div className="flex items-center gap-4">
                                     <Phone className="h-6 w-6 text-primary" />
-                                    <a href="tel:+1234567890" className="hover:underline">+1 (234) 567-890</a>
+                                    <a href="tel:+421900123456" className="hover:underline">+421 900 123 456</a>
                                 </div>
                                  <div className="flex items-center gap-4">
                                     <MapPin className="h-6 w-6 text-primary" />
-                                    <span>Bratislava, Slovakia</span>
+                                    <span>Bratislava, Slovensko</span>
                                 </div>
                             </CardContent>
                         </Card>
