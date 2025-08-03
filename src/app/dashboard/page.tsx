@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useAuth } from '@/context/auth-context';
@@ -15,10 +16,11 @@ import { Separator } from '@/components/ui/separator';
 import { SpendingChart } from '@/components/dashboard/spending-chart';
 import { CategoryChart } from '@/components/dashboard/category-chart';
 import { Balancer } from 'react-wrap-balancer';
-import { plugins, Plugin } from '@/components/plugin-list';
+import { plugins } from '@/components/plugin-list';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
+import { LicenseKeyDialog } from '@/components/dashboard/license-key-dialog';
 
 
 export default function DashboardPage() {
@@ -190,7 +192,13 @@ export default function DashboardPage() {
                             </div>
                           </div>
                           <div className='flex gap-2 self-end sm:self-center'>
-                             <Button size="sm" variant="ghost"><KeyRound className="mr-2 h-4 w-4" /> Spravovať licenciu</Button>
+                             <LicenseKeyDialog 
+                                pluginId={plugin.slug}
+                                userId={user.uid}
+                                trigger={
+                                    <Button size="sm" variant="ghost"><KeyRound className="mr-2 h-4 w-4" /> Spravovať licenciu</Button>
+                                }
+                             />
                              <Button size="sm" variant="outline"><Download className="mr-2 h-4 w-4" /> Stiahnuť</Button>
                           </div>
                         </li>
