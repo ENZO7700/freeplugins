@@ -4,7 +4,6 @@
 import * as React from 'react';
 import { useAuth } from '@/context/auth-context';
 import { useCart } from '@/context/cart-context';
-import { useDashboard } from '@/context/dashboard-context';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
@@ -14,11 +13,13 @@ import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { db } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { onOrderPaid } from '@/ai/flows/on-order-paid';
 
 export default function CheckoutPage() {
   const { user, loading } = useAuth();
   const { cart, total, clearCart } = useCart();
-  const { addOrder } = useDashboard();
   const router = useRouter();
   const { toast } = useToast();
   const [isProcessing, setIsProcessing] = React.useState(false);
@@ -35,26 +36,54 @@ export default function CheckoutPage() {
 
   const handlePlaceOrder = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (!user) {
+      toast({
+        variant: "destructive",
+        title: "Chyba",
+        description: "Na zadanie objednávky musíte byť prihlásený.",
+      });
+      return;
+    }
     setIsProcessing(true);
-    
-    // Simulate API call to process payment and create order
-    await new Promise(resolve => setTimeout(resolve, 2000));
 
-    // Add order to dashboard context (which saves to localStorage)
-    addOrder({
-      id: new Date().toISOString(), // simple unique id
-      date: new Date().toISOString(),
-      items: cart,
-      total: total,
-    });
+    try {
+      // 1. Create the order document in Firestore
+      const orderRef = await addDoc(collection(db, "orders"), {
+        userId: user.uid,
+        userEmail: user.email,
+        items: cart,
+        total: total,
+        orderDate: serverTimestamp(),
+        status: 'paid' // Simulate successful payment
+      });
 
-    setIsProcessing(false);
-    clearCart();
-    toast({
-      title: 'Objednávka úspešná!',
-      description: 'Vaše pluginy sú na ceste. Ďakujeme za nákup.',
-    });
-    router.push('/dashboard');
+      console.log("Order created with ID: ", orderRef.id);
+
+      // 2. Trigger the onOrderPaid Genkit flow
+      await onOrderPaid({
+        orderId: orderRef.id,
+        userId: user.uid,
+        userEmail: user.email || '',
+        items: cart.map(item => ({ pluginId: item.slug, name: item.name })),
+      });
+      
+      setIsProcessing(false);
+      clearCart();
+      toast({
+        title: 'Objednávka úspešná!',
+        description: 'Vaše pluginy sú na ceste. Ďakujeme za nákup.',
+      });
+      router.push('/dashboard');
+
+    } catch (error) {
+        console.error("Error placing order: ", error);
+        toast({
+          variant: "destructive",
+          title: "Spracovanie objednávky zlyhalo",
+          description: "Vyskytla sa chyba. Skúste to znova.",
+        });
+        setIsProcessing(false);
+    }
   };
 
   if (loading || !user || cart.length === 0) {

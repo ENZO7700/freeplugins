@@ -72,9 +72,7 @@ export function FeaturedPlugins() {
                 </Link>
                 <div className="flex items-center gap-2 mb-2">
                   <StarRating rating={plugin.rating} />
-                  <span className="text-sm text-muted-foreground">
-                    ({plugin.reviews.length} recenzií)
-                  </span>
+                   <span className="text-sm text-muted-foreground">(pozri recenzie)</span>
                 </div>
                 <p className="text-muted-foreground text-sm">
                   {plugin.description}

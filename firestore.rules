@@ -1,35 +1,39 @@
-
 rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-  
-    // Helper functions
-    function isOwner(userId) {
-      return request.auth != null && request.auth.uid == userId;
+
+    // Users can only read/write their own user document
+    match /users/{userId} {
+      allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+      allow create: if request.auth != null;
     }
     
-    function isSignedIn() {
-      return request.auth != null;
-    }
-    
-    // Plugins are publically readable
+    // Anyone can read plugins
     match /plugins/{pluginId} {
+        allow read: if true;
+    }
+    
+    // Reviews can be read by anyone
+    // Authenticated users can create reviews
+    // Users can only update/delete their own reviews
+    match /plugins/{pluginId}/reviews/{reviewId} {
       allow read: if true;
-      // TODO: Add write rule for vendors/admins
-      allow write: if false; 
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && resource.data.authorId == request.auth.uid;
     }
     
-    // Orders can be read/written by the user who owns them
+    // Orders can only be managed by the user who created them
     match /orders/{orderId} {
-        allow read, write: if isOwner(resource.data.userId);
+      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null;
     }
     
-    // License keys can only be read by the user who owns them
-    // Creation is handled by a Cloud Function with admin privileges
+    // License keys can only be read by the user who they belong to
     match /licenseKeys/{keyId} {
-        allow read: if isOwner(resource.data.userId);
-        allow create, update, delete: if false;
+      allow read, update: if request.auth != null && request.auth.uid == resource.data.userId;
+      // Creation is handled by a server-side flow (onOrderPaid)
+      allow create: if false; 
     }
   }
 }

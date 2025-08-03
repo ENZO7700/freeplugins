@@ -31,8 +31,8 @@ export interface Plugin {
   price: string;
   imageUrl: string;
   dataAiHint: string;
-  rating: number;
-  reviews: Review[];
+  rating: number; // This will now serve as the initial/default rating
+  reviews: Review[]; // This will likely be empty, as reviews are fetched from DB
 }
 
 export interface Category {
@@ -62,10 +62,7 @@ export const plugins: Plugin[] = [
     imageUrl: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'chart graph',
     rating: 4.5,
-    reviews: [
-      { author: 'Alice', rating: 5, comment: 'Absolútne zmenilo návštevnosť mojej stránky!', date: '2024-07-20T10:00:00Z' },
-      { author: 'Bob', rating: 4, comment: 'Skvelý nástroj, trochu strmá krivka učenia.', date: '2024-07-18T14:30:00Z' },
-    ],
+    reviews: [],
   },
   {
     slug: 'ecommerceify',
@@ -77,9 +74,7 @@ export const plugins: Plugin[] = [
     imageUrl: 'https://images.unsplash.com/photo-1580974910344-96b9918de40b?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'online payment',
     rating: 5,
-    reviews: [
-      { author: 'Charlie', rating: 5, comment: 'Super jednoduché na nastavenie a funguje bezchybne.', date: '2024-07-22T09:00:00Z' },
-    ],
+    reviews: [],
   },
   {
     slug: 'socialconnect',
@@ -139,9 +134,7 @@ export const plugins: Plugin[] = [
     imageUrl: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'website builder',
     rating: 4.9,
-    reviews: [
-      { author: 'David', rating: 5, comment: 'Najlepší page builder pre WordPress, bodka.', date: '2024-07-29T11:00:00Z' }
-    ],
+    reviews: [],
   },
   {
     slug: 'astra-pro',
@@ -375,7 +368,8 @@ export function PluginList() {
                 </Link>
                 <div className="flex items-center gap-2 mb-2">
                   <StarRating rating={plugin.rating} />
-                  <span className="text-sm text-muted-foreground">({plugin.reviews.length} recenzií)</span>
+                  {/* The number of reviews will be fetched on the detail page */}
+                  <span className="text-sm text-muted-foreground">(pozri recenzie)</span>
                 </div>
                 <p className="text-muted-foreground text-sm">{plugin.description}</p>
               </CardContent>
@@ -397,13 +391,11 @@ export function PluginList() {
   );
 }
 
-export const getPluginData = (slug: string) => {
+export const getPluginData = (slug: string): Plugin | undefined => {
   const plugin = plugins.find(p => p.slug === slug);
   if (!plugin) return undefined;
 
-  // Make a defensive copy to avoid direct mutation of the source data
-  return {
-      ...plugin,
-      reviews: plugin.reviews.map(r => ({...r}))
-  };
+  // Reviews are now fetched from Firestore, so we return the static data.
+  // The client component will handle fetching and displaying the dynamic reviews.
+  return { ...plugin };
 }

@@ -1,7 +1,8 @@
+
 'use client';
 
 import * as React from 'react';
-import { getPluginData, Plugin, StarRating } from '@/components/plugin-list';
+import { getPluginData, Plugin, StarRating, Review } from '@/components/plugin-list';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
@@ -19,40 +20,83 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { format } from 'date-fns';
 import { sk } from 'date-fns/locale';
+import { db } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp, query, onSnapshot, orderBy } from 'firebase/firestore';
 
 
 export default function PluginDetailPage({ params }: { params: { slug: string } }) {
   const { user } = useAuth();
-  const [plugin, setPlugin] = React.useState(() => getPluginData(params.slug));
+  const pluginData = getPluginData(params.slug); // This is static data
   const { addToCart } = useCart();
   const { toast } = useToast();
+  
+  const [reviews, setReviews] = React.useState<Review[]>([]);
+  const [averageRating, setAverageRating] = React.useState(pluginData?.rating || 0);
+  const [isReviewsLoading, setIsReviewsLoading] = React.useState(true);
+  
   const [isGenerating, setIsGenerating] = React.useState(false);
   const [marketingCopy, setMarketingCopy] = React.useState('');
   const [reviewRating, setReviewRating] = React.useState(0);
   const [reviewComment, setReviewComment] = React.useState('');
   const [isSubmittingReview, setIsSubmittingReview] = React.useState(false);
 
-  if (!plugin) {
+  React.useEffect(() => {
+    if (!pluginData) return;
+    
+    const reviewsColRef = collection(db, "plugins", pluginData.slug, "reviews");
+    const q = query(reviewsColRef, orderBy("date", "desc"));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const fetchedReviews: Review[] = [];
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        fetchedReviews.push({
+          author: data.author,
+          rating: data.rating,
+          comment: data.comment,
+          // Firestore timestamp to ISO string
+          date: data.date?.toDate().toISOString() || new Date().toISOString(),
+        });
+      });
+      setReviews(fetchedReviews);
+      
+      if (fetchedReviews.length > 0) {
+        const totalRating = fetchedReviews.reduce((sum, r) => sum + r.rating, 0);
+        setAverageRating(parseFloat((totalRating / fetchedReviews.length).toFixed(1)));
+      } else {
+        setAverageRating(pluginData.rating); // Fallback to static rating
+      }
+      
+      setIsReviewsLoading(false);
+    }, (error) => {
+      console.error("Error fetching reviews: ", error);
+      setIsReviewsLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [pluginData]);
+
+  if (!pluginData) {
     notFound();
   }
 
   const handleAddToCart = () => {
-    addToCart(plugin as Plugin);
+    addToCart(pluginData as Plugin);
     toast({
       title: "Pridané do košíka",
-      description: `${plugin.name} bol pridaný do vášho košíka.`,
+      description: `${pluginData.name} bol pridaný do vášho košíka.`,
     })
   };
 
   const handleGenerateCopy = async () => {
-    if (!plugin) return;
+    if (!pluginData) return;
     setIsGenerating(true);
     setMarketingCopy('');
     try {
       const result = await generatePluginMarketingCopy({
-        name: plugin.name,
-        description: plugin.description,
-        category: plugin.category,
+        name: pluginData.name,
+        description: pluginData.description,
+        category: pluginData.category,
       });
       setMarketingCopy(result.copy);
     } catch (error) {
@@ -77,38 +121,43 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
         });
         return;
     }
+     if (!user) {
+        toast({
+            variant: "destructive",
+            title: "Nie ste prihlásený",
+            description: "Na odoslanie recenzie sa musíte prihlásiť.",
+        });
+        return;
+    }
     
     setIsSubmittingReview(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const newReview = {
-        author: user?.displayName || user?.email || 'Anonym',
-        rating: reviewRating,
-        comment: reviewComment,
-        date: new Date().toISOString(),
-    };
-    
-    // This update is local to the client. In a real app, you'd send this to a backend.
-    setPlugin(prevPlugin => {
-      if (!prevPlugin) return null;
-      const updatedReviews = [...prevPlugin.reviews, newReview];
-      const newAverageRating = updatedReviews.reduce((sum, r) => sum + r.rating, 0) / updatedReviews.length;
-      return {
-        ...prevPlugin,
-        reviews: updatedReviews,
-        rating: parseFloat(newAverageRating.toFixed(1)),
-      };
-    });
+    try {
+        const reviewsColRef = collection(db, "plugins", pluginData.slug, "reviews");
+        await addDoc(reviewsColRef, {
+            author: user?.displayName || user?.email || 'Anonym',
+            authorId: user.uid,
+            rating: reviewRating,
+            comment: reviewComment,
+            date: serverTimestamp(),
+        });
 
-    setIsSubmittingReview(false);
-    setReviewRating(0);
-    setReviewComment('');
-    toast({
-        title: "Recenzia odoslaná!",
-        description: "Ďakujeme za vašu spätnú väzbu.",
-    });
+        setIsSubmittingReview(false);
+        setReviewRating(0);
+        setReviewComment('');
+        toast({
+            title: "Recenzia odoslaná!",
+            description: "Ďakujeme za vašu spätnú väzbu.",
+        });
+    } catch (error) {
+         console.error("Error submitting review: ", error);
+         setIsSubmittingReview(false);
+         toast({
+            variant: "destructive",
+            title: "Odoslanie zlyhalo",
+            description: "Vyskytla sa chyba pri odosielaní vašej recenzie.",
+        });
+    }
   };
 
   return (
@@ -126,27 +175,27 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             <div className="relative h-80 w-full rounded-lg overflow-hidden shadow-lg">
-              {plugin.imageUrl && (
+              {pluginData.imageUrl && (
                 <Image
-                  src={plugin.imageUrl}
-                  alt={plugin.name}
+                  src={pluginData.imageUrl}
+                  alt={pluginData.name}
                   fill
                   style={{objectFit: "cover"}}
-                  data-ai-hint={plugin.dataAiHint}
+                  data-ai-hint={pluginData.dataAiHint}
                 />
               )}
             </div>
             <div className="flex flex-col justify-center">
-              <Badge variant="secondary" className="w-fit mb-2">{plugin.category}</Badge>
-              <h1 className="text-4xl font-bold font-headline mb-4">{plugin.name}</h1>
+              <Badge variant="secondary" className="w-fit mb-2">{pluginData.category}</Badge>
+              <h1 className="text-4xl font-bold font-headline mb-4">{pluginData.name}</h1>
               <div className="flex items-center gap-2 mb-4">
-                  <StarRating rating={plugin.rating} />
+                  <StarRating rating={averageRating} />
                   <span className="text-muted-foreground">
-                    {plugin.rating.toFixed(1)} ({plugin.reviews.length} recenzií)
+                    {averageRating.toFixed(1)} ({reviews.length} recenzií)
                   </span>
               </div>
-              <p className="text-2xl font-semibold mb-6">{plugin.price}</p>
-              <p className="text-lg text-muted-foreground mb-6">{plugin.description}</p>
+              <p className="text-2xl font-semibold mb-6">{pluginData.price}</p>
+              <p className="text-lg text-muted-foreground mb-6">{pluginData.description}</p>
               <Button size="lg" onClick={handleAddToCart}>Pridať do košíka</Button>
             </div>
           </div>
@@ -154,7 +203,7 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
           <div className="mt-16">
             <h2 className="text-3xl font-bold font-headline mb-4">Detaily produktu</h2>
             <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground mb-8">
-              <p>{plugin.longDescription}</p>
+              <p>{pluginData.longDescription}</p>
             </div>
           </div>
 
@@ -164,7 +213,6 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
           <div className="mt-12">
              <h2 className="text-3xl font-bold font-headline mb-8">Hodnotenia a recenzie</h2>
 
-             {/* Review Form */}
             {user ? (
                  <Card className="mb-8 bg-secondary/30">
                     <CardHeader>
@@ -209,15 +257,16 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
                     <CardTitle>Chcete zanechať recenziu?</CardTitle>
                     <CardDescription className="mt-2">Prosím, prihláste sa, aby ste sa mohli podeliť o svoje myšlienky s komunitou.</CardDescription>
                     <Button asChild className="mt-4">
-                        <Link href={`/login?redirect=/plugins/${plugin.slug}`}>Prihlásiť sa a hodnotiť</Link>
+                        <Link href={`/login?redirect=/plugins/${pluginData.slug}`}>Prihlásiť sa a hodnotiť</Link>
                     </Button>
                 </Card>
             )}
 
-             {/* Existing Reviews */}
              <div className="space-y-6">
-                {plugin.reviews.length > 0 ? (
-                    plugin.reviews.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map((review, index) => (
+                {isReviewsLoading ? (
+                    <div className="flex justify-center py-8"><Loader2 className="h-8 w-8 animate-spin" /></div>
+                ) : reviews.length > 0 ? (
+                    reviews.map((review, index) => (
                         <Card key={index} className="p-6">
                             <div className="flex items-start justify-between">
                                 <div>
@@ -234,7 +283,6 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
                 )}
              </div>
           </div>
-
 
           <Card className="mt-12 bg-secondary/50">
             <CardHeader>
