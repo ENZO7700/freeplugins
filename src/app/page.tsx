@@ -9,6 +9,7 @@ import { PluginList } from '@/components/plugin-list';
 import { useSearchParams } from 'next/navigation';
 import { AiAssistant } from '@/components/ai-assistant';
 import { FeaturedPlugins } from '@/components/featured-plugins';
+import { PluginIdeaGenerator } from '@/components/plugin-idea-generator';
 
 export default function Home() {
   const searchParams = useSearchParams();
@@ -30,6 +31,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-8">
           <AiAssistant />
           <FeaturedPlugins />
+          <PluginIdeaGenerator />
           {showPlugins ? <PluginList key={key} /> : <CategoryGrid />}
         </div>
       </>
