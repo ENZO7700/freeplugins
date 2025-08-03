@@ -34,7 +34,7 @@ export function MainNav() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const categoryParam = searchParams.get('category')
-  const { isMobile, setOpen } = useSidebar()
+  const { isMobile, setOpenMobile } = useSidebar()
   const [isMarketplaceOpen, setIsMarketplaceOpen] = React.useState(true);
 
   const categories = getPluginCategories()
@@ -52,7 +52,7 @@ export function MainNav() {
 
   const handleClose = () => {
     if (isMobile) {
-      setOpen(false)
+      setOpenMobile(false)
     }
   }
 
@@ -87,7 +87,7 @@ export function MainNav() {
                 <SidebarMenuSubItem>
                   <Link href="/" onClick={handleClose} passHref>
                     <SidebarMenuSubButton asChild isActive={isMarketplaceActive()}>
-                      Všetky pluginy
+                      <a>Všetky pluginy</a>
                     </SidebarMenuSubButton>
                   </Link>
                 </SidebarMenuSubItem>
@@ -95,7 +95,7 @@ export function MainNav() {
                     <SidebarMenuSubItem key={category.name}>
                         <Link href={`/?category=${encodeURIComponent(category.name)}`} onClick={handleClose} passHref>
                             <SidebarMenuSubButton asChild isActive={isMarketplaceActive(category.name)}>
-                                {category.name}
+                                <a>{category.name}</a>
                             </SidebarMenuSubButton>
                         </Link>
                     </SidebarMenuSubItem>
