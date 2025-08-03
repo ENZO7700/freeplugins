@@ -8,7 +8,7 @@ import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
-import { Loader2, User, Edit, Save, LogOut, Download, ShoppingBag, History, BadgeCheck, BarChart2, PieChart, Star, KeyRound, DollarSign, Package, Tag, ThumbsUp, Medal, Sparkles  } from 'lucide-react';
+import { Loader2, User, Edit, Save, LogOut, Download, ShoppingBag, History, BadgeCheck, BarChart2, PieChart, Star, KeyRound, DollarSign, Package, Tag, ThumbsUp, Medal, Sparkles, Handshake, MousePointerClick, Goal, Percent } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
@@ -21,6 +21,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { LicenseKeyDialog } from '@/components/dashboard/license-key-dialog';
+import { calculateAffiliatePayouts } from '@/ai/flows/calculate-affiliate-payouts';
+import { getAffiliateStats, type AffiliateStatsOutput } from '@/ai/flows/get-affiliate-stats';
 
 
 export default function DashboardPage() {
@@ -32,14 +34,27 @@ export default function DashboardPage() {
   const [displayName, setDisplayName] = React.useState(user?.displayName || '');
   const [isSaving, setIsSaving] = React.useState(false);
   
+  const [affiliateStats, setAffiliateStats] = React.useState<AffiliateStatsOutput | null>(null);
+  const [isAffiliateStatsLoading, setIsAffiliateStatsLoading] = React.useState(true);
+  const [isCalculatingPayout, setIsCalculatingPayout] = React.useState(false);
+
   React.useEffect(() => {
     if (!loading && !user) {
       router.push('/login');
     }
     if (user) {
         setDisplayName(user.displayName || '');
+        // Fetch affiliate stats
+        setIsAffiliateStatsLoading(true);
+        getAffiliateStats()
+            .then(stats => setAffiliateStats(stats))
+            .catch(err => {
+                console.error("Failed to load affiliate stats", err);
+                toast({ variant: "destructive", title: "Chyba", description: "Nepodarilo sa načítať partnerské štatistiky." });
+            })
+            .finally(() => setIsAffiliateStatsLoading(false));
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, toast]);
 
   const handleProfileUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,6 +69,30 @@ export default function DashboardPage() {
         toast({ variant: "destructive", title: "Aktualizácia zlyhala", description: error.message });
     } finally {
         setIsSaving(false);
+    }
+  };
+
+  const handleCalculatePayouts = async () => {
+    setIsCalculatingPayout(true);
+    toast({
+        title: "Spracovávam...",
+        description: "Simulujem mesačný výpočet provízií. Prosím, počkajte.",
+    });
+    try {
+        const result = await calculateAffiliatePayouts();
+        toast({
+            title: "Výpočet dokončený!",
+            description: `Boli vypočítané provízie za ${result.reportPeriod} v celkovej výške $${result.totalPayoutAmount.toFixed(2)} pre ${result.numberOfAffiliates} partnerov.`,
+        });
+    } catch (error) {
+        console.error("Error calculating affiliate payouts:", error);
+        toast({
+            variant: "destructive",
+            title: "Výpočet zlyhal",
+            description: "Vyskytla sa chyba pri simulácii výpočtu.",
+        });
+    } finally {
+        setIsCalculatingPayout(false);
     }
   };
 
@@ -294,6 +333,53 @@ export default function DashboardPage() {
                             ID používateľa: <code className="bg-muted p-1 rounded-sm">{user.uid}</code>
                         </p>
                     </CardContent>
+                </Card>
+                
+                <Card>
+                    <CardHeader>
+                        <div className='flex items-center gap-2'>
+                            <Handshake className="h-6 w-6" />
+                            <CardTitle>Partnerský Panel</CardTitle>
+                        </div>
+                        <CardDescription>Prehľad vašich simulovaných partnerských aktivít.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        {isAffiliateStatsLoading ? (
+                            <div className="flex justify-center items-center h-40">
+                                <Loader2 className="h-8 w-8 animate-spin" />
+                            </div>
+                        ) : affiliateStats ? (
+                            <div className="space-y-4">
+                                <div className="grid grid-cols-2 gap-4 text-sm">
+                                    <div className="flex flex-col space-y-1 p-3 bg-muted rounded-md">
+                                        <div className="flex items-center gap-2 text-muted-foreground"><MousePointerClick /><span>Kliknutia</span></div>
+                                        <p className="text-2xl font-bold">{affiliateStats.clicks}</p>
+                                    </div>
+                                    <div className="flex flex-col space-y-1 p-3 bg-muted rounded-md">
+                                        <div className="flex items-center gap-2 text-muted-foreground"><Goal/><span>Konverzie</span></div>
+                                        <p className="text-2xl font-bold">{affiliateStats.conversions}</p>
+                                    </div>
+                                     <div className="flex flex-col space-y-1 p-3 bg-muted rounded-md">
+                                        <div className="flex items-center gap-2 text-muted-foreground"><Percent/><span>Miera konverzie</span></div>
+                                        <p className="text-2xl font-bold">{affiliateStats.conversionRate}%</p>
+                                    </div>
+                                    <div className="flex flex-col space-y-1 p-3 bg-muted rounded-md">
+                                        <div className="flex items-center gap-2 text-muted-foreground"><DollarSign/><span>Celkové zárobky</span></div>
+                                        <p className="text-2xl font-bold">${affiliateStats.totalEarnings.toFixed(2)}</p>
+                                    </div>
+                                </div>
+                                <p className="text-xs text-muted-foreground italic text-center pt-2">Tieto dáta sú len na demonštračné účely.</p>
+                            </div>
+                        ) : (
+                            <p className="text-muted-foreground text-center">Partnerské štatistiky sa nepodarilo načítať.</p>
+                        )}
+                    </CardContent>
+                    <CardFooter>
+                        <Button className="w-full" onClick={handleCalculatePayouts} disabled={isCalculatingPayout}>
+                            {isCalculatingPayout && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            Simulovať Mesačnú Uzávierku
+                        </Button>
+                    </CardFooter>
                 </Card>
 
                  {getBadges.length > 0 && (
