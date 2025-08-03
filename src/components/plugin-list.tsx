@@ -212,18 +212,6 @@ export const plugins: Plugin[] = [
     reviews: [],
   },
   {
-    slug: 'ecommerceify',
-    name: 'E-commerceify',
-    category: 'Plugins',
-    description: 'Premeňte svoju webovú stránku na výkonný online obchod v priebehu niekoľkých minút.',
-    longDescription: 'E-commerceify poskytuje všetko, čo potrebujete na začatie online predaja. Medzi funkcie patrí správa produktov, bezpečné platobné brány, sledovanie zásob a správa zákazníkov. Plne prispôsobiteľné, aby zodpovedalo vašej značke.',
-    price: '$99',
-    imageUrl: 'https://images.unsplash.com/photo-1580974910344-96b9918de40b?q=80&w=600&h=400&fit=crop',
-    dataAiHint: 'online payment',
-    rating: 5,
-    reviews: [],
-  },
-  {
     slug: 'socialconnect',
     name: 'SocialConnect',
     category: 'Plugins',
