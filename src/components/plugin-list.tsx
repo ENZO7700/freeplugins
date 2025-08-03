@@ -13,6 +13,8 @@ import { useToast } from '@/hooks/use-toast';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Star, StarHalf } from 'lucide-react';
+import { format } from 'date-fns';
+import { sk } from 'date-fns/locale';
 
 export interface Review {
   author: string;
@@ -73,7 +75,7 @@ export const plugins: Plugin[] = [
     description: 'Premeňte svoju webovú stránku na výkonný online obchod v priebehu niekoľkých minút.',
     longDescription: 'E-commerceify poskytuje všetko, čo potrebujete na začatie online predaja. Medzi funkcie patrí správa produktov, bezpečné platobné brány, sledovanie zásob a správa zákazníkov. Plne prispôsobiteľné, aby zodpovedalo vašej značke.',
     price: '$99',
-    imageUrl: 'https://images.unsplash.com/photo-1556740738-b6a63e2775d2?q=80&w=600&h=400&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1556740772-1a741367b93e?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'online payment',
     rating: 5,
     reviews: [
@@ -397,10 +399,12 @@ export function PluginList() {
 }
 
 export const getPluginData = (slug: string) => {
-  return plugins.find(p => p.slug === slug);
+  const plugin = plugins.find(p => p.slug === slug);
+  if (!plugin) return undefined;
+
+  // Make a defensive copy to avoid direct mutation of the source data
+  return {
+      ...plugin,
+      reviews: plugin.reviews.map(r => ({...r}))
+  };
 }
-
-    
-
-    
-
