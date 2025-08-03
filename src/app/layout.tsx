@@ -12,6 +12,9 @@ import { AuthProvider } from '@/context/auth-context';
 import { DashboardProvider } from '@/context/dashboard-context';
 import { AdaptiveUiProvider, useAdaptiveUi } from '@/context/adaptive-ui-context';
 import React from 'react';
+import { Sidebar, SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
+import { MainNav } from '@/components/main-nav';
+
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -52,7 +55,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
       </head>
-      <body className={`text-base-adaptive ${poppins.variable} ${ptSans.variable} font-body antialiased flex flex-col min-h-screen`}>
+      <body className={`text-base-adaptive ${poppins.variable} ${ptSans.variable} font-body antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -64,11 +67,20 @@ export default function RootLayout({
               <DashboardProvider>
                  <AdaptiveUiProvider>
                   <AdaptiveStyles />
-                  <Header />
-                  <main className="flex-grow">
-                    {children}
-                  </main>
-                  <Footer />
+                  <SidebarProvider>
+                    <div className="flex min-h-screen flex-col">
+                      <Sidebar>
+                        <MainNav />
+                      </Sidebar>
+                      <SidebarInset className="flex-grow flex flex-col">
+                        <Header />
+                        <main className="flex-grow">
+                          {children}
+                        </main>
+                        <Footer />
+                      </SidebarInset>
+                    </div>
+                  </SidebarProvider>
                   <Toaster />
                 </AdaptiveUiProvider>
               </DashboardProvider>
@@ -79,3 +91,4 @@ export default function RootLayout({
     </html>
   );
 }
+
