@@ -17,6 +17,17 @@ const config = {
       },
     },
     extend: {
+      boxShadow: {
+        'glow-primary': '0 0 15px hsl(var(--primary))',
+        'glow-blue': '0 0 15px #60a5fa', // blue-400
+        'glow-purple': '0 0 15px #c084fc', // purple-400
+        'glow-green': '0 0 15px #4ade80', // green-400
+        'glow-sky': '0 0 15px #38bdf8', // sky-400
+        'glow-orange': '0 0 15px #fb923c', // orange-400
+        'glow-gray': '0 0 15px #9ca3af', // gray-400
+        'glow-emerald': '0 0 15px #34d399', // emerald-400
+        'glow-indigo': '0 0 15px #818cf8', // indigo-400
+      },
       fontSize: {
         'base-adaptive': 'var(--adaptive-font-size)',
       },
@@ -92,16 +103,19 @@ const config = {
             height: '0',
           },
         },
-        'glow': {
-          '0%': { textShadow: '0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary))' },
-          '50%': { textShadow: '0 0 20px hsl(var(--primary) / 0.8), 0 0 30px hsl(var(--primary) / 0.6)' },
-          '100%': { textShadow: '0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary))' },
-        },
+        'text-glow': {
+           '0%, 100%': {
+            textShadow: '0 0 5px hsl(var(--primary) / 0.5), 0 0 10px hsl(var(--accent) / 0.5)',
+          },
+          '50%': {
+            textShadow: '0 0 10px hsl(var(--primary) / 0.8), 0 0 20px hsl(var(--accent) / 0.8)',
+          },
+        }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'glow': 'glow 2.5s ease-in-out infinite',
+        'text-glow': 'text-glow 3s ease-in-out infinite',
       },
       typography: (theme: any) => ({
         DEFAULT: {
@@ -132,7 +146,6 @@ const config = {
             '--tw-prose-invert-counters': theme('colors.muted.foreground'),
             '--tw-prose-invert-bullets': theme('colors.muted.foreground'),
             '--tw-prose-invert-hr': theme('colors.border'),
-            '--tw-prose-invert-quotes': theme('colors.background'),
             '--tw-prose-invert-quote-borders': theme('colors.border'),
             '--tw-prose-invert-captions': theme('colors.muted.foreground'),
             '--tw-prose-invert-code': theme('colors.background'),
