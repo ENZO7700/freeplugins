@@ -125,7 +125,7 @@ export function HeroSection() {
             className="inline-block mt-8"
             variants={itemVariants}
           >
-            <Button size="lg" className="animate-text-glow">
+            <Button size="lg" className="shadow-lg hover:shadow-primary/50">
               Preskúmať pluginy <ArrowRight className="ml-2" />
             </Button>
           </motion.div>

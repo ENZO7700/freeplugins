@@ -120,8 +120,7 @@ const config = {
       typography: (theme: any) => ({
         DEFAULT: {
           css: {
-            '--tw-prose-body': 'var(--adaptive-font-size)',
-            '--tw-prose-p': 'var(--adaptive-font-size)',
+            '--tw-prose-body': theme('colors.muted.foreground'),
             '--tw-prose-headings': theme('colors.foreground'),
             '--tw-prose-lead': theme('colors.muted.foreground'),
             '--tw-prose-links': theme('colors.primary.DEFAULT'),
@@ -137,8 +136,7 @@ const config = {
             '--tw-prose-pre-bg': theme('colors.muted.DEFAULT'),
             '--tw-prose-th-borders': theme('colors.border'),
             '--tw-prose-td-borders': theme('colors.border'),
-            '--tw-prose-invert-body': 'var(--adaptive-font-size)',
-            '--tw-prose-invert-p': 'var(--adaptive-font-size)',
+            '--tw-prose-invert-body': theme('colors.muted.foreground'),
             '--tw-prose-invert-headings': theme('colors.background'),
             '--tw-prose-invert-lead': theme('colors.muted.foreground'),
             '--tw-prose-invert-links': theme('colors.primary.DEFAULT'),
@@ -153,28 +151,26 @@ const config = {
             '--tw-prose-invert-pre-bg': 'rgb(0 0 0 / 50%)',
             '--tw-prose-invert-th-borders': theme('colors.border'),
             '--tw-prose-invert-td-borders': theme('colors.border'),
-            color: theme('colors.muted.foreground'),
             p: {
-              fontSize: 'var(--adaptive-font-size)',
               marginTop: 'var(--adaptive-spacing-unit)',
               marginBottom: 'var(--adaptive-spacing-unit)',
             },
             h1: {
-              color: theme('colors.foreground'),
+              color: 'hsl(var(--foreground))',
             },
             h2: {
-              color: theme('colors.foreground'),
+              color: 'hsl(var(--foreground))',
             },
             h3: {
-              color: theme('colors.foreground'),
+              color: 'hsl(var(--foreground))',
             },
             strong: {
-              color: theme('colors.foreground'),
+              color: 'hsl(var(--foreground))',
             },
             a: {
-              color: theme('colors.primary.DEFAULT'),
+              color: 'hsl(var(--primary))',
               '&:hover': {
-                color: theme('colors.primary.DEFAULT'),
+                color: 'hsl(var(--primary))',
               },
             },
           },
