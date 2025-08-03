@@ -9,10 +9,8 @@ import { PanelLeft } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
-import { Skeleton } from "@/components/ui/skeleton"
 import {
   Tooltip,
   TooltipContent,
@@ -89,7 +87,9 @@ const SidebarProvider = React.forwardRef<
           _setOpen(openState)
         }
 
-        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+        if (typeof window !== "undefined") {
+          document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+        }
       },
       [setOpenProp, open]
     )
@@ -180,7 +180,7 @@ const Sidebar = React.forwardRef<
           <SheetContent
             data-sidebar="sidebar"
             data-mobile="true"
-            className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+            className="w-[var(--sidebar-width)] bg-background p-0 text-foreground [&>button]:hidden"
             style={
               {
                 "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -200,7 +200,7 @@ const Sidebar = React.forwardRef<
             data-state={state}
             data-side={side}
             className={cn(
-                "hidden md:flex flex-col flex-shrink-0 bg-sidebar text-sidebar-foreground border-r transition-[width] duration-300 ease-in-out",
+                "hidden md:flex flex-col flex-shrink-0 bg-background text-foreground border-r transition-[width] duration-300 ease-in-out",
                 state === 'expanded' ? 'w-[var(--sidebar-width)]' : 'w-[var(--sidebar-width-icon)]',
                 className
             )}
@@ -242,10 +242,10 @@ SidebarTrigger.displayName = "SidebarTrigger"
 
 const SidebarInset = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<"main">
+  React.ComponentProps<"div">
 >(({ className, ...props }, ref) => {
   return (
-    <main
+    <div
       ref={ref}
       className={cn(
         "flex-1",
@@ -299,7 +299,7 @@ const SidebarSeparator = React.forwardRef<
     <Separator
       ref={ref}
       data-sidebar="separator"
-      className={cn("mx-2 w-auto bg-sidebar-border", className)}
+      className={cn("mx-2 w-auto bg-border", className)}
       {...props}
     />
   )
@@ -351,7 +351,7 @@ const SidebarGroupLabel = React.forwardRef<
       ref={ref}
       data-sidebar="group-label"
       className={cn(
-        "flex h-8 items-center px-2 text-xs font-medium text-sidebar-foreground/70 transition-opacity duration-300",
+        "flex h-8 items-center px-2 text-xs font-medium text-muted-foreground/70 transition-opacity duration-300",
         state === 'collapsed' && "opacity-0 h-0 p-0",
         className
       )}
@@ -389,7 +389,7 @@ const SidebarMenuItem = React.forwardRef<
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
-  "flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-all hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-semibold data-[active=true]:text-sidebar-accent-foreground",
+  "flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-ring transition-all hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 active:bg-accent active:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[active=true]:bg-accent data-[active=true]:font-semibold data-[active=true]:text-accent-foreground",
   {
     variants: {
       size: {
@@ -504,7 +504,7 @@ const SidebarMenuSub = React.forwardRef<
         ref={ref}
         data-sidebar="menu-sub"
         className={cn(
-        "ml-4 flex min-w-0 flex-col gap-1 border-l border-sidebar-border pl-4 py-1 transition-all duration-300 overflow-hidden",
+        "ml-4 flex min-w-0 flex-col gap-1 border-l border-border pl-4 py-1 transition-all duration-300 overflow-hidden",
         state === 'collapsed' && "h-0 p-0 m-0 border-none",
         className
         )}
@@ -537,8 +537,8 @@ const SidebarMenuSubButton = React.forwardRef<
       data-size={size}
       data-active={isActive}
       className={cn(
-        "flex h-7 min-w-0 items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground/80 outline-none ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground",
-        "data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground data-[active=true]:font-semibold",
+        "flex h-7 min-w-0 items-center gap-2 overflow-hidden rounded-md px-2 text-muted-foreground/80 outline-none ring-ring hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 active:bg-accent active:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-accent-foreground",
+        "data-[active=true]:bg-accent data-[active=true]:text-accent-foreground data-[active=true]:font-semibold",
         size === "sm" && "text-xs",
         size === "md" && "text-sm",
         className

@@ -5,7 +5,7 @@ import { ThemeToggle } from './theme-toggle';
 import { Cart } from './cart';
 import { Button } from './ui/button';
 import { useAuth } from '@/context/auth-context';
-import { Loader2, User, LogOut, ChevronDown } from 'lucide-react';
+import { Loader2, User, LogOut } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -92,4 +92,3 @@ export function Header() {
     </header>
   );
 }
-

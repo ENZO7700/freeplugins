@@ -34,7 +34,7 @@ export function MainNav() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const categoryParam = searchParams.get('category')
-  const { isMobile, open, setOpen } = useSidebar()
+  const { isMobile, setOpen } = useSidebar()
   const [isMarketplaceOpen, setIsMarketplaceOpen] = React.useState(true);
 
   const categories = getPluginCategories()

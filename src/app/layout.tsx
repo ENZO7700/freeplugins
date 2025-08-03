@@ -68,16 +68,18 @@ export default function RootLayout({
                  <AdaptiveUiProvider>
                   <AdaptiveStyles />
                   <SidebarProvider>
-                    <div className="flex min-h-screen flex-col">
+                    <div className="flex min-h-screen flex-row">
                       <Sidebar>
                         <MainNav />
                       </Sidebar>
-                      <SidebarInset className="flex-grow flex flex-col">
-                        <Header />
-                        <main className="flex-grow">
-                          {children}
-                        </main>
-                        <Footer />
+                      <SidebarInset>
+                        <div className="flex flex-col h-full">
+                          <Header />
+                          <main className="flex-grow">
+                            {children}
+                          </main>
+                          <Footer />
+                        </div>
                       </SidebarInset>
                     </div>
                   </SidebarProvider>
@@ -91,4 +93,3 @@ export default function RootLayout({
     </html>
   );
 }
-

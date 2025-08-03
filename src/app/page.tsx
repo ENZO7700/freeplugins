@@ -27,13 +27,22 @@ export default function Home() {
   return (
     <PageTransitionWrapper>
       <>
-        <HeroSection />
-        <div className="container mx-auto px-4 py-8">
-          <AiAssistant />
-          <FeaturedPlugins />
-          <PluginIdeaGenerator />
-          {showPlugins ? <PluginList key={key} /> : <CategoryGrid />}
-        </div>
+        {!category && (
+          <>
+            <HeroSection />
+            <div className="container mx-auto px-4 py-8">
+              <AiAssistant />
+              <FeaturedPlugins />
+              <PluginIdeaGenerator />
+              <CategoryGrid />
+            </div>
+          </>
+        )}
+        {category && (
+          <div className="container mx-auto px-4 py-8">
+            <PluginList key={key} />
+          </div>
+        )}
       </>
     </PageTransitionWrapper>
   );
