@@ -45,7 +45,7 @@ export function MainNav() {
 
   const isMarketplaceActive = (categoryName?: string) => {
     if (!categoryName) {
-      return (pathname === '/' || pathname.startsWith('/plugins/')) && !categoryParam
+      return (pathname === '/') && !categoryParam
     }
     return categoryParam === categoryName
   }
@@ -85,16 +85,16 @@ export function MainNav() {
             {isMarketplaceOpen && (
               <SidebarMenuSub>
                 <SidebarMenuSubItem>
-                  <Link href="/" onClick={handleClose}>
-                    <SidebarMenuSubButton isActive={isMarketplaceActive()}>
+                  <Link href="/" onClick={handleClose} passHref>
+                    <SidebarMenuSubButton asChild isActive={isMarketplaceActive()}>
                       Všetky pluginy
                     </SidebarMenuSubButton>
                   </Link>
                 </SidebarMenuSubItem>
                 {categories.map((category) => (
                     <SidebarMenuSubItem key={category.name}>
-                        <Link href={`/?category=${encodeURIComponent(category.name)}`} onClick={handleClose}>
-                            <SidebarMenuSubButton isActive={isMarketplaceActive(category.name)}>
+                        <Link href={`/?category=${encodeURIComponent(category.name)}`} onClick={handleClose} passHref>
+                            <SidebarMenuSubButton asChild isActive={isMarketplaceActive(category.name)}>
                                 {category.name}
                             </SidebarMenuSubButton>
                         </Link>
