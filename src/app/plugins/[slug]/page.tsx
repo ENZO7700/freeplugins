@@ -24,7 +24,7 @@ import { sk } from 'date-fns/locale';
 
 export default function PluginDetailPage({ params }: { params: { slug: string } }) {
   const { user } = useAuth();
-  const [plugin, setPlugin] = React.useState(getPluginData(params.slug));
+  const [plugin, setPlugin] = React.useState(() => getPluginData(params.slug));
   const { addToCart } = useCart();
   const { toast } = useToast();
   const [isGenerating, setIsGenerating] = React.useState(false);

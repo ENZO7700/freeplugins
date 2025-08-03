@@ -43,7 +43,7 @@ export default function CheckoutPage() {
     // Add order to dashboard context (which saves to localStorage)
     addOrder({
       id: new Date().toISOString(), // simple unique id
-      date: new Date().toLocaleDateString(),
+      date: new Date().toISOString(),
       items: cart,
       total: total,
     });
