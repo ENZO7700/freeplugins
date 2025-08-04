@@ -1252,7 +1252,7 @@ export function PluginList() {
   if (!category) return null; // Don't render if no category is selected
 
   return (
-    <section className="py-12 md:py-24">
+    <section className="py-12 md:py-24" id="plugin-list">
       <div className="text-center max-w-3xl mx-auto mb-12">
         <h2 className="text-3xl md:text-4xl font-bold font-headline">{category ? `${category} Pluginy` : 'Všetky pluginy'}</h2>
         <p className="mt-4 text-lg text-muted-foreground">
@@ -1260,7 +1260,7 @@ export function PluginList() {
         </p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 mb-8">
+      <div className="flex flex-col md:flex-row gap-4 mb-8 max-w-lg mx-auto">
         <Input 
           placeholder="Hľadať v kategórii..."
           className="flex-grow"
@@ -1269,7 +1269,7 @@ export function PluginList() {
         />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {filteredPlugins.map((plugin) => (
           <motion.div
             key={plugin.slug}
