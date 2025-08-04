@@ -278,7 +278,7 @@ export const plugins: Plugin[] = [
     description: 'Vylepšite predvolené vyhľadávanie WordPressu.',
     longDescription: 'SearchWP poskytuje relevantnejšie výsledky vyhľadávania. Indexuje všetok obsah vrátane vlastných polí, PDF dokumentov a produktov, čo umožňuje používateľom nájsť presne to, čo hľadajú.',
     price: '$99/year',
-    imageUrl: 'https://images.unsplash.com/photo-1569034947981-141e6951834d?q=80&w=600&h=400&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1569034947981-141e6951b34d?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'search icon',
     rating: 4.8,
     reviews: [],
@@ -1229,31 +1229,14 @@ export const StarRating = ({ rating, className }: { rating: number; className?: 
 export function PluginList() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const category = searchParams.get('category');
+  
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [selectedCategory, setSelectedCategory] = React.useState<string | null>(searchParams.get('category'));
   const { addToCart } = useCart();
   const { toast } = useToast();
   
-  React.useEffect(() => {
-    setSelectedCategory(searchParams.get('category'));
-  }, [searchParams]);
-
-  const allCategories = ['Všetko', ...getPluginCategories().map(c => c.name)];
-
-  const handleCategoryChange = (category: string | null) => {
-    const newCategory = category === 'Všetko' ? null : category;
-    setSelectedCategory(newCategory);
-    const params = new URLSearchParams(window.location.search);
-    if (newCategory) {
-      params.set('category', newCategory);
-    } else {
-      params.delete('category');
-    }
-    router.push(`?${params.toString()}`);
-  };
-
   const filteredPlugins = plugins.filter(plugin => {
-    const matchesCategory = !selectedCategory || plugin.category === selectedCategory;
+    const matchesCategory = !category || plugin.category === category;
     const matchesSearch = plugin.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
@@ -1266,10 +1249,12 @@ export function PluginList() {
     })
   };
 
+  if (!category) return null; // Don't render if no category is selected
+
   return (
     <section className="py-12 md:py-24">
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold font-headline">Odporúčané pluginy</h2>
+        <h2 className="text-3xl md:text-4xl font-bold font-headline">{category ? `${category} Pluginy` : 'Všetky pluginy'}</h2>
         <p className="mt-4 text-lg text-muted-foreground">
           Objavte nástroje, ktoré vylepšia váš pracovný postup.
         </p>
@@ -1277,23 +1262,11 @@ export function PluginList() {
 
       <div className="flex flex-col md:flex-row gap-4 mb-8">
         <Input 
-          placeholder="Hľadať pluginy..."
+          placeholder="Hľadať v kategórii..."
           className="flex-grow"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <div className="flex items-center gap-2 overflow-x-auto pb-2">
-            {allCategories.map(category => (
-                <Button 
-                    key={category}
-                    variant={selectedCategory === (category === 'Všetko' ? null : category) ? "default" : "outline"}
-                    onClick={() => handleCategoryChange(category)}
-                    className="whitespace-nowrap"
-                >
-                    {category}
-                </Button>
-            ))}
-        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

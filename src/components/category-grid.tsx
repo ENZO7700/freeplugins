@@ -36,7 +36,7 @@ export function CategoryGrid() {
             const Icon = visual.icon;
             
             return (
-                <Link key={category.name} href={`/?category=${encodeURIComponent(category.name)}`} passHref>
+                <Link key={category.name} href={`/?category=${encodeURIComponent(category.name)}#plugin-list`} passHref>
                     <motion.div 
                         className={cn("bg-card border-2 border-transparent rounded-lg p-6 h-64 flex flex-col justify-between items-start cursor-pointer transition-all duration-300", visual.color, visual.shadow)}
                         whileHover={{ y: -5 }}
