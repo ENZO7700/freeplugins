@@ -10,11 +10,10 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useCart } from '@/context/cart-context';
 import { useToast } from '@/hooks/use-toast';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Star, StarHalf } from 'lucide-react';
-import { format } from 'date-fns';
-import { sk } from 'date-fns/locale';
+import { Balancer } from 'react-wrap-balancer';
 
 export interface Review {
   author: string;
@@ -1228,7 +1227,6 @@ export const StarRating = ({ rating, className }: { rating: number; className?: 
 
 export function PluginList() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const category = searchParams.get('category');
   
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -1249,14 +1247,18 @@ export function PluginList() {
     })
   };
 
-  if (!category) return null; // Don't render if no category is selected
-
   return (
     <section className="py-12 md:py-24" id="plugin-list">
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold font-headline">{category ? `${category} Pluginy` : 'Všetky pluginy'}</h2>
+        <h2 className="text-3xl md:text-4xl font-bold font-headline">
+          <Balancer>
+            {category ? `${category} pluginy` : 'Všetky pluginy'}
+          </Balancer>
+        </h2>
         <p className="mt-4 text-lg text-muted-foreground">
-          Objavte nástroje, ktoré vylepšia váš pracovný postup.
+          <Balancer>
+            Objavte nástroje, ktoré vylepšia váš pracovný postup a posunú vaše projekty na novú úroveň.
+          </Balancer>
         </p>
       </div>
 
@@ -1275,6 +1277,7 @@ export function PluginList() {
             key={plugin.slug}
             whileHover={{ y: -8, scale: 1.02 }}
             transition={{ type: 'spring', stiffness: 300 }}
+            layout
           >
             <Card className="flex flex-col overflow-hidden h-full shadow-md hover:shadow-xl transition-shadow">
               <Link href={`/plugins/${plugin.slug}`} passHref>

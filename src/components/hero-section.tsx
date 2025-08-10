@@ -7,6 +7,7 @@ import { ArrowRight } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { Balancer } from 'react-wrap-balancer';
+import Link from 'next/link';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -65,7 +66,7 @@ const AnimatedWords = ({ text }: { text: string }) => {
   
     return (
       <motion.h1
-        className="text-6xl md:text-8xl font-bold font-headline tracking-tighter animate-text-glow"
+        className="text-5xl md:text-7xl font-bold font-headline tracking-tighter animate-text-glow"
         style={{
           textShadow: '0 2px 4px rgba(0,0,0,0.2), 0 5px 15px rgba(0,0,0,0.1), 0 10px 30px rgba(0,0,0,0.1)'
         }}
@@ -103,8 +104,8 @@ export function HeroSection() {
   const textOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   return (
-    <section ref={targetRef} className="relative w-full overflow-hidden bg-background py-20 md:py-32 h-[150vh]">
-      <div className="sticky top-0 flex h-screen items-center justify-center">
+    <section ref={targetRef} className="relative w-full overflow-hidden bg-background py-20 md:py-32 h-[80vh]">
+      <div className="sticky top-0 flex h-full items-center justify-center">
         <motion.div style={{ y: gridY }} className="absolute inset-0">
           <GridPattern
               className="absolute inset-0 z-0 h-full w-full fill-primary/10 stroke-border [mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]"
@@ -117,7 +118,7 @@ export function HeroSection() {
             style={{ y: textY, opacity: textOpacity }}
         >
           <motion.div initial="hidden" animate="visible" variants={containerVariants}>
-              <AnimatedWords text="SOFTW4R3" />
+              <AnimatedWords text="Expresívny Navigátor" />
             <motion.p 
               className="mt-6 text-lg md:text-xl text-muted-foreground"
               variants={itemVariants}
@@ -130,8 +131,10 @@ export function HeroSection() {
               className="inline-block mt-8"
               variants={itemVariants}
             >
-              <Button size="lg" className="shadow-lg hover:shadow-primary/50">
-                Preskúmať pluginy <ArrowRight className="ml-2" />
+              <Button size="lg" className="shadow-lg hover:shadow-primary/50" asChild>
+                <Link href="/?category=Wordpress">
+                  Preskúmať pluginy <ArrowRight className="ml-2" />
+                </Link>
               </Button>
             </motion.div>
           </motion.div>

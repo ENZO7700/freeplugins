@@ -39,10 +39,11 @@ export function MainNav() {
   }
 
   const isMarketplaceActive = (categoryName?: string) => {
+    const isMarketplacePage = pathname === '/' || pathname.startsWith('/plugins/');
     if (!categoryName) {
-      return (pathname === '/') && !categoryParam
+      return isMarketplacePage && !categoryParam
     }
-    return categoryParam === categoryName
+    return isMarketplacePage && categoryParam === categoryName
   }
 
   const handleClose = () => {
@@ -56,7 +57,7 @@ export function MainNav() {
       <SidebarHeader>
         <Link href="/" passHref>
           <div className="text-2xl font-bold font-headline text-primary cursor-pointer hover:animate-text-glow p-2">
-            SOFTW4R3
+            Expresívny Navigátor
           </div>
         </Link>
       </SidebarHeader>
@@ -69,7 +70,7 @@ export function MainNav() {
             <SidebarMenuButton
               onClick={() => setIsMarketplaceOpen(!isMarketplaceOpen)}
               className="justify-between"
-              isActive={pathname === '/' || pathname.startsWith('/plugins/')}
+              isActive={isMarketplaceActive()}
             >
               <div className="flex items-center gap-2">
                 <ShoppingBag />
@@ -81,7 +82,7 @@ export function MainNav() {
               <SidebarMenuSub>
                 <SidebarMenuSubItem>
                   <Link href="/" onClick={handleClose} passHref>
-                    <SidebarMenuSubButton asChild isActive={isMarketplaceActive()}>
+                    <SidebarMenuSubButton isActive={isMarketplaceActive()}>
                        Všetky pluginy
                     </SidebarMenuSubButton>
                   </Link>
@@ -89,7 +90,7 @@ export function MainNav() {
                 {categories.map((category) => (
                     <SidebarMenuSubItem key={category.name}>
                         <Link href={`/?category=${encodeURIComponent(category.name)}`} onClick={handleClose} passHref>
-                            <SidebarMenuSubButton asChild isActive={isMarketplaceActive(category.name)}>
+                            <SidebarMenuSubButton isActive={isMarketplaceActive(category.name)}>
                                 {category.name}
                             </SidebarMenuSubButton>
                         </Link>
@@ -100,7 +101,7 @@ export function MainNav() {
           </SidebarMenuItem>
 
           <SidebarMenuItem>
-            <Link href="/blog" onClick={handleClose}>
+            <Link href="/blog" onClick={handleClose} passHref>
               <SidebarMenuButton tooltip="Blog" isActive={isActive('/blog')}>
                 <BookOpen />
                 <span>Blog</span>
@@ -109,7 +110,7 @@ export function MainNav() {
           </SidebarMenuItem>
 
           <SidebarMenuItem>
-            <Link href="/about" onClick={handleClose}>
+            <Link href="/about" onClick={handleClose} passHref>
               <SidebarMenuButton tooltip="O nás" isActive={isActive('/about')}>
                 <Users />
                 <span>O nás</span>
@@ -118,7 +119,7 @@ export function MainNav() {
           </SidebarMenuItem>
 
           <SidebarMenuItem>
-            <Link href="/contact" onClick={handleClose}>
+            <Link href="/contact" onClick={handleClose} passHref>
               <SidebarMenuButton tooltip="Kontakt" isActive={isActive('/contact')}>
                 <Mail />
                 <span>Kontakt</span>
@@ -129,7 +130,7 @@ export function MainNav() {
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter>
-        <p className="text-xs text-muted-foreground p-2">&copy; {new Date().getFullYear()} SOFTW4R3</p>
+        <p className="text-xs text-muted-foreground p-2 text-center">&copy; {new Date().getFullYear()} Expresívny Navigátor</p>
       </SidebarFooter>
     </>
   )

@@ -7,6 +7,8 @@ import { getPluginCategories } from '@/components/plugin-list';
 import { AppWindow, Download, ToyBrick, Smartphone, LucideIcon, Code, Monitor, Wind } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { Balancer } from 'react-wrap-balancer';
+
 
 const categoryVisuals: { [key: string]: { icon: LucideIcon, color: string, shadow: string } } = {
   Wordpress: { icon: Code, color: 'hover:border-blue-400', shadow: 'hover:shadow-glow-blue' },
@@ -25,9 +27,13 @@ export function CategoryGrid() {
   return (
     <section className="py-12 md:py-24">
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold font-headline">Archív produktov</h2>
+        <h2 className="text-3xl md:text-4xl font-bold font-headline">
+          <Balancer>Archív produktov</Balancer>
+        </h2>
         <p className="mt-4 text-lg text-muted-foreground">
-          Preskúmajte naše pluginy podľa kategórie.
+          <Balancer>
+            Preskúmajte naše pluginy podľa kategórie a nájdite presne to, čo potrebujete pre svoj ďalší projekt.
+          </Balancer>
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -36,7 +42,7 @@ export function CategoryGrid() {
             const Icon = visual.icon;
             
             return (
-                <Link key={category.name} href={`/?category=${encodeURIComponent(category.name)}#plugin-list`} passHref>
+                <Link key={category.name} href={`/?category=${encodeURIComponent(category.name)}`} passHref>
                     <motion.div 
                         className={cn("bg-card border-2 border-transparent rounded-lg p-6 h-64 flex flex-col justify-between items-start cursor-pointer transition-all duration-300", visual.color, visual.shadow)}
                         whileHover={{ y: -5 }}

@@ -10,7 +10,7 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Sheet, SheetContent } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import {
   Tooltip,
   TooltipContent,
@@ -267,7 +267,7 @@ const SidebarHeader = React.forwardRef<
       ref={ref}
       data-sidebar="header"
       className={cn(
-        "flex items-center border-b", 
+        "flex items-center border-b transition-all duration-300", 
         state === 'expanded' ? 'h-14 px-2' : 'h-14 justify-center',
         className)}
       {...props}
@@ -280,11 +280,16 @@ const SidebarFooter = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div">
 >(({ className, ...props }, ref) => {
+    const { state } = useSidebar();
   return (
     <div
       ref={ref}
       data-sidebar="footer"
-      className={cn("flex flex-col gap-2 p-2 mt-auto border-t", className)}
+      className={cn(
+          "flex flex-col gap-2 p-2 mt-auto border-t transition-all duration-300",
+          state === 'collapsed' && 'items-center',
+          className
+      )}
       {...props}
     />
   )
@@ -432,7 +437,7 @@ const SidebarMenuButton = React.forwardRef<
         {React.Children.map(children, (child, index) => {
           if (React.isValidElement(child) && typeof child.type !== 'string' && child.type.displayName?.includes("Chevron")) {
             return React.cloneElement(child, {
-              className: cn(child.props.className, 'transition-opacity duration-300', state === 'collapsed' ? 'opacity-0' : 'opacity-100')
+              className: cn(child.props.className, 'transition-opacity duration-300 ml-auto', state === 'collapsed' ? 'opacity-0' : 'opacity-100')
             });
           }
           if (React.isValidElement(child) && child.type === 'span') {
@@ -527,7 +532,7 @@ const SidebarMenuSubButton = React.forwardRef<
     size?: "sm" | "md";
     isActive?: boolean;
   }
->(({ asChild = false, size = "md", isActive, className, ...props }, ref) => {
+>(({ asChild = false, size = "md", isActive, className, children, ...props }, ref) => {
   const Comp = asChild ? Slot : "a";
 
   return (
@@ -544,7 +549,9 @@ const SidebarMenuSubButton = React.forwardRef<
         className
       )}
       {...props}
-    />
+    >
+        {children}
+    </Comp>
   );
 });
 SidebarMenuSubButton.displayName = "SidebarMenuSubButton"

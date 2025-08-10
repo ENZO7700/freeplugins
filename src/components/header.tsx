@@ -17,6 +17,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import Link from 'next/link';
 import { SidebarTrigger } from './ui/sidebar';
+import { MainNav } from './main-nav';
 
 export function Header() {
   const { user, loading, logout } = useAuth();
@@ -78,7 +79,7 @@ export function Header() {
            <SidebarTrigger className="md:hidden" />
            <Link href="/" passHref>
               <div className="hidden sm:block text-xl font-bold font-headline text-primary cursor-pointer hover:animate-text-glow">
-                SOFTW4R3
+                Expresívny Navigátor
               </div>
             </Link>
         </div>
