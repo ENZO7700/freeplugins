@@ -1,39 +1,48 @@
+
 rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Users can only read/write their own user document
+    // Helper function to check if the user is the owner of a document
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    // Helper function to check if the user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Users collection can be read by anyone, but only the user can write to their own document
     match /users/{userId} {
-      allow read, update, delete: if request.auth != null && request.auth.uid == userId;
-      allow create: if request.auth != null;
+      allow read;
+      allow write: if isOwner(userId);
     }
-    
-    // Anyone can read plugins
+
+    // Plugins are publically readable, but nobody can write to them from the client
     match /plugins/{pluginId} {
-        allow read: if true;
+      allow read;
+      allow write: if false; 
     }
     
-    // Reviews can be read by anyone
-    // Authenticated users can create reviews
-    // Users can only update/delete their own reviews
+    // Reviews can be read by anyone, but only created/updated/deleted by authenticated users
     match /plugins/{pluginId}/reviews/{reviewId} {
-      allow read: if true;
-      allow create: if request.auth != null;
-      allow update, delete: if request.auth != null && resource.data.authorId == request.auth.uid;
+        allow read;
+        allow create, update, delete: if isAuthenticated();
     }
-    
-    // Orders can only be managed by the user who created them
+
+    // Orders can only be read and created by the authenticated user who owns them
     match /orders/{orderId} {
-      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
-      allow create: if request.auth != null;
+      allow read: if isOwner(resource.data.userId);
+      allow create: if isOwner(request.resource.data.userId);
+      allow update, delete: if false; // Orders should not be updatable or deletable from client
     }
     
-    // License keys can only be read by the user who they belong to
+    // License keys can only be read by the user who owns them
     match /licenseKeys/{keyId} {
-      allow read, update: if request.auth != null && request.auth.uid == resource.data.userId;
-      // Creation is handled by a server-side flow (onOrderPaid)
-      allow create: if false; 
+      allow read: if isOwner(resource.data.userId);
+      allow create, update, delete: if false; // Should only be created server-side
     }
   }
 }
