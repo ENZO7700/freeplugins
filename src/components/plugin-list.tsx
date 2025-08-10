@@ -51,7 +51,7 @@ const categories: Category[] = [
     { name: 'iPhone', description: 'Aplikácie pre váš iPhone.' },
 ];
 
-export const plugins: Plugin[] = [
+export const allPlugins: Plugin[] = [
   // Wordpress (Original 4 + New 8 = 12)
   {
     slug: 'elementor-pro',
@@ -1201,6 +1201,10 @@ export const plugins: Plugin[] = [
     reviews: [],
   },
 ];
+
+// Filter out plugins that don't have an image URL
+export const plugins = allPlugins.filter(p => p.imageUrl);
+
 
 export function getPluginCategories() {
     return categories;
