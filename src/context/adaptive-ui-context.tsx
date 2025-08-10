@@ -3,12 +3,12 @@
 
 import * as React from 'react';
 import useAdaptiveUiHook from '@/hooks/use-adaptive-ui';
-import type { AdaptAnimationsToUserBehaviorOutput } from '@/ai/flows/adapt-animations-to-user-behavior';
+import type { AdaptiveUiSettingsOutput } from '@/ai/tools/get-adaptive-ui-settings';
 
 type AnimationSpeed = 'fast' | 'medium' | 'slow';
 
 interface AdaptiveUiContextType {
-  settings: AdaptAnimationsToUserBehaviorOutput | null;
+  settings: AdaptiveUiSettingsOutput | null;
   animationSpeed: AnimationSpeed;
   fontSize: string;
   elementSpacing: string;

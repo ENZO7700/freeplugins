@@ -3,26 +3,27 @@
 
 import { useState, useEffect } from 'react';
 import {
-  adaptAnimationsToUserBehavior,
-  type AdaptAnimationsToUserBehaviorOutput,
-} from '@/ai/flows/adapt-animations-to-user-behavior';
+  getAdaptiveUiSettings,
+  type AdaptiveUiSettingsOutput,
+  type AdaptiveUiSettingsInput,
+} from '@/ai/tools/get-adaptive-ui-settings';
 
 export default function useAdaptiveUiHook() {
-  const [settings, setSettings] = useState<AdaptAnimationsToUserBehaviorOutput | null>(null);
+  const [settings, setSettings] = useState<AdaptiveUiSettingsOutput | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getAdaptiveSettings = async () => {
+    const getAdaptedSettings = async () => {
       try {
         setLoading(true);
         // Simulate gathering user data
-        const simulatedInput = {
-          userActions: 'Clicked on 3 plugins, scrolled through category page.',
+        const simulatedInput: AdaptiveUiSettingsInput = {
           deviceType: 'desktop' as const,
           networkSpeed: 'fast' as const,
         };
 
-        const result = await adaptAnimationsToUserBehavior(simulatedInput);
+        // Use the more efficient tool instead of the rate-limited flow
+        const result = await getAdaptiveUiSettings(simulatedInput);
         setSettings(result);
       } catch (error) {
         console.error('Failed to get adaptive UI settings:', error);
@@ -44,7 +45,7 @@ export default function useAdaptiveUiHook() {
       }
     };
 
-    getAdaptiveSettings();
+    getAdaptedSettings();
   }, []);
 
   return { settings, loading };

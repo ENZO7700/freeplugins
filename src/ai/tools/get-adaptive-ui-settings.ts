@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview A tool to get adaptive UI settings based on device and network.
