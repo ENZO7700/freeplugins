@@ -39,11 +39,11 @@ export function MainNav() {
   }
 
   const isMarketplaceActive = (categoryName?: string) => {
-    const isMarketplacePage = pathname === '/' || pathname.startsWith('/plugins/');
+    const isMarketplacePage = pathname === '/' && !searchParams.get('category');
     if (!categoryName) {
       return isMarketplacePage && !categoryParam
     }
-    return isMarketplacePage && categoryParam === categoryName
+    return pathname === '/' && categoryParam === categoryName
   }
 
   const handleClose = () => {
@@ -70,7 +70,7 @@ export function MainNav() {
             <SidebarMenuButton
               onClick={() => setIsMarketplaceOpen(!isMarketplaceOpen)}
               className="justify-between"
-              isActive={isMarketplaceActive()}
+              isActive={pathname === '/' || pathname.startsWith('/plugins/')}
             >
               <div className="flex items-center gap-2">
                 <ShoppingBag />
@@ -81,7 +81,7 @@ export function MainNav() {
             {isMarketplaceOpen && (
               <SidebarMenuSub>
                 <SidebarMenuSubItem>
-                  <Link href="/" onClick={handleClose} passHref>
+                  <Link href="/" onClick={handleClose}>
                     <SidebarMenuSubButton isActive={isMarketplaceActive()}>
                        Všetky pluginy
                     </SidebarMenuSubButton>
@@ -89,7 +89,7 @@ export function MainNav() {
                 </SidebarMenuSubItem>
                 {categories.map((category) => (
                     <SidebarMenuSubItem key={category.name}>
-                        <Link href={`/?category=${encodeURIComponent(category.name)}`} onClick={handleClose} passHref>
+                        <Link href={`/?category=${encodeURIComponent(category.name)}`} onClick={handleClose}>
                             <SidebarMenuSubButton isActive={isMarketplaceActive(category.name)}>
                                 {category.name}
                             </SidebarMenuSubButton>
@@ -101,7 +101,7 @@ export function MainNav() {
           </SidebarMenuItem>
 
           <SidebarMenuItem>
-            <Link href="/blog" onClick={handleClose} passHref>
+            <Link href="/blog" onClick={handleClose}>
               <SidebarMenuButton tooltip="Blog" isActive={isActive('/blog')}>
                 <BookOpen />
                 <span>Blog</span>
@@ -110,7 +110,7 @@ export function MainNav() {
           </SidebarMenuItem>
 
           <SidebarMenuItem>
-            <Link href="/about" onClick={handleClose} passHref>
+            <Link href="/about" onClick={handleClose}>
               <SidebarMenuButton tooltip="O nás" isActive={isActive('/about')}>
                 <Users />
                 <span>O nás</span>
@@ -119,7 +119,7 @@ export function MainNav() {
           </SidebarMenuItem>
 
           <SidebarMenuItem>
-            <Link href="/contact" onClick={handleClose} passHref>
+            <Link href="/contact" onClick={handleClose}>
               <SidebarMenuButton tooltip="Kontakt" isActive={isActive('/contact')}>
                 <Mail />
                 <span>Kontakt</span>
