@@ -791,18 +791,6 @@ export const allPlugins: Plugin[] = [
     reviews: [],
   },
   {
-    slug: 'alfred-5',
-    name: 'Alfred 5',
-    category: 'macOS',
-    description: 'Zvýšte svoju produktivitu s touto klávesnicovou aplikáciou.',
-    longDescription: 'Alfred je oveľa viac ako len spúšťač aplikácií. Umožňuje vyhľadávať súbory, spúšťať príkazy, spravovať schránku, vytvárať vlastné pracovné postupy a ovládať hudbu.',
-    price: '£34',
-    imageUrl: 'https://images.unsplash.com/photo-1504207920153-9d1003923c22?q=80&w=600&h=400&fit=crop',
-    dataAiHint: 'productivity tools',
-    rating: 5.0,
-    reviews: [],
-  },
-  {
     slug: 'cleanmymac-x',
     name: 'CleanMyMac X',
     category: 'macOS',
