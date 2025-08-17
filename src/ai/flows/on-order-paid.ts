@@ -86,7 +86,7 @@ const onOrderPaidFlow = ai.defineFlow(
       You can view all your licenses in your dashboard.
 
       Thanks,
-      The SOFTW4R3 Team
+      The FreePlugins Team
       =====================================================
     `);
   }

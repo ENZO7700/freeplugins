@@ -22,7 +22,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-muted-foreground">
           
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-xl font-bold font-headline text-primary mb-4">Expresívny Navigátor</h3>
+            <h3 className="text-xl font-bold font-headline text-primary mb-4">FreePlugins</h3>
             <p className="text-sm max-w-md">
               Vaše centrum pre objavovanie, nákup a predaj najlepších softvérových pluginov a nástrojov. Podporujeme inovácie a pomáhame tvorcom uspieť.
             </p>
@@ -50,7 +50,7 @@ export function Footer() {
 
         </div>
         <div className="flex flex-col sm:flex-row justify-between items-center text-sm mt-8 pt-8 border-t">
-          <p>&copy; {currentYear} Expresívny Navigátor. Všetky práva vyhradené.</p>
+          <p>&copy; {currentYear} FreePlugins. Všetky práva vyhradené.</p>
           <div className="flex space-x-2 mt-4 sm:mt-0">
             <Link href="#" aria-label="Twitter" className={cn(buttonVariants({variant: "ghost", size:"icon"}))}><Twitter /></Link>
             <Link href="#" aria-label="GitHub" className={cn(buttonVariants({variant: "ghost", size:"icon"}))}><Github /></Link>

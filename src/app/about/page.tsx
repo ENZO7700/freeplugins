@@ -14,7 +14,7 @@ const teamMembers = [
     {
         name: 'Alex Schwarz',
         role: 'CEO & Founder',
-        bio: 'Alex je vizionárom stojacim za SOFTW4R3. Jeho cieľom je vytvoriť najlepší a najinovatívnejší trh pre softvérové nástroje.',
+        bio: 'Alex je vizionárom stojacim za FreePlugins. Jeho cieľom je vytvoriť najlepší a najinovatívnejší trh pre softvérové nástroje.',
         imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=150&h=150&fit=crop',
     },
     {
@@ -26,7 +26,7 @@ const teamMembers = [
     {
         name: 'Peter Designer',
         role: 'Head of Design',
-        bio: 'Peter je umelcom, ktorý dáva SOFTW4R3 jeho jedinečný vzhľad. Zodpovedá za to, aby bol používateľský zážitok nielen funkčný, ale aj krásny.',
+        bio: 'Peter je umelcom, ktorý dáva FreePlugins jeho jedinečný vzhľad. Zodpovedá za to, aby bol používateľský zážitok nielen funkčný, ale aj krásny.',
         imageUrl: 'https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=150&h=150&fit=crop',
     }
 ];
@@ -55,7 +55,7 @@ export default function AboutPage() {
             <main className="container mx-auto px-4 py-12 md:py-24">
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h1 className="text-4xl md:text-5xl font-bold font-headline">
-                        <Balancer>O SOFTW4R3</Balancer>
+                        <Balancer>O FreePlugins</Balancer>
                     </h1>
                     <p className="mt-4 text-lg text-muted-foreground">
                         <Balancer>

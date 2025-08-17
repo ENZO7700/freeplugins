@@ -49,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="sk" suppressHydrationWarning>
       <head>
-        <title>Expresívny Navigátor</title>
+        <title>FreePlugins</title>
         <meta name="description" content="The ultimate marketplace for software plugins and tools." />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

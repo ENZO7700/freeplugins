@@ -57,7 +57,7 @@ export function MainNav() {
       <SidebarHeader>
         <Link href="/" passHref>
           <div className="text-2xl font-bold font-headline text-primary cursor-pointer hover:animate-text-glow p-2">
-            Expresívny Navigátor
+            FreePlugins
           </div>
         </Link>
       </SidebarHeader>
@@ -130,7 +130,7 @@ export function MainNav() {
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter>
-        <p className="text-xs text-muted-foreground p-2 text-center">&copy; {new Date().getFullYear()} Expresívny Navigátor</p>
+        <p className="text-xs text-muted-foreground p-2 text-center">&copy; {new Date().getFullYear()} FreePlugins</p>
       </SidebarFooter>
     </>
   )

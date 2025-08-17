@@ -79,7 +79,7 @@ export function Header() {
            <SidebarTrigger className="md:hidden" />
            <Link href="/" passHref>
               <div className="hidden sm:block text-xl font-bold font-headline text-primary cursor-pointer hover:animate-text-glow">
-                Expresívny Navigátor
+                FreePlugins
               </div>
             </Link>
         </div>

@@ -118,7 +118,7 @@ export function HeroSection() {
             style={{ y: textY, opacity: textOpacity }}
         >
           <motion.div initial="hidden" animate="visible" variants={containerVariants}>
-              <AnimatedWords text="Expresívny Navigátor" />
+              <AnimatedWords text="FreePlugins" />
             <motion.p 
               className="mt-6 text-lg md:text-xl text-muted-foreground"
               variants={itemVariants}
