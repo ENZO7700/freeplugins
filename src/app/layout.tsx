@@ -12,7 +12,7 @@ import { AuthProvider } from '@/context/auth-context';
 import { DashboardProvider } from '@/context/dashboard-context';
 import { AdaptiveUiProvider, useAdaptiveUi } from '@/context/adaptive-ui-context';
 import React from 'react';
-import { Sidebar, SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
+import { Sidebar, SidebarProvider } from '@/components/ui/sidebar';
 import { MainNav } from '@/components/main-nav';
 
 
@@ -72,15 +72,13 @@ export default function RootLayout({
                       <Sidebar>
                         <MainNav />
                       </Sidebar>
-                      <SidebarInset>
-                        <div className="flex flex-col h-full">
-                          <Header />
-                          <main className="flex-grow">
-                            {children}
-                          </main>
-                          <Footer />
-                        </div>
-                      </SidebarInset>
+                      <div className="flex flex-1 flex-col">
+                        <Header />
+                        <main className="flex-grow">
+                          {children}
+                        </main>
+                        <Footer />
+                      </div>
                     </div>
                   </SidebarProvider>
                   <Toaster />

@@ -14,7 +14,8 @@ import {
   useSidebar,
   SidebarMenuSub,
   SidebarMenuSubButton,
-  SidebarMenuSubItem
+  SidebarMenuSubItem,
+  SidebarTrigger
 } from "@/components/ui/sidebar"
 import {
   BookOpen,
@@ -24,12 +25,13 @@ import {
   ChevronDown
 } from "lucide-react"
 import { getPluginCategories } from "./plugin-list"
+import { cn } from "@/lib/utils"
 
 export function MainNav() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const categoryParam = searchParams.get('category')
-  const { isMobile, setOpenMobile } = useSidebar()
+  const { isMobile, setOpenMobile, state } = useSidebar()
   const [isMarketplaceOpen, setIsMarketplaceOpen] = React.useState(true);
 
   const categories = getPluginCategories()
@@ -56,10 +58,14 @@ export function MainNav() {
     <>
       <SidebarHeader>
         <Link href="/" passHref>
-          <div className="text-2xl font-bold font-headline text-primary cursor-pointer hover:animate-text-glow p-2">
+          <div className={cn(
+            "text-2xl font-bold font-headline text-primary cursor-pointer hover:animate-text-glow p-2 transition-opacity duration-300",
+            state === 'collapsed' ? 'opacity-0' : 'opacity-100'
+            )}>
             FreePlugins
           </div>
         </Link>
+        <SidebarTrigger />
       </SidebarHeader>
 
       <SidebarContent className="p-0">
@@ -71,6 +77,7 @@ export function MainNav() {
               onClick={() => setIsMarketplaceOpen(!isMarketplaceOpen)}
               className="justify-between"
               isActive={pathname === '/' || pathname.startsWith('/plugins/')}
+              tooltip="Trhovisko"
             >
               <div className="flex items-center gap-2">
                 <ShoppingBag />
@@ -130,7 +137,10 @@ export function MainNav() {
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter>
-        <p className="text-xs text-muted-foreground p-2 text-center">&copy; {new Date().getFullYear()} FreePlugins</p>
+        <p className={cn(
+          "text-xs text-muted-foreground p-2 text-center transition-opacity duration-300",
+          state === 'collapsed' ? 'opacity-0' : 'opacity-100'
+        )}>&copy; {new Date().getFullYear()} FreePlugins</p>
       </SidebarFooter>
     </>
   )

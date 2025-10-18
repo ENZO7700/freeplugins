@@ -1,16 +1,15 @@
-
 "use client"
 
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
-import { PanelLeft } from "lucide-react"
+import { Settings } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent } from "@/components/ui/sheet"
 import {
   Tooltip,
   TooltipContent,
@@ -23,7 +22,6 @@ const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 const SIDEBAR_WIDTH = "16rem"
 const SIDEBAR_WIDTH_MOBILE = "18rem"
 const SIDEBAR_WIDTH_ICON = "3.5rem"
-const SIDEBAR_KEYBOARD_SHORTCUT = "b"
 
 type SidebarContext = {
   state: "expanded" | "collapsed"
@@ -33,6 +31,8 @@ type SidebarContext = {
   setOpenMobile: (open: boolean) => void
   isMobile: boolean
   toggleSidebar: () => void
+  isHovering: boolean
+  setIsHovering: (hovering: boolean) => void
 }
 
 const SidebarContext = React.createContext<SidebarContext | null>(null)
@@ -56,7 +56,7 @@ const SidebarProvider = React.forwardRef<
 >(
   (
     {
-      defaultOpen = true,
+      defaultOpen = false, // Default to collapsed on desktop
       open: openProp,
       onOpenChange: setOpenProp,
       className,
@@ -68,6 +68,7 @@ const SidebarProvider = React.forwardRef<
   ) => {
     const isMobile = useIsMobile()
     const [openMobile, setOpenMobile] = React.useState(false)
+    const [isHovering, setIsHovering] = React.useState(false);
 
     const [_open, _setOpen] = React.useState(() => {
         if (typeof window !== "undefined") {
@@ -100,34 +101,22 @@ const SidebarProvider = React.forwardRef<
         : setOpen((open) => !open)
     }, [isMobile, setOpen, setOpenMobile])
 
-    React.useEffect(() => {
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (
-          event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
-          (event.metaKey || event.ctrlKey)
-        ) {
-          event.preventDefault()
-          toggleSidebar()
-        }
-      }
-
-      window.addEventListener("keydown", handleKeyDown)
-      return () => window.removeEventListener("keydown", handleKeyDown)
-    }, [toggleSidebar])
-
-    const state = open ? "expanded" : "collapsed"
+    // On desktop, the sidebar is controlled by hover.
+    const effectiveState = isMobile ? (open ? 'expanded' : 'collapsed') : (open || isHovering ? 'expanded' : 'collapsed');
 
     const contextValue = React.useMemo<SidebarContext>(
       () => ({
-        state,
+        state: effectiveState,
         open,
         setOpen,
         isMobile,
         openMobile,
         setOpenMobile,
         toggleSidebar,
+        isHovering,
+        setIsHovering,
       }),
-      [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
+      [effectiveState, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar, isHovering]
     )
 
     return (
@@ -172,7 +161,7 @@ const Sidebar = React.forwardRef<
     },
     ref
   ) => {
-    const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
+    const { isMobile, state, openMobile, setOpenMobile, setIsHovering } = useSidebar()
 
     if (isMobile) {
       return (
@@ -199,8 +188,10 @@ const Sidebar = React.forwardRef<
             ref={ref}
             data-state={state}
             data-side={side}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
             className={cn(
-                "hidden md:flex flex-col flex-shrink-0 bg-background text-foreground border-r transition-[width] duration-300 ease-in-out",
+                "hidden md:flex flex-col flex-shrink-0 bg-background text-foreground border-r transition-[width] duration-300 ease-in-out z-50",
                 state === 'expanded' ? 'w-[var(--sidebar-width)]' : 'w-[var(--sidebar-width-icon)]',
                 className
             )}
@@ -217,24 +208,61 @@ const SidebarTrigger = React.forwardRef<
   React.ElementRef<typeof Button>,
   React.ComponentProps<typeof Button>
 >(({ className, onClick, ...props }, ref) => {
-  const { toggleSidebar } = useSidebar()
+  const { isMobile, toggleSidebar, state } = useSidebar()
+
+  if (isMobile) {
+    return (
+      <Button
+        ref={ref}
+        data-sidebar="trigger"
+        variant="ghost"
+        size="icon"
+        className={cn("h-8 w-8", className)}
+        onClick={(event) => {
+          onClick?.(event)
+          toggleSidebar()
+        }}
+        {...props}
+      >
+        <Settings className="animate-pulse-subtle" />
+        <span className="sr-only">Toggle Sidebar</span>
+      </Button>
+    )
+  }
 
   return (
-    <Button
-      ref={ref}
-      data-sidebar="trigger"
-      variant="ghost"
-      size="icon"
-      className={cn("h-8 w-8", className)}
-      onClick={(event) => {
-        onClick?.(event)
-        toggleSidebar()
-      }}
-      {...props}
-    >
-      <PanelLeft />
-      <span className="sr-only">Toggle Sidebar</span>
-    </Button>
+    <div className={cn(
+        "hidden md:flex items-center",
+        state === 'expanded' ? 'justify-end' : 'justify-center',
+        "p-2"
+    )}>
+        <Tooltip>
+            <TooltipTrigger asChild>
+                <Button
+                    ref={ref}
+                    data-sidebar="trigger"
+                    variant="ghost"
+                    size="icon"
+                    className={cn(
+                        "h-8 w-8",
+                        state === 'collapsed' && 'animate-pulse-subtle',
+                        className
+                    )}
+                    onClick={(event) => {
+                        onClick?.(event)
+                        toggleSidebar()
+                    }}
+                    {...props}
+                    >
+                    <Settings />
+                    <span className="sr-only">Toggle Sidebar</span>
+                </Button>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+                {state === 'collapsed' ? 'Rozbaliť bočnú lištu' : 'Zbaliť bočnú lištu'}
+            </TooltipContent>
+        </Tooltip>
+    </div>
   )
 })
 SidebarTrigger.displayName = "SidebarTrigger"
@@ -244,11 +272,13 @@ const SidebarInset = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div">
 >(({ className, ...props }, ref) => {
+  const { state, isMobile } = useSidebar();
   return (
     <div
       ref={ref}
       className={cn(
-        "flex-1",
+        "flex-1 transition-[padding-left] duration-300 ease-in-out",
+        !isMobile && (state === 'expanded' ? 'pl-[var(--sidebar-width)]' : 'pl-[var(--sidebar-width-icon)]'),
         className
       )}
       {...props}

@@ -16,7 +16,7 @@ export function Footer() {
   return (
     <footer className={cn(
         "border-t bg-background/80 backdrop-blur-sm mt-auto transition-[padding] duration-300 ease-in-out",
-        !isMobile && state === 'expanded' ? 'pl-[var(--sidebar-width)]' : 'pl-0 md:pl-[var(--sidebar-width-icon)]'
+         !isMobile && (state === 'expanded' ? 'pl-[var(--sidebar-width)]' : 'pl-[var(--sidebar-width-icon)]')
     )}>
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-muted-foreground">
