@@ -1293,7 +1293,6 @@ export function PluginList() {
                 </Link>
                 <div className="flex items-center gap-2 mb-2">
                   <StarRating rating={plugin.rating} />
-                  {/* The number of reviews will be fetched on the detail page */}
                   <span className="text-sm text-muted-foreground">(pozri recenzie)</span>
                 </div>
                 <p className="text-muted-foreground text-sm">{plugin.description}</p>
