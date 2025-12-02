@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -8,12 +9,12 @@ interface SpendingChartProps {
   data: Order[];
 }
 
-export function SpendingChart({ data: orders }: SpendingChartProps) {
+const MemoizedSpendingChart = React.memo(function SpendingChart({ data: orders }: SpendingChartProps) {
   const chartData = React.useMemo(() => {
     if (!orders || orders.length === 0) return [];
 
     const monthlySpending = orders.reduce((acc, order) => {
-      const month = new Date(order.date).toLocaleString('default', { month: 'short', year: '2-digit' });
+      const month = new Date(order.date).toLocaleString('sk-SK', { month: 'short', year: '2-digit' });
       acc[month] = (acc[month] || 0) + order.total;
       return acc;
     }, {} as Record<string, number>);
@@ -21,7 +22,7 @@ export function SpendingChart({ data: orders }: SpendingChartProps) {
     return Object.entries(monthlySpending).map(([name, total]) => ({
       name,
       total,
-    })).sort((a,b) => new Date(`1 ${a.name}`).getTime() - new Date(`1 ${b.name}`).getTime());
+    })).sort((a,b) => new Date(`1 ${a.name.replace('.', '')}`).getTime() - new Date(`1 ${b.name.replace('.', '')}`).getTime());
   }, [orders]);
 
    if (chartData.length === 0) {
@@ -56,9 +57,11 @@ export function SpendingChart({ data: orders }: SpendingChartProps) {
                     }}
                 />
                 <Legend wrapperStyle={{fontSize: "14px"}}/>
-                <Bar dataKey="total" fill="hsl(var(--primary))" name="Celková útrata ($)" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="total" fill="hsl(var(--primary))" name="Celková útrata (€)" radius={[4, 4, 0, 0]} />
             </BarChart>
         </ResponsiveContainer>
     </div>
   );
-}
+});
+
+export { MemoizedSpendingChart as SpendingChart };

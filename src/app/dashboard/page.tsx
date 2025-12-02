@@ -13,16 +13,54 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
-import { SpendingChart } from '@/components/dashboard/spending-chart';
-import { CategoryChart } from '@/components/dashboard/category-chart';
 import { Balancer } from 'react-wrap-balancer';
 import { plugins } from '@/components/plugin-list';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
-import { LicenseKeyDialog } from '@/components/dashboard/license-key-dialog';
 import { calculateAffiliatePayouts } from '@/ai/flows/calculate-affiliate-payouts';
 import { getAffiliateStats, type AffiliateStatsOutput } from '@/ai/flows/get-affiliate-stats';
+import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
+
+
+const LicenseKeyDialog = dynamic(() =>
+  import('@/components/dashboard/license-key-dialog').then((mod) => mod.LicenseKeyDialog)
+);
+const SpendingChart = dynamic(() =>
+  import('@/components/dashboard/spending-chart').then((mod) => mod.SpendingChart)
+);
+const CategoryChart = dynamic(() =>
+  import('@/components/dashboard/category-chart').then((mod) => mod.CategoryChart)
+);
+
+
+const DashboardSkeleton = () => (
+  <div className="max-w-7xl mx-auto space-y-8">
+      <div className="flex justify-between items-center">
+        <Skeleton className="h-9 w-1/2" />
+        <Skeleton className="h-9 w-24" />
+      </div>
+       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Skeleton className="h-24 w-full" />
+        <Skeleton className="h-24 w-full" />
+        <Skeleton className="h-24 w-full" />
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-8">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                <Skeleton className="h-64 w-full" />
+                <Skeleton className="h-64 w-full" />
+            </div>
+            <Skeleton className="h-48 w-full" />
+        </div>
+        <div className="space-y-8">
+            <Skeleton className="h-64 w-full" />
+            <Skeleton className="h-56 w-full" />
+        </div>
+      </div>
+  </div>
+);
 
 
 export default function DashboardPage() {
@@ -66,7 +104,7 @@ export default function DashboardPage() {
         toast({ title: "Profil aktualizovaný", description: "Vaše zobrazované meno bolo aktualizované." });
         setIsEditing(false);
     } catch (error: any) {
-        toast({ variant: "destructive", title: "Aktualizácia zlyhala", description: error.message });
+        toast({ variant: "destructive", title: "Aktualizácia zlyhala", description: "Vyskytla sa chyba. Skúste to prosím znova." });
     } finally {
         setIsSaving(false);
     }
@@ -127,9 +165,11 @@ export default function DashboardPage() {
 
   if (loading || !user || dashboardLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
+       <PageTransitionWrapper>
+        <main className="container mx-auto px-4 py-8">
+            <DashboardSkeleton />
+        </main>
+       </PageTransitionWrapper>
     );
   }
 
@@ -191,7 +231,9 @@ export default function DashboardPage() {
                                 </div>
                             </CardHeader>
                             <CardContent>
+                               <React.Suspense fallback={<Skeleton className="h-[250px] w-full" />}>
                                 <SpendingChart data={orderHistory} />
+                               </React.Suspense>
                             </CardContent>
                         </Card>
                          <Card>
@@ -202,7 +244,9 @@ export default function DashboardPage() {
                                 </div>
                             </CardHeader>
                             <CardContent>
+                               <React.Suspense fallback={<Skeleton className="h-[250px] w-full" />}>
                                 <CategoryChart data={purchasedPlugins} />
+                               </React.Suspense>
                             </CardContent>
                         </Card>
                     </div>
@@ -231,14 +275,16 @@ export default function DashboardPage() {
                             </div>
                           </div>
                           <div className='flex gap-2 self-end sm:self-center'>
-                             <LicenseKeyDialog 
-                                pluginId={plugin.slug}
-                                userId={user.uid}
-                                trigger={
-                                    <Button size="sm" variant="ghost"><KeyRound className="mr-2 h-4 w-4" /> Spravovať licenciu</Button>
-                                }
-                             />
-                             <Button size="sm" variant="outline"><Download className="mr-2 h-4 w-4" /> Stiahnuť</Button>
+                             <React.Suspense fallback={<Button size="sm" variant="ghost" disabled><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Načítavam...</Button>}>
+                                 <LicenseKeyDialog 
+                                    pluginId={plugin.slug}
+                                    userId={user.uid}
+                                    trigger={
+                                        <Button size="sm" variant="ghost" aria-label={`Spravovať licenciu pre ${plugin.name}`}><KeyRound className="mr-2 h-4 w-4" /> Spravovať licenciu</Button>
+                                    }
+                                 />
+                             </React.Suspense>
+                             <Button size="sm" variant="outline" aria-label={`Stiahnuť ${plugin.name}`}><Download className="mr-2 h-4 w-4" /> Stiahnuť</Button>
                           </div>
                         </li>
                       ))}
@@ -309,7 +355,7 @@ export default function DashboardPage() {
                                         disabled={!isEditing}
                                     />
                                     {!isEditing && (
-                                        <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)}>
+                                        <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)} aria-label="Upraviť meno">
                                             <Edit className="h-4 w-4"/>
                                         </Button>
                                     )}
@@ -345,9 +391,14 @@ export default function DashboardPage() {
                     </CardHeader>
                     <CardContent>
                         {isAffiliateStatsLoading ? (
-                            <div className="flex justify-center items-center h-40">
-                                <Loader2 className="h-8 w-8 animate-spin" />
-                            </div>
+                           <div className="space-y-4">
+                               <div className="grid grid-cols-2 gap-4">
+                                   <Skeleton className="h-20" />
+                                   <Skeleton className="h-20" />
+                                   <Skeleton className="h-20" />
+                                   <Skeleton className="h-20" />
+                               </div>
+                           </div>
                         ) : affiliateStats ? (
                             <div className="space-y-4">
                                 <div className="grid grid-cols-2 gap-4 text-sm">

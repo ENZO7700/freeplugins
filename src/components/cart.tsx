@@ -14,10 +14,10 @@ export function Cart() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" size="icon" className="relative">
+        <Button variant="outline" size="icon" className="relative" aria-label="Otvoriť nákupný košík">
           <ShoppingCart />
           {cart.length > 0 && (
-            <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+            <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center" aria-label={`${cart.length} položiek v košíku`}>
               {cart.length}
             </span>
           )}
@@ -32,7 +32,13 @@ export function Cart() {
         </SheetHeader>
         <div className="flex-1 overflow-y-auto py-6">
           {cart.length === 0 ? (
-            <p className="text-center text-muted-foreground">Váš košík je prázdny.</p>
+            <div className="text-center text-muted-foreground flex flex-col items-center gap-4 h-full justify-center">
+              <ShoppingCart className="w-12 h-12 text-muted-foreground/50" />
+              <p>Váš košík je prázdny.</p>
+              <Button asChild>
+                <Link href="/">Začnite nakupovať</Link>
+              </Button>
+            </div>
           ) : (
             <ul className="divide-y divide-border">
               {cart.map(item => (
@@ -57,6 +63,7 @@ export function Cart() {
                           variant="ghost"
                           size="icon"
                           onClick={() => removeFromCart(item.slug)}
+                          aria-label={`Odstrániť ${item.name} z košíka`}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>

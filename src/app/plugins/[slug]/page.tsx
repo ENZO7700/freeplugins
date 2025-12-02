@@ -22,11 +22,38 @@ import { format } from 'date-fns';
 import { sk } from 'date-fns/locale';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp, query, onSnapshot, orderBy } from 'firebase/firestore';
+import { Metadata, ResolvingMetadata } from 'next';
+import { Skeleton } from '@/components/ui/skeleton';
 
 
-export default function PluginDetailPage({ params }: { params: { slug: string } }) {
+type Props = {
+  params: { slug: string }
+}
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const plugin = getPluginData(params.slug);
+  
+  if (!plugin) {
+    return {
+      title: 'Plugin nenájdený',
+    }
+  }
+ 
+  // fetch data
+  const parentTitle = (await parent).title?.absolute;
+ 
+  return {
+    title: `${plugin.name} | ${parentTitle}`,
+    description: plugin.description,
+  }
+}
+
+function PluginDetailContent({ params }: { params: { slug: string } }) {
   const { user } = useAuth();
-  const pluginData = getPluginData(params.slug); // This is static data
+  const pluginData = getPluginData(params.slug);
   const { addToCart } = useCart();
   const { toast } = useToast();
   
@@ -54,7 +81,6 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
           author: data.author,
           rating: data.rating,
           comment: data.comment,
-          // Firestore timestamp to ISO string
           date: data.date?.toDate().toISOString() || new Date().toISOString(),
         });
       });
@@ -70,11 +96,16 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
       setIsReviewsLoading(false);
     }, (error) => {
       console.error("Error fetching reviews: ", error);
+      toast({
+          variant: "destructive",
+          title: "Chyba pri načítaní recenzií",
+          description: "Nepodarilo sa načítať recenzie z databázy. Skúste to prosím znova.",
+      });
       setIsReviewsLoading(false);
     });
 
     return () => unsubscribe();
-  }, [pluginData]);
+  }, [pluginData, toast]);
 
   if (!pluginData) {
     notFound();
@@ -142,7 +173,7 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
             date: serverTimestamp(),
         });
 
-        setIsSubmittingReview(false);
+        
         setReviewRating(0);
         setReviewComment('');
         toast({
@@ -151,12 +182,13 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
         });
     } catch (error) {
          console.error("Error submitting review: ", error);
-         setIsSubmittingReview(false);
          toast({
             variant: "destructive",
             title: "Odoslanie zlyhalo",
-            description: "Vyskytla sa chyba pri odosielaní vašej recenzie.",
+            description: "Vyskytla sa chyba pri odosielaní vašej recenzie. Skúste to prosím znova.",
         });
+    } finally {
+        setIsSubmittingReview(false);
     }
   };
 
@@ -182,6 +214,8 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
                   fill
                   style={{objectFit: "cover"}}
                   data-ai-hint={pluginData.dataAiHint}
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               )}
             </div>
@@ -229,6 +263,7 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
                                           key={star}
                                           className={`w-8 h-8 cursor-pointer transition-colors ${reviewRating >= star ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`}
                                           onClick={() => setReviewRating(star)}
+                                          aria-label={`Hodnotenie ${star} z 5`}
                                       />
                                   ))}
                               </div>
@@ -241,6 +276,7 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
                                   value={reviewComment}
                                   onChange={(e) => setReviewComment(e.target.value)}
                                   required
+                                  aria-required="true"
                               />
                           </div>
                       </CardContent>
@@ -264,7 +300,10 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
 
              <div className="space-y-6">
                 {isReviewsLoading ? (
-                    <div className="flex justify-center py-8"><Loader2 className="h-8 w-8 animate-spin" /></div>
+                    <div className="space-y-6">
+                        <Skeleton className="h-24 w-full" />
+                        <Skeleton className="h-24 w-full" />
+                    </div>
                 ) : reviews.length > 0 ? (
                     reviews.map((review, index) => (
                         <Card key={index} className="p-6">
@@ -303,7 +342,9 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
               </Button>
 
               {isGenerating && (
-                 <div className="mt-4 text-muted-foreground">Generujem...</div>
+                 <div className="mt-4">
+                    <Skeleton className="h-20 w-full" />
+                 </div>
               )}
 
               {marketingCopy && (
@@ -318,4 +359,8 @@ export default function PluginDetailPage({ params }: { params: { slug: string } 
       </main>
     </PageTransitionWrapper>
   );
+}
+
+export default function PluginDetailPage({ params }: { params: { slug: string } }) {
+  return <PluginDetailContent params={params} />;
 }

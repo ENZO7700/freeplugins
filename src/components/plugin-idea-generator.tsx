@@ -5,12 +5,13 @@ import * as React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Loader2, Lightbulb, Sparkles, User, Tag, DollarSign, Target } from 'lucide-react';
+import { Loader2, Lightbulb, Sparkles, Target, DollarSign } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { generatePluginIdea, type GeneratePluginIdeaOutput } from '@/ai/flows/generate-plugin-idea';
 import { generatePluginLogo } from '@/ai/flows/generate-plugin-logo';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function PluginIdeaGenerator() {
     const [concept, setConcept] = React.useState('');
@@ -22,7 +23,14 @@ export function PluginIdeaGenerator() {
 
     const handleIdeaSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!concept.trim()) return;
+        if (!concept.trim()) {
+            toast({
+                variant: 'destructive',
+                title: 'Prázdny koncept',
+                description: 'Prosím, zadajte svoj nápad na plugin.',
+            });
+            return;
+        }
 
         setIsLoading(true);
         setIdea(null);
@@ -32,7 +40,6 @@ export function PluginIdeaGenerator() {
             const response = await generatePluginIdea({ concept });
             setIdea(response);
             
-            // Now, generate the logo
             setIsLogoLoading(true);
             try {
                 const logoResponse = await generatePluginLogo({ 
@@ -41,8 +48,7 @@ export function PluginIdeaGenerator() {
                 });
                 setLogoUrl(logoResponse);
             } catch (logoError) {
-                console.error('Plugin Logo Generation Error:', logoError);
-                // Non-critical error, so we just toast without failing the whole process
+                console.error('Chyba pri generovaní loga:', logoError);
                 toast({
                     variant: 'destructive',
                     title: 'Chyba pri generovaní loga',
@@ -53,7 +59,7 @@ export function PluginIdeaGenerator() {
             }
 
         } catch (error) {
-            console.error('Plugin Idea Generator Error:', error);
+            console.error('Chyba pri generovaní nápadu na plugin:', error);
             toast({
                 variant: 'destructive',
                 title: 'Vyskytla sa chyba',
@@ -63,6 +69,35 @@ export function PluginIdeaGenerator() {
             setIsLoading(false);
         }
     };
+    
+    const IdeaCardSkeleton = () => (
+        <CardFooter className="flex flex-col items-start gap-6 pt-6 border-t">
+            <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
+                <Skeleton className="w-24 h-24 rounded-md" />
+                <Skeleton className="h-8 w-48" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                <div className="flex items-start gap-3">
+                    <Skeleton className="h-6 w-6 rounded-full mt-1" />
+                    <div className="w-full">
+                        <Skeleton className="h-5 w-24 mb-2" />
+                        <Skeleton className="h-4 w-full" />
+                    </div>
+                </div>
+                <div className="flex items-start gap-3">
+                    <Skeleton className="h-6 w-6 rounded-full mt-1" />
+                    <div className="w-full">
+                         <Skeleton className="h-5 w-32 mb-2" />
+                         <Skeleton className="h-4 w-full" />
+                    </div>
+                </div>
+            </div>
+            <div className="w-full space-y-2">
+                <Skeleton className="h-5 w-32" />
+                <Skeleton className="h-16 w-full" />
+            </div>
+        </CardFooter>
+    );
 
     return (
         <section className="py-12 md:py-24 bg-secondary/30 rounded-lg my-12">
@@ -90,6 +125,7 @@ export function PluginIdeaGenerator() {
                                     onChange={(e) => setConcept(e.target.value)}
                                     placeholder="Napr. 'Nástroj na optimalizáciu obrázkov pre WordPress'"
                                     disabled={isLoading}
+                                    aria-label="Vstup pre koncept pluginu"
                                 />
                                 <Button type="submit" disabled={isLoading || !concept.trim()}>
                                     {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4"/>}
@@ -99,8 +135,10 @@ export function PluginIdeaGenerator() {
                         </CardContent>
                     </form>
                     
+                    {isLoading && <IdeaCardSkeleton />}
+
                     <AnimatePresence>
-                    {idea && (
+                    {!isLoading && idea && (
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -110,11 +148,9 @@ export function PluginIdeaGenerator() {
                         <CardFooter className="flex flex-col items-start gap-6 pt-6 border-t">
                             <div className="flex flex-col sm:flex-row items-center gap-4">
                                 {isLogoLoading ? (
-                                    <div className="w-24 h-24 bg-muted rounded-md flex items-center justify-center">
-                                        <Loader2 className="w-8 h-8 animate-spin text-primary"/>
-                                    </div>
+                                    <Skeleton className="w-24 h-24 rounded-md"/>
                                 ) : logoUrl ? (
-                                    <Image src={logoUrl} alt={`${idea.name} logo`} width={96} height={96} className="rounded-md shadow-md"/>
+                                    <Image src={logoUrl} alt={`Logo pre ${idea.name}`} width={96} height={96} className="rounded-md shadow-md"/>
                                 ) : (
                                     <div className="w-24 h-24 bg-muted rounded-md flex items-center justify-center">
                                          <Lightbulb className="w-8 h-8 text-muted-foreground"/>

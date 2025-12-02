@@ -15,6 +15,7 @@ import { Loader2, Copy, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { db } from '@/lib/firebase';
 import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface LicenseKeyDialogProps {
   pluginId: string;
@@ -34,6 +35,7 @@ export function LicenseKeyDialog({ pluginId, userId, trigger }: LicenseKeyDialog
     if (isOpen) {
       fetchLicenseKey();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
   
   React.useEffect(() => {
@@ -67,7 +69,7 @@ export function LicenseKeyDialog({ pluginId, userId, trigger }: LicenseKeyDialog
       }
     } catch (err) {
       console.error('Chyba pri načítavaní licenčného kľúča:', err);
-      setError('Nepodarilo sa načítať licenčný kľúč.');
+      setError('Nepodarilo sa načítať licenčný kľúč. Skúste to prosím znova.');
     } finally {
       setIsLoading(false);
     }
@@ -96,9 +98,7 @@ export function LicenseKeyDialog({ pluginId, userId, trigger }: LicenseKeyDialog
         </DialogHeader>
         <div className="py-4">
           {isLoading && (
-            <div className="flex items-center justify-center h-20">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            </div>
+            <Skeleton className="h-10 w-full" />
           )}
           {error && (
             <div className="flex items-center justify-center h-20 text-destructive">
@@ -108,7 +108,7 @@ export function LicenseKeyDialog({ pluginId, userId, trigger }: LicenseKeyDialog
           {licenseKey && (
             <div className="flex items-center gap-2 p-3 rounded-md bg-muted border">
               <code className="text-sm sm:text-base font-mono flex-grow break-all">{licenseKey}</code>
-              <Button size="icon" variant="ghost" onClick={handleCopy}>
+              <Button size="icon" variant="ghost" onClick={handleCopy} aria-label="Skopírovať licenčný kľúč">
                 {hasCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
               </Button>
             </div>

@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -5,7 +6,6 @@ import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
 import { Settings } from "lucide-react"
 
-import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -22,6 +22,24 @@ const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 const SIDEBAR_WIDTH = "16rem"
 const SIDEBAR_WIDTH_MOBILE = "18rem"
 const SIDEBAR_WIDTH_ICON = "3.5rem"
+const MOBILE_BREAKPOINT = 768;
+
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState(false)
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    }
+
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+  return isMobile
+}
 
 type SidebarContext = {
   state: "expanded" | "collapsed"
@@ -101,8 +119,7 @@ const SidebarProvider = React.forwardRef<
         : setOpen((open) => !open)
     }, [isMobile, setOpen, setOpenMobile])
 
-    // On desktop, the sidebar is controlled by hover.
-    const effectiveState = isMobile ? (open ? 'expanded' : 'collapsed') : (open || isHovering ? 'expanded' : 'collapsed');
+    const effectiveState = isMobile ? (openMobile ? 'expanded' : 'collapsed') : (open || isHovering ? 'expanded' : 'collapsed');
 
     const contextValue = React.useMemo<SidebarContext>(
       () => ({
@@ -222,10 +239,11 @@ const SidebarTrigger = React.forwardRef<
           onClick?.(event)
           toggleSidebar()
         }}
+        aria-label="Otvoriť/Zavrieť bočnú lištu"
         {...props}
       >
         <Settings className="animate-pulse-subtle" />
-        <span className="sr-only">Toggle Sidebar</span>
+        <span className="sr-only">Prepnúť bočnú lištu</span>
       </Button>
     )
   }
@@ -252,10 +270,11 @@ const SidebarTrigger = React.forwardRef<
                         onClick?.(event)
                         toggleSidebar()
                     }}
+                    aria-label="Prepnúť bočnú lištu"
                     {...props}
                     >
                     <Settings />
-                    <span className="sr-only">Toggle Sidebar</span>
+                    <span className="sr-only">Prepnúť bočnú lištu</span>
                 </Button>
             </TooltipTrigger>
             <TooltipContent side="right">
