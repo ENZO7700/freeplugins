@@ -88,7 +88,7 @@ export default function ContactPage() {
                             <CardContent className="space-y-4 text-lg">
                                 <div className="flex items-center gap-4">
                                     <Mail className="h-6 w-6 text-primary" />
-                                    <a href="mailto:info@softw4re.com" className="hover:underline">info@softw4re.com</a>
+                                    <a href="mailto:info@freeplugins.com" className="hover:underline">info@freeplugins.com</a>
                                 </div>
                                 <div className="flex items-center gap-4">
                                     <Phone className="h-6 w-6 text-primary" />

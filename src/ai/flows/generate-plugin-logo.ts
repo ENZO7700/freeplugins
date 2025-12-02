@@ -35,13 +35,8 @@ const generatePluginLogoFlow = ai.defineFlow(
     The logo should be on a clean, solid background. Avoid text. It should be abstract and iconic.`;
 
     const { media } = await ai.generate({
-      // IMPORTANT: ONLY this model is able to generate images.
-      model: googleAI.model('gemini-2.0-flash-preview-image-generation'),
+      model: googleAI.model('imagen-4.0-fast-generate-001'),
       prompt: prompt,
-      config: {
-        // You MUST provide both TEXT and IMAGE, IMAGE only won't work
-        responseModalities: ['TEXT', 'IMAGE'],
-      },
     });
 
     if (!media || !media.url) {

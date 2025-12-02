@@ -41,7 +41,7 @@ function ParallaxImage() {
 
     return (
         <div ref={ref} className="relative h-96 w-full rounded-lg overflow-hidden shadow-lg mb-24">
-            <motion.div className="absolute inset-0" style={{ y, height: '140%', top: '-20%' }}>
+            <motion.div className="absolute inset-0 h-[140%] top-[-20%]" style={{ y }}>
                 <Image src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&h=600&fit=crop" alt="Tím pri práci" fill style={{objectFit: 'cover'}} data-ai-hint="team working" />
             </motion.div>
         </div>
