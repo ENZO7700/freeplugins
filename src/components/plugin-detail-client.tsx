@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -10,7 +11,6 @@ import Link from 'next/link';
 import { useCart } from '@/context/cart-context';
 import { useToast } from '@/hooks/use-toast';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
-import { generatePluginMarketingCopy } from '@/ai/flows/generate-plugin-marketing-copy';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from '@/components/ui/card';
 import { useAuth } from '@/context/auth-context';
 import { Textarea } from '@/components/ui/textarea';
@@ -35,8 +35,6 @@ export default function PluginDetailClient({ pluginData }: PluginDetailClientPro
   const [averageRating, setAverageRating] = React.useState(pluginData.rating);
   const [isReviewsLoading, setIsReviewsLoading] = React.useState(true);
   
-  const [isGenerating, setIsGenerating] = React.useState(false);
-  const [marketingCopy, setMarketingCopy] = React.useState('');
   const [reviewRating, setReviewRating] = React.useState(0);
   const [reviewComment, setReviewComment] = React.useState('');
   const [isSubmittingReview, setIsSubmittingReview] = React.useState(false);
@@ -89,28 +87,6 @@ export default function PluginDetailClient({ pluginData }: PluginDetailClientPro
     })
   };
 
-  const handleGenerateCopy = async () => {
-    setIsGenerating(true);
-    setMarketingCopy('');
-    try {
-      const result = await generatePluginMarketingCopy({
-        name: pluginData.name,
-        description: pluginData.description,
-        category: pluginData.category,
-      });
-      setMarketingCopy(result.copy);
-    } catch (error) {
-      console.error('Nepodarilo sa vygenerovať marketingový text:', error);
-      toast({
-        variant: 'destructive',
-        title: 'Vyskytla sa chyba',
-        description: 'Nepodarilo sa vygenerovať marketingový text. Skúste to znova.',
-      });
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-  
   const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (reviewRating === 0 || !reviewComment.trim()) {
@@ -291,39 +267,6 @@ export default function PluginDetailClient({ pluginData }: PluginDetailClientPro
                 )}
              </div>
           </div>
-
-          <Card className="mt-12 bg-secondary/50">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Sparkles className="text-primary" />
-                <span>Marketingový asistent s AI</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground mb-4">Vygenerujte pútavý marketingový text pre tento plugin jediným kliknutím.</p>
-              <Button onClick={handleGenerateCopy} disabled={isGenerating}>
-                {isGenerating ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <Sparkles className="mr-2 h-4 w-4" />
-                )}
-                Generovať marketingový text
-              </Button>
-
-              {isGenerating && (
-                 <div className="mt-4">
-                    <Skeleton className="h-20 w-full" />
-                 </div>
-              )}
-
-              {marketingCopy && (
-                <div className="mt-6 p-4 border rounded-lg bg-background">
-                    <p className="whitespace-pre-wrap font-mono text-sm">{marketingCopy}</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
         </div>
       </main>
     </PageTransitionWrapper>

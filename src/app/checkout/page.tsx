@@ -15,7 +15,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { onOrderPaid } from '@/ai/flows/on-order-paid';
 
 export default function CheckoutPage() {
   const { user, loading } = useAuth();
@@ -58,14 +57,6 @@ export default function CheckoutPage() {
       });
 
       console.log("Order created with ID: ", orderRef.id);
-
-      // 2. Trigger the onOrderPaid Genkit flow
-      await onOrderPaid({
-        orderId: orderRef.id,
-        userId: user.uid,
-        userEmail: user.email || '',
-        items: cart.map(item => ({ pluginId: item.slug, name: item.name })),
-      });
       
       setIsProcessing(false);
       clearCart();

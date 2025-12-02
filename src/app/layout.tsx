@@ -10,7 +10,6 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { AuthProvider } from '@/context/auth-context';
 import { DashboardProvider } from '@/context/dashboard-context';
-import { AdaptiveUiProvider, useAdaptiveUi } from '@/context/adaptive-ui-context';
 import React from 'react';
 import { Sidebar, SidebarProvider } from '@/components/ui/sidebar';
 import { MainNav } from '@/components/main-nav';
@@ -28,19 +27,6 @@ const ptSans = PT_Sans({
   variable: '--font-pt-sans',
 });
 
-const AdaptiveStyles = () => {
-  const { fontSize, elementSpacing } = useAdaptiveUi();
-  
-  const css = `
-    :root {
-      --adaptive-font-size: ${fontSize};
-      --adaptive-spacing-unit: ${parseFloat(elementSpacing)}px;
-    }
-  `;
-
-  return <style>{css}</style>
-}
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -55,7 +41,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
       </head>
-      <body className={`text-base-adaptive ${poppins.variable} ${ptSans.variable} font-body antialiased`}>
+      <body className={`${poppins.variable} ${ptSans.variable} font-body antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -65,8 +51,6 @@ export default function RootLayout({
           <AuthProvider>
             <CartProvider>
               <DashboardProvider>
-                 <AdaptiveUiProvider>
-                  <AdaptiveStyles />
                   <SidebarProvider>
                     <div className="flex min-h-screen flex-row">
                       <Sidebar>
@@ -82,7 +66,6 @@ export default function RootLayout({
                     </div>
                   </SidebarProvider>
                   <Toaster />
-                </AdaptiveUiProvider>
               </DashboardProvider>
             </CartProvider>
           </AuthProvider>

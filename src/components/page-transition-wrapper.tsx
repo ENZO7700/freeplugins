@@ -3,7 +3,6 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { useAdaptiveUi } from "@/context/adaptive-ui-context";
 
 const animationDurations = {
   fast: 0.2,
@@ -32,8 +31,7 @@ export function PageTransitionWrapper({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const { animationSpeed } = useAdaptiveUi();
-  const duration = animationDurations[animationSpeed] || 0.4;
+  const duration = animationDurations['medium'];
 
   return (
     <AnimatePresence mode="wait">
