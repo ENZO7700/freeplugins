@@ -19,11 +19,9 @@ export async function generateMetadata(
       title: 'Článok nenájdený',
     }
   }
-
-  const parentTitle = (await parent).title?.absolute;
  
   return {
-    title: `${post.title} | ${parentTitle || 'FreePlugins Blog'}`,
+    title: `${post.title} | FreePlugins Blog`,
     description: post.summary,
   }
 }

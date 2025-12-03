@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import { getPluginData } from '@/components/plugin-list';
 import { Metadata, ResolvingMetadata } from 'next';
@@ -20,11 +21,8 @@ export async function generateMetadata(
     }
   }
  
-  // fetch data
-  const parentTitle = (await parent).title?.absolute;
- 
   return {
-    title: `${plugin.name} | ${parentTitle || 'FreePlugins'}`,
+    title: `${plugin.name} | FreePlugins`,
     description: plugin.description,
   }
 }
