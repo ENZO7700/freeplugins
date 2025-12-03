@@ -107,13 +107,24 @@ export default function DashboardPage() {
   }, [purchasedPlugins]);
 
   const recommendedPlugins = React.useMemo(() => {
-    if (purchasedPlugins.length === 0) {
-      return plugins.sort((a,b) => b.rating - a.rating).slice(0, 3);
-    }
     const purchasedSlugs = new Set(purchasedPlugins.map(p => p.slug));
-    return plugins
-      .filter(p => !purchasedSlugs.has(p.slug) && (p.category === favoriteCategory || favoriteCategory === 'N/A'))
+    const recommendations = plugins
+      .filter(p => 
+          !purchasedSlugs.has(p.slug) && 
+          (p.category === favoriteCategory || favoriteCategory === 'N/A')
+      )
+      .sort((a,b) => b.rating - a.rating) // Consistent sorting
       .slice(0, 3);
+      
+    if (recommendations.length < 3) {
+      const additionalPlugins = plugins
+        .filter(p => !purchasedSlugs.has(p.slug) && !recommendations.some(r => r.slug === p.slug))
+        .sort((a,b) => b.rating - a.rating) // Consistent sorting
+        .slice(0, 3 - recommendations.length);
+      return [...recommendations, ...additionalPlugins];
+    }
+    
+    return recommendations;
   }, [purchasedPlugins, favoriteCategory]);
   
   const getBadges = React.useMemo(() => {
@@ -277,7 +288,7 @@ export default function DashboardPage() {
                              <Card className="overflow-hidden h-full hover:shadow-lg transition-shadow">
                                 <div className='relative h-32 w-full'>
                                   {plugin.imageUrl && (
-                                    <Image src={plugin.imageUrl} alt={plugin.name} fill style={{objectFit: 'cover'}} data-ai-hint={plugin.dataAiHint} />
+                                    <Image src={plugin.imageUrl} alt={plugin.name} fill style={{objectFit: 'cover'}} data-ai-hint={plugin.dataAiHint} sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw" />
                                   )}
                                 </div>
                                 <div className="p-4">
@@ -372,3 +383,5 @@ export default function DashboardPage() {
     </PageTransitionWrapper>
   );
 }
+
+    

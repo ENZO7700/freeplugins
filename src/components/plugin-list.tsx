@@ -1324,3 +1324,5 @@ export const getPluginData = (slug: string): Plugin | undefined => {
 
   return { ...plugin };
 }
+
+    
