@@ -1,6 +1,3 @@
-
-'use client';
-
 import { Poppins, PT_Sans } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
