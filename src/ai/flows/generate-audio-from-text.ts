@@ -1,82 +1,111 @@
-'use server';
-/**
- * @fileOverview A flow to convert text to speech.
- *
- * - generateAudioFromText - Converts a given text string to an audio data URI.
- */
+'use client';
 
-import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
-import wav from 'wav';
-import { googleAI } from '@genkit-ai/googleai';
+import * as React from 'react';
+import { BlogPost } from '@/lib/blog-posts';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Loader2, Volume2 } from 'lucide-react';
+import Link from 'next/link';
+import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
+import { useToast } from '@/hooks/use-toast';
+import { Card } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
-export async function generateAudioFromText(text: string): Promise<string> {
-    return textToSpeechFlow(text);
+interface BlogPostClientProps {
+    post: BlogPost;
 }
 
-// Helper function to convert PCM audio data to WAV format
-async function toWav(
-  pcmData: Buffer,
-  channels = 1,
-  rate = 24000, // Gemini TTS default sample rate
-  sampleWidth = 2
-): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const writer = new wav.Writer({
-      channels,
-      sampleRate: rate,
-      bitDepth: sampleWidth * 8,
-    });
+export default function BlogPostClient({ post }: BlogPostClientProps) {
+  const [isGeneratingAudio, setIsGeneratingAudio] = React.useState(false);
+  const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
+  const { toast } = useToast();
 
-    const bufs: Buffer[] = [];
-    writer.on('error', reject);
-    writer.on('data', (d) => {
-      bufs.push(d);
-    });
-    writer.on('end', () => {
-      resolve(Buffer.concat(bufs).toString('base64'));
-    });
+  const handleListen = async () => {
+    setIsGeneratingAudio(true);
+    setAudioUrl(null);
+    toast({
+        variant: "destructive",
+        title: "Funkcia nie je k dispozícii",
+        description: "Generovanie audia bolo v tejto verzii aplikácie odstránené.",
+      });
+    setIsGeneratingAudio(false);
+  };
 
-    writer.write(pcmData);
-    writer.end();
-  });
+  return (
+    <PageTransitionWrapper>
+      <main className="container mx-auto px-4 py-8 flex-grow">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-8">
+            <Link href="/blog" passHref>
+               <Button variant="outline">
+                  <ArrowLeft className="mr-2" />
+                  Späť na blog
+               </Button>
+            </Link>
+          </div>
+          
+          <article>
+            <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4">{post.title}</h1>
+            <div className="flex items-center gap-4 mb-8 text-muted-foreground">
+                <div className="flex items-center gap-2">
+                    <Image src={post.authorImageUrl} alt={post.author} width={40} height={40} className="rounded-full" data-ai-hint="person portrait" />
+                    <span>{post.author}</span>
+                </div>
+                <span>&bull;</span>
+                <span>{post.date}</span>
+            </div>
+            
+            <div className="relative h-96 w-full rounded-lg overflow-hidden shadow-lg mb-8">
+              <Image
+                src={post.imageUrl}
+                alt={post.title}
+                fill
+                style={{objectFit: "cover"}}
+                data-ai-hint={post.dataAiHint}
+                priority
+              />
+            </div>
+            
+            <Card className="my-8 p-6 bg-secondary/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>
+                <h3 className="font-bold text-lg">Radšej počúvate ako čítate?</h3>
+                <p className="text-muted-foreground">Kliknite na tlačidlo a nechajte si článok prečítať umelou inteligenciou.</p>
+              </div>
+              <Button onClick={handleListen} disabled={isGeneratingAudio || !!audioUrl} aria-label="Vypočuť článok">
+                {isGeneratingAudio ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Generujem...
+                  </>
+                ) : (
+                  <>
+                    <Volume2 className="mr-2 h-5 w-5" />
+                    Vypočuť článok
+                  </>
+                )}
+              </Button>
+            </Card>
+
+            {isGeneratingAudio && !audioUrl && <Skeleton className="w-full h-14 rounded-md" />}
+
+            {audioUrl && (
+              <div className="my-8">
+                <audio controls src={audioUrl} className="w-full" autoPlay>
+                  Váš prehliadač nepodporuje audio element.
+                </audio>
+              </div>
+            )}
+
+            <div 
+              className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
+            >
+              {post.content.split('\n\n').map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
+          </article>
+        </div>
+      </main>
+    </PageTransitionWrapper>
+  );
 }
-
-const textToSpeechFlow = ai.defineFlow(
-  {
-    name: 'textToSpeechFlow',
-    inputSchema: z.string(),
-    outputSchema: z.string(),
-  },
-  async (text) => {
-    // Generate the audio from the text using the TTS model
-    const { media } = await ai.generate({
-      model: googleAI.model('gemini-2.5-flash-preview-tts'),
-      config: {
-        responseModalities: ['AUDIO'],
-        speechConfig: {
-          voiceConfig: {
-            prebuiltVoiceConfig: { voiceName: 'Algenib' }, // A standard male voice
-          },
-        },
-      },
-      prompt: text,
-    });
-
-    if (!media) {
-      throw new Error('No audio media was returned from the AI model.');
-    }
-
-    // The audio data is a base64 string within a data URI, so we need to extract it
-    const audioBuffer = Buffer.from(
-      media.url.substring(media.url.indexOf(',') + 1),
-      'base64'
-    );
-    
-    // Convert the raw PCM buffer to a WAV buffer and then to a base64 string
-    const wavBase64 = await toWav(audioBuffer);
-
-    // Return the audio as a data URI that can be used in an <audio> element
-    return `data:audio/wav;base64,${wavBase64}`;
-  }
-);

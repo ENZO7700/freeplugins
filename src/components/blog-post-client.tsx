@@ -4,10 +4,9 @@ import * as React from 'react';
 import { BlogPost } from '@/lib/blog-posts';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Volume2, Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2, Volume2 } from 'lucide-react';
 import Link from 'next/link';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
-import { generateAudioFromText } from '@/ai/flows/generate-audio-from-text';
 import { useToast } from '@/hooks/use-toast';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -24,20 +23,12 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
   const handleListen = async () => {
     setIsGeneratingAudio(true);
     setAudioUrl(null);
-    try {
-      const fullText = `${post.title}. ${post.content}`;
-      const generatedAudioUrl = await generateAudioFromText(fullText);
-      setAudioUrl(generatedAudioUrl);
-    } catch (error) {
-      console.error("Failed to generate audio:", error);
-      toast({
+    toast({
         variant: "destructive",
-        title: "Chyba pri generovaní audia",
-        description: "Nepodarilo sa vygenerovať zvukovú verziu článku. Skúste to prosím znova neskôr.",
+        title: "Funkcia nie je k dispozícii",
+        description: "Generovanie audia bolo v tejto verzii aplikácie odstránené.",
       });
-    } finally {
-      setIsGeneratingAudio(false);
-    }
+    setIsGeneratingAudio(false);
   };
 
   return (
@@ -85,11 +76,6 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
                   <>
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                     Generujem...
-                  </>
-                ) : audioUrl ? (
-                  <>
-                    <Volume2 className="mr-2 h-5 w-5" />
-                    Prehrať znova
                   </>
                 ) : (
                   <>

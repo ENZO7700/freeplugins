@@ -1,63 +1,111 @@
+'use client';
 
-'use server';
-/**
- * @fileOverview A flow to generate a plugin idea based on a user's concept.
- *
- * - generatePluginIdea - A function that handles generating the plugin details.
- * - GeneratePluginIdeaInput - The input type for the function.
- * - GeneratePluginIdeaOutput - The return type for the function.
- */
+import * as React from 'react';
+import { BlogPost } from '@/lib/blog-posts';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Loader2, Volume2 } from 'lucide-react';
+import Link from 'next/link';
+import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
+import { useToast } from '@/hooks/use-toast';
+import { Card } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
-import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
-
-const GeneratePluginIdeaInputSchema = z.object({
-  concept: z.string().describe('A brief description of the plugin idea.'),
-});
-export type GeneratePluginIdeaInput = z.infer<typeof GeneratePluginIdeaInputSchema>;
-
-const GeneratePluginIdeaOutputSchema = z.object({
-  name: z.string().describe('A creative and catchy name for the plugin.'),
-  description: z.string().describe('A detailed description of the plugin, including its main features and benefits.'),
-  targetAudience: z.string().describe('The ideal target audience for this plugin.'),
-  pricingStrategy: z.string().describe('A suggested pricing strategy (e.g., one-time fee, subscription, freemium).'),
-});
-export type GeneratePluginIdeaOutput = z.infer<typeof GeneratePluginIdeaOutputSchema>;
-
-export async function generatePluginIdea(input: GeneratePluginIdeaInput): Promise<GeneratePluginIdeaOutput> {
-  return generatePluginIdeaFlow(input);
+interface BlogPostClientProps {
+    post: BlogPost;
 }
 
-const prompt = ai.definePrompt({
-  name: 'generatePluginIdeaPrompt',
-  input: { schema: GeneratePluginIdeaInputSchema },
-  output: { schema: GeneratePluginIdeaOutputSchema },
-  prompt: `You are an expert product manager specializing in software plugins. Your task is to flesh out a plugin idea based on a user's concept.
+export default function BlogPostClient({ post }: BlogPostClientProps) {
+  const [isGeneratingAudio, setIsGeneratingAudio] = React.useState(false);
+  const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
+  const { toast } = useToast();
 
-  User's Concept:
-  "{{{concept}}}"
+  const handleListen = async () => {
+    setIsGeneratingAudio(true);
+    setAudioUrl(null);
+    toast({
+        variant: "destructive",
+        title: "Funkcia nie je k dispozícii",
+        description: "Generovanie audia bolo v tejto verzii aplikácie odstránené.",
+      });
+    setIsGeneratingAudio(false);
+  };
 
-  Based on this concept, generate the following:
-  1.  **Name**: A creative, memorable, and relevant name for the plugin.
-  2.  **Description**: A detailed paragraph explaining what the plugin does, its key features, and why it's valuable.
-  3.  **Target Audience**: A clear description of the ideal user for this plugin (e.g., "Freelance web developers", "Marketing agencies", "Content creators").
-  4.  **Pricing Strategy**: A simple, suggested pricing model. Examples: "One-time fee of $49", "Subscription starting at $15/month", "Freemium with a Pro plan at $99/year".
+  return (
+    <PageTransitionWrapper>
+      <main className="container mx-auto px-4 py-8 flex-grow">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-8">
+            <Link href="/blog" passHref>
+               <Button variant="outline">
+                  <ArrowLeft className="mr-2" />
+                  Späť na blog
+               </Button>
+            </Link>
+          </div>
+          
+          <article>
+            <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4">{post.title}</h1>
+            <div className="flex items-center gap-4 mb-8 text-muted-foreground">
+                <div className="flex items-center gap-2">
+                    <Image src={post.authorImageUrl} alt={post.author} width={40} height={40} className="rounded-full" data-ai-hint="person portrait" />
+                    <span>{post.author}</span>
+                </div>
+                <span>&bull;</span>
+                <span>{post.date}</span>
+            </div>
+            
+            <div className="relative h-96 w-full rounded-lg overflow-hidden shadow-lg mb-8">
+              <Image
+                src={post.imageUrl}
+                alt={post.title}
+                fill
+                style={{objectFit: "cover"}}
+                data-ai-hint={post.dataAiHint}
+                priority
+              />
+            </div>
+            
+            <Card className="my-8 p-6 bg-secondary/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>
+                <h3 className="font-bold text-lg">Radšej počúvate ako čítate?</h3>
+                <p className="text-muted-foreground">Kliknite na tlačidlo a nechajte si článok prečítať umelou inteligenciou.</p>
+              </div>
+              <Button onClick={handleListen} disabled={isGeneratingAudio || !!audioUrl} aria-label="Vypočuť článok">
+                {isGeneratingAudio ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Generujem...
+                  </>
+                ) : (
+                  <>
+                    <Volume2 className="mr-2 h-5 w-5" />
+                    Vypočuť článok
+                  </>
+                )}
+              </Button>
+            </Card>
 
-  Provide a well-structured and plausible output.
-`,
-});
+            {isGeneratingAudio && !audioUrl && <Skeleton className="w-full h-14 rounded-md" />}
 
-const generatePluginIdeaFlow = ai.defineFlow(
-  {
-    name: 'generatePluginIdeaFlow',
-    inputSchema: GeneratePluginIdeaInputSchema,
-    outputSchema: GeneratePluginIdeaOutputSchema,
-  },
-  async (input) => {
-    const { output } = await prompt(input);
-    if (!output) {
-      throw new Error('AI failed to generate a plugin idea.');
-    }
-    return output;
-  }
-);
+            {audioUrl && (
+              <div className="my-8">
+                <audio controls src={audioUrl} className="w-full" autoPlay>
+                  Váš prehliadač nepodporuje audio element.
+                </audio>
+              </div>
+            )}
+
+            <div 
+              className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
+            >
+              {post.content.split('\n\n').map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
+          </article>
+        </div>
+      </main>
+    </PageTransitionWrapper>
+  );
+}
