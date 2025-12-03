@@ -6,14 +6,16 @@ import { getFirestore } from "firebase/firestore";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+// These values are loaded from environment variables
+// Copy .env.example to .env.local and fill in your Firebase project details
 const firebaseConfig = {
-  "projectId": "expresvny-navigtor",
-  "appId": "1:981057554742:web:20df894353c4556f274b97",
-  "storageBucket": "expresvny-navigtor.firebasestorage.app",
-  "apiKey": "AIzaSyCUIm5P7z3sgmfxxESksDC32eSjsvfeKb0",
-  "authDomain": "expresvny-navigtor.firebaseapp.com",
-  "measurementId": "",
-  "messagingSenderId": "981057554742"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "",
 };
 
 // Initialize Firebase
