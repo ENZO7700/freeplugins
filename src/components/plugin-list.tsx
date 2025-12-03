@@ -10,7 +10,6 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useCart } from '@/context/cart-context';
 import { useToast } from '@/hooks/use-toast';
-import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Star, StarHalf } from 'lucide-react';
 import { Balancer } from 'react-wrap-balancer';
@@ -1217,10 +1216,7 @@ export const StarRating = React.memo(function StarRating({ rating, className }: 
 });
 
 
-export function PluginList() {
-  const searchParams = useSearchParams();
-  const category = searchParams.get('category');
-  
+export function PluginList({ category }: { category: string | null }) {
   const [searchQuery, setSearchQuery] = React.useState('');
   const { addToCart } = useCart();
   const { toast } = useToast();

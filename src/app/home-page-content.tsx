@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -22,7 +23,7 @@ export default function HomePageContent() {
             <CategoryGrid />
           </>
         )}
-        {category && <PluginList />}
+        <PluginList category={category} />
       </div>
     </PageTransitionWrapper>
   );

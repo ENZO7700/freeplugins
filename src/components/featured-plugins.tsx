@@ -57,6 +57,7 @@ export function FeaturedPlugins() {
                       style={{ objectFit: 'cover' }}
                       data-ai-hint={plugin.dataAiHint}
                       className="transition-transform duration-300"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     />
                   )}
                 </div>
