@@ -1,10 +1,11 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 # Dependencies
 /node_modules
 
 # Build outputs
 /.next/
 /out/
-/.swc/
 
 # Local Environment Variables
 .env.local
@@ -18,15 +19,16 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Vercel
-.vercel/
-
-# TypeScript
-*.tsbuildinfo
-
 # Firebase
-firebase-debug.log
-firebase-debug.*.log
+*.firebase
+firebase-debug.log*
+firebase-debug.*.log*
 
-# Backups
+# Backup files
 *.tar.gz
+
+# IDE and OS-specific files
+.idea
+.vscode
+.DS_Store
+Thumbs.db
