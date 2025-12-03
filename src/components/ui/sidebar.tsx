@@ -484,14 +484,14 @@ const SidebarMenuButton = React.forwardRef<
     const buttonContent = (
       <>
         {React.Children.map(children, (child, index) => {
-          if (React.isValidElement(child) && typeof child.type !== 'string' && child.type.displayName?.includes("Chevron")) {
-            return React.cloneElement(child, {
-              className: cn(child.props.className, 'transition-opacity duration-300 ml-auto', state === 'collapsed' ? 'opacity-0' : 'opacity-100')
+          if (React.isValidElement(child) && typeof child.type !== 'string' && typeof child.type === 'function' && (child.type as any).displayName?.includes("Chevron")) {
+            return React.cloneElement(child as React.ReactElement<any>, {
+              className: cn((child.props as any).className, 'transition-opacity duration-300 ml-auto', state === 'collapsed' ? 'opacity-0' : 'opacity-100')
             });
           }
           if (React.isValidElement(child) && child.type === 'span') {
-             return React.cloneElement(child, {
-              className: cn(child.props.className, 'transition-opacity duration-200 whitespace-nowrap', state === 'collapsed' ? 'opacity-0' : 'opacity-100')
+             return React.cloneElement(child as React.ReactElement<any>, {
+              className: cn((child.props as any).className, 'transition-opacity duration-200 whitespace-nowrap', state === 'collapsed' ? 'opacity-0' : 'opacity-100')
             });
           }
            if (React.isValidElement(child)) {

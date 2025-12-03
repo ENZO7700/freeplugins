@@ -5,14 +5,15 @@ import { notFound } from 'next/navigation';
 import PluginDetailClient from '@/components/plugin-detail-client';
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const plugin = getPluginData(params.slug);
+  const { slug } = await params;
+  const plugin = getPluginData(slug);
   
   if (!plugin) {
     return {
@@ -29,8 +30,9 @@ export async function generateMetadata(
   }
 }
 
-export default function PluginDetailPage({ params }: { params: { slug: string } }) {
-  const pluginData = getPluginData(params.slug);
+export default async function PluginDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const pluginData = getPluginData(slug);
 
   if (!pluginData) {
     notFound();
