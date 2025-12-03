@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview A flow to generate a logo for a plugin using an image generation model.
