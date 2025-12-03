@@ -100,7 +100,7 @@ export default function AboutPage() {
                                 <Users className="h-12 w-12 text-primary" />
                             </div>
                             <CardTitle>Naše hodnoty</CardTitle>
-                        </Header>
+                        </CardHeader>
                         <CardContent>
                              <p className="text-muted-foreground">
                                Kvalita, inovácia, komunita a transparentnosť. Tieto princípy sú jadrom všetkého, čo robíme.
