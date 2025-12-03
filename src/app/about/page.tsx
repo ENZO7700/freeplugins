@@ -1,4 +1,3 @@
-
 'use client';
 
 import * as React from 'react';
@@ -64,7 +63,9 @@ export default function AboutPage() {
                     </p>
                 </div>
 
-                <ParallaxImage />
+                <div className="relative">
+                    <ParallaxImage />
+                </div>
 
                 <div className="grid md:grid-cols-3 gap-8 text-center max-w-5xl mx-auto mb-24">
                     <Card>
@@ -99,7 +100,7 @@ export default function AboutPage() {
                                 <Users className="h-12 w-12 text-primary" />
                             </div>
                             <CardTitle>Naše hodnoty</CardTitle>
-                        </CardHeader>
+                        </Header>
                         <CardContent>
                              <p className="text-muted-foreground">
                                Kvalita, inovácia, komunita a transparentnosť. Tieto princípy sú jadrom všetkého, čo robíme.
