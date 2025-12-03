@@ -1,3 +1,4 @@
+'use client';
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -6,10 +7,10 @@ import {
   onAuthStateChanged,
   User,
 } from 'firebase/auth';
-import { app, db } from './firebase';
+import { getFirebaseClient } from './firebase-client';
 import { doc, setDoc } from 'firebase/firestore';
 
-const auth = getAuth(app);
+const { auth, db } = getFirebaseClient();
 
 export interface AuthCredentials {
   email: string;

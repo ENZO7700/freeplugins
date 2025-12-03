@@ -1,12 +1,9 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+
+// This file should only contain the Firebase configuration.
+// Initialization should be handled in a client-specific file.
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
+export const firebaseConfig = {
   "projectId": "expresvny-navigtor",
   "appId": "1:981057554742:web:20df894353c4556f274b97",
   "storageBucket": "expresvny-navigtor.firebasestorage.app",
@@ -15,10 +12,3 @@ const firebaseConfig = {
   "measurementId": "",
   "messagingSenderId": "981057554742"
 };
-
-// Initialize Firebase
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-export { app, auth, db };

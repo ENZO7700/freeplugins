@@ -13,7 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { db } from '@/lib/firebase';
+import { getFirebaseClient } from '@/lib/firebase-client';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export default function CheckoutPage() {
@@ -22,6 +22,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [isProcessing, setIsProcessing] = React.useState(false);
+  const { db } = getFirebaseClient();
 
   React.useEffect(() => {
     if (loading) return;

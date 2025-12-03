@@ -6,7 +6,7 @@ import {
   onAuthStateChanged,
   updateProfile,
 } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { getFirebaseClient } from '@/lib/firebase-client';
 import { signIn as firebaseSignIn, signUp as firebaseSignUp, logOut as firebaseSignOut } from '@/lib/auth-service';
 
 interface AuthContextType {
@@ -23,6 +23,7 @@ const AuthContext = React.createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = React.useState<User | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const { auth } = getFirebaseClient();
 
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -31,7 +32,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [auth]);
   
   const login = async (email: string, password: string): Promise<any> => {
     return firebaseSignIn({ email, password });

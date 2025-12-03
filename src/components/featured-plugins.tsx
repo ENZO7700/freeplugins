@@ -92,5 +92,3 @@ export function FeaturedPlugins() {
     </section>
   );
 }
-
-    

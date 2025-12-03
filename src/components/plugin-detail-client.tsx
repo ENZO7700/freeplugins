@@ -18,7 +18,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { format } from 'date-fns';
 import { sk } from 'date-fns/locale';
-import { db } from '@/lib/firebase';
+import { getFirebaseClient } from '@/lib/firebase-client';
 import { collection, addDoc, serverTimestamp, query, onSnapshot, orderBy } from 'firebase/firestore';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -30,6 +30,7 @@ export default function PluginDetailClient({ pluginData }: PluginDetailClientPro
   const { user } = useAuth();
   const { addToCart } = useCart();
   const { toast } = useToast();
+  const { db } = getFirebaseClient();
   
   const [reviews, setReviews] = React.useState<Review[]>([]);
   const [averageRating, setAverageRating] = React.useState(pluginData.rating);
@@ -40,7 +41,7 @@ export default function PluginDetailClient({ pluginData }: PluginDetailClientPro
   const [isSubmittingReview, setIsSubmittingReview] = React.useState(false);
 
   React.useEffect(() => {
-    if (!pluginData) return;
+    if (!pluginData || !db) return;
     
     const reviewsColRef = collection(db, "plugins", pluginData.slug, "reviews");
     const q = query(reviewsColRef, orderBy("date", "desc"));
@@ -77,7 +78,7 @@ export default function PluginDetailClient({ pluginData }: PluginDetailClientPro
     });
 
     return () => unsubscribe();
-  }, [pluginData, toast]);
+  }, [pluginData, toast, db]);
 
   const handleAddToCart = () => {
     addToCart(pluginData);

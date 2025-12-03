@@ -1,15 +1,7 @@
 import { Poppins, PT_Sans } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/components/theme-provider';
-import { Toaster } from "@/components/ui/toaster"
-import { CartProvider } from '@/context/cart-context';
-import { Header } from '@/components/header';
-import { Footer } from '@/components/footer';
-import { AuthProvider } from '@/context/auth-context';
-import { DashboardProvider } from '@/context/dashboard-context';
 import React from 'react';
-import { Sidebar, SidebarProvider } from '@/components/ui/sidebar';
-import { MainNav } from '@/components/main-nav';
+import { ClientProviders } from '@/components/client-providers';
 
 
 const poppins = Poppins({
@@ -39,34 +31,9 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
       </head>
       <body className={`${poppins.variable} ${ptSans.variable} font-body antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <AuthProvider>
-            <CartProvider>
-              <DashboardProvider>
-                  <SidebarProvider>
-                    <div className="flex min-h-screen flex-row">
-                      <Sidebar>
-                        <MainNav />
-                      </Sidebar>
-                      <div className="flex flex-1 flex-col">
-                        <Header />
-                        <main className="flex-grow">
-                          {children}
-                        </main>
-                        <Footer />
-                      </div>
-                    </div>
-                  </SidebarProvider>
-                  <Toaster />
-              </DashboardProvider>
-            </CartProvider>
-          </AuthProvider>
-        </ThemeProvider>
+        <ClientProviders>
+            {children}
+        </ClientProviders>
       </body>
     </html>
   );

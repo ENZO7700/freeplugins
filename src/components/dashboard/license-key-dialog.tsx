@@ -13,7 +13,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Loader2, Copy, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { db } from '@/lib/firebase';
+import { getFirebaseClient } from '@/lib/firebase-client';
 import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -30,6 +30,7 @@ export function LicenseKeyDialog({ pluginId, userId, trigger }: LicenseKeyDialog
   const [error, setError] = React.useState<string | null>(null);
   const [hasCopied, setHasCopied] = React.useState(false);
   const { toast } = useToast();
+  const { db } = getFirebaseClient();
 
   React.useEffect(() => {
     if (isOpen) {

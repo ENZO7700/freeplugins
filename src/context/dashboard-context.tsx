@@ -3,8 +3,8 @@
 import * as React from 'react';
 import type { Plugin } from '@/components/plugin-list';
 import { useAuth } from './auth-context';
-import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, orderBy, onSnapshot } from 'firebase/firestore';
+import { getFirebaseClient } from '@/lib/firebase-client';
+import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestore';
 
 export interface Order {
     id: string;
@@ -27,9 +27,10 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
   const [purchasedPlugins, setPurchasedPlugins] = React.useState<Plugin[]>([]);
   const [orderHistory, setOrderHistory] = React.useState<Order[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const { db } = getFirebaseClient();
   
   React.useEffect(() => {
-    if (user) {
+    if (user && db) {
       setLoading(true);
       
       const q = query(
@@ -70,13 +71,13 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
 
       return () => unsubscribe();
 
-    } else {
+    } else if (!user) {
         // Clear data if user logs out
         setOrderHistory([]);
         setPurchasedPlugins([]);
         setLoading(false);
     }
-  }, [user]);
+  }, [user, db]);
 
   const value = {
     purchasedPlugins,
