@@ -1,30 +1,22 @@
-
-'use client';
-
-import * as React from 'react';
-import { HeroSection } from '@/components/hero-section';
+import React, { Suspense } from 'react';
+import HomePageContent from './home-page-content';
+import { Loader2 } from 'lucide-react';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
-import { CategoryGrid } from '@/components/category-grid';
-import { PluginList } from '@/components/plugin-list';
-import { FeaturedPlugins } from '@/components/featured-plugins';
-import { useSearchParams } from 'next/navigation';
+
+const HomePageLoading = () => {
+    return (
+        <PageTransitionWrapper>
+            <div className="flex justify-center items-center h-[80vh]">
+                <Loader2 className="h-10 w-10 animate-spin text-primary" />
+            </div>
+        </PageTransitionWrapper>
+    )
+}
 
 export default function Home() {
-  const searchParams = useSearchParams();
-  const category = searchParams.get('category');
-
   return (
-    <PageTransitionWrapper>
-      {!category && <HeroSection />}
-      <div className="container mx-auto px-4 py-8">
-        {!category && (
-          <>
-            <FeaturedPlugins />
-            <CategoryGrid />
-          </>
-        )}
-        {category && <PluginList />}
-      </div>
-    </PageTransitionWrapper>
+    <Suspense fallback={<HomePageLoading />}>
+      <HomePageContent />
+    </Suspense>
   );
 }
