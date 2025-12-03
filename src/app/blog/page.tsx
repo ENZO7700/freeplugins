@@ -10,6 +10,8 @@ import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
 import { motion } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { format } from 'date-fns';
+import { sk } from 'date-fns/locale';
 
 export default function BlogPage() {
   const allPosts = getAllPosts();
@@ -83,7 +85,7 @@ export default function BlogPage() {
                             <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
                                 <span>{post.author}</span>
                                 <span>&bull;</span>
-                                <span>{post.date}</span>
+                                <span>{format(new Date(post.date), "d. M. yyyy", { locale: sk })}</span>
                             </div>
                         </CardHeader>
                         <CardContent className="flex-grow">

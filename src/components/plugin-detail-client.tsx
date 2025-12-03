@@ -54,7 +54,7 @@ export default function PluginDetailClient({ pluginData }: PluginDetailClientPro
           author: data.author,
           rating: data.rating,
           comment: data.comment,
-          date: data.date?.toDate().toISOString() || new Date().toISOString(),
+          date: data.date?.toDate()?.toISOString() || new Date().toISOString(),
         });
       });
       setReviews(fetchedReviews);

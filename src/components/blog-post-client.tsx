@@ -8,7 +8,8 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
-import { Card } from '@/components/ui/card';
+import { format } from 'date-fns';
+import { sk } from 'date-fns/locale';
 
 interface BlogPostClientProps {
     post: BlogPost;
@@ -37,7 +38,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
                     <span>{post.author}</span>
                 </div>
                 <span>&bull;</span>
-                <span>{post.date}</span>
+                <span>{format(new Date(post.date), "d. MMMM yyyy", { locale: sk })}</span>
             </div>
             
             <div className="relative h-96 w-full rounded-lg overflow-hidden shadow-lg mb-8">

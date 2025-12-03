@@ -6,7 +6,7 @@ export interface BlogPost {
   content: string;
   author: string;
   authorImageUrl: string;
-  date: string;
+  date: string; // ISO 8601 format: 'YYYY-MM-DD'
   imageUrl: string;
   dataAiHint: string;
   category: string;
@@ -28,7 +28,7 @@ Spätné odkazy (backlinks) z autoritatívnych stránok sú jedným z najdôlež
 Väčšina používateľov dnes prehliada web na mobilných zariadeniach. Responzívny dizajn je absolútnou nevyhnutnosťou pre dobré umiestnenie vo vyhľadávaní.`,
     author: 'Ján Kováč',
     authorImageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=100&h=100&fit=crop',
-    date: '15. júl 2024',
+    date: '2024-07-15',
     imageUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'seo analytics',
     category: 'SEO',
@@ -48,7 +48,7 @@ Uistite sa, že plugin je kompatibilný s vašou verziou redakčného systému (
 Neriaďte sa len cenou. Niekedy sa oplatí investovať do plateného pluginu, ktorý ponúka lepšiu funkcionalitu, bezpečnosť a podporu ako jeho bezplatná alternatíva.`,
     author: 'Eva Nováková',
     authorImageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=100&h=100&fit=crop',
-    date: '10. júl 2024',
+    date: '2024-07-10',
     imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'software puzzle',
     category: 'Plugins',
@@ -66,7 +66,7 @@ E-mailový marketing je jedným z najlepších kandidátov na automatizáciu. Pl
 Nezabúdajte ani na personalizáciu obsahu na webe. Niektoré pluginy dokážu dynamicky meniť obsah stránky podľa toho, odkiaľ návštevník prišiel alebo čo ho zaujímalo v minulosti. To vedie k vyššej miere konverzie a spokojnejším zákazníkom.`,
     author: 'Martina Veselá',
     authorImageUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100&h=100&fit=crop',
-    date: '25. júl 2024',
+    date: '2024-07-25',
     imageUrl: 'https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'marketing automation',
     category: 'Marketing',
@@ -86,7 +86,7 @@ Pravidelná aktualizácia tiež zaisťuje kompatibilitu s najnovšou verziou vá
 Nastavte si pripomienky alebo využite funkcie automatických aktualizácií. Investícia niekoľkých minút do údržby vám môže ušetriť hodiny alebo aj dni riešenia problémov po hackerskom útoku.`,
     author: 'Peter Bezpečný',
     authorImageUrl: 'https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=100&h=100&fit=crop',
-    date: '28. júl 2024',
+    date: '2024-07-28',
     imageUrl: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'cyber security',
     category: 'Plugins',
@@ -104,7 +104,7 @@ Nové verzie WordPressu prinášajú aj nové funkcie a vylepšenia existujúcic
 Vývojári tém a pluginov prispôsobujú svoje produkty najnovším verziám WordPressu. Ak svoj web neaktualizujete, riskujete, že vaše obľúbené nástroje prestanú správne fungovať alebo sa stanú nekompatibilnými.`,
     author: 'Ján Kováč',
     authorImageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=100&h=100&fit=crop',
-    date: '30. júl 2024',
+    date: '2024-07-30',
     imageUrl: 'https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'wordpress design',
     category: 'Wordpress',
@@ -122,7 +122,7 @@ Chatbot môže zákazníka sprevádzať celým nákupným procesom, od výberu p
 Implementácia AI chatbotu je dnes vďaka moderným platformám a pluginom jednoduchšia a dostupnejšia ako kedykoľvek predtým. Investícia do tejto technológie sa rýchlo vráti v podobe spokojnejších zákazníkov a vyšších tržieb.`,
     author: 'Martina Veselá',
     authorImageUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100&h=100&fit=crop',
-    date: '2. august 2024',
+    date: '2024-08-02',
     imageUrl: 'https://images.unsplash.com/photo-1534723328310-e82dad3ee43f?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'robot assistant',
     category: 'AI',
