@@ -249,11 +249,7 @@ const SidebarTrigger = React.forwardRef<
   }
 
   return (
-    <div className={cn(
-        "hidden md:flex items-center",
-        state === 'expanded' ? 'justify-end' : 'justify-center',
-        "p-2"
-    )}>
+     <div className={cn("hidden md:flex items-center absolute top-2.5 right-2 z-10")}>
         <Tooltip>
             <TooltipTrigger asChild>
                 <Button
@@ -316,7 +312,7 @@ const SidebarHeader = React.forwardRef<
       ref={ref}
       data-sidebar="header"
       className={cn(
-        "flex items-center border-b transition-all duration-300", 
+        "flex items-center border-b transition-all duration-300 relative", 
         state === 'expanded' ? 'h-14 px-2' : 'h-14 justify-center',
         className)}
       {...props}
@@ -624,3 +620,5 @@ export {
   SidebarTrigger,
   useSidebar,
 }
+
+    
