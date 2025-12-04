@@ -25,6 +25,15 @@ const nextConfig: NextConfig = {
       }
     ],
   },
+  
+  // This will prevent the build from failing due to the missing favicon.ico
+  async exportPathMap(defaultPathMap, { dev, dir, outDir, distDir, buildId }) {
+    // This is to prevent the error: "Error occurred prerendering page "/favicon.ico""
+    // This can be removed if a favicon.ico is added to the public folder.
+    const pathMap = { ...defaultPathMap };
+    delete pathMap['/favicon.ico'];
+    return pathMap;
+  },
 };
 
 export default nextConfig;
