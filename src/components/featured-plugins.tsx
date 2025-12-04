@@ -10,7 +10,8 @@ import { Badge } from '@/components/ui/badge';
 import { useCart } from '@/context/cart-context';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
-import { plugins, Plugin, StarRating } from '@/lib/plugins';
+import { plugins, Plugin } from '@/lib/plugins';
+import { StarRating } from '@/components/plugin-list';
 
 export function FeaturedPlugins() {
   const { addToCart } = useCart();

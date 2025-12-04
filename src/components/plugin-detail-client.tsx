@@ -2,7 +2,8 @@
 'use client';
 
 import * as React from 'react';
-import { Plugin, StarRating, Review } from '@/components/plugin-list';
+import { Plugin, Review } from '@/lib/plugins';
+import { StarRating } from '@/components/plugin-list';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';

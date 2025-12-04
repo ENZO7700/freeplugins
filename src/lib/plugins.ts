@@ -639,7 +639,7 @@ export const allPlugins: Plugin[] = [
     description: 'Výkonný nelineárny video editor pre Linux.',
     longDescription: 'Kdenlive je open-source softvér na strih videa. Podporuje viacstopové úpravy, širokú škálu audio a video formátov, a ponúka množstvo efektov, prechodov a nástrojov na úpravu farieb.',
     price: 'Zdarma',
-    imageUrl: 'https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=600&h=400&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1617802690992-15d932033d3a9?q=80&w=600&h=400&fit=crop',
     dataAiHint: 'video editing',
     rating: 4.5,
     reviews: [],
@@ -1183,24 +1183,6 @@ export const plugins = allPlugins.filter(p => p.imageUrl);
 export function getPluginCategories() {
     return categories;
 }
-
-export const StarRating = React.memo(function StarRating({ rating, className }: { rating: number; className?: string }) {
-  const fullStars = Math.floor(rating);
-  const halfStar = rating % 1 >= 0.5;
-  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-
-  return (
-    <div className={`flex items-center ${className}`}>
-      {[...Array(fullStars)].map((_, i) => (
-        <Star key={`full-${i}`} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-      ))}
-      {halfStar && <StarHalf className="w-5 h-5 fill-yellow-400 text-yellow-400" />}
-      {[...Array(emptyStars)].map((_, i) => (
-        <Star key={`empty-${i}`} className="w-5 h-5 text-gray-300" />
-      ))}
-    </div>
-  );
-});
 
 export const getPluginData = (slug: string): Plugin | undefined => {
   const plugin = plugins.find(p => p.slug === slug);
