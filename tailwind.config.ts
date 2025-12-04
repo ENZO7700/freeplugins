@@ -1,5 +1,9 @@
 
 import type {Config} from 'tailwindcss';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import tailwindcssAnimate from 'tailwindcss-animate';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import tailwindcssTypography from '@tailwindcss/typography';
 
 const config = {
   darkMode: ['class'],
@@ -129,6 +133,7 @@ const config = {
         'text-glow': 'text-glow 3s ease-in-out infinite',
         'pulse-subtle': 'pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       typography: (theme: any) => ({
         DEFAULT: {
           css: {
@@ -192,8 +197,8 @@ const config = {
     },
   },
   plugins: [
-    require('tailwindcss-animate'),
-    require('@tailwindcss/typography'),
+    tailwindcssAnimate,
+    tailwindcssTypography,
   ],
 } satisfies Config;
 

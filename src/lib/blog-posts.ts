@@ -1,4 +1,6 @@
-
+/**
+ * Blog post interface representing a blog article
+ */
 export interface BlogPost {
   slug: string;
   title: string;
@@ -129,14 +131,35 @@ Implementácia AI chatbotu je dnes vďaka moderným platformám a pluginom jedno
   },
 ];
 
+/**
+ * Get all blog posts
+ * 
+ * @returns Array of all blog posts
+ */
 export function getAllPosts() {
   return blogPosts;
 }
 
+/**
+ * Get a specific blog post by its slug
+ * 
+ * @param slug - The URL-friendly identifier for the blog post
+ * @returns The blog post if found, undefined otherwise
+ * 
+ * @example
+ * ```ts
+ * const post = getPostBySlug('5-tipov-pre-lepsi-ranking');
+ * ```
+ */
 export function getPostBySlug(slug: string) {
   return blogPosts.find(p => p.slug === slug);
 }
 
+/**
+ * Get all unique blog categories
+ * 
+ * @returns Array of unique category names
+ */
 export function getBlogCategories() {
   const categories = blogPosts.map(post => post.category);
   return [...new Set(categories)]; // Return unique categories
