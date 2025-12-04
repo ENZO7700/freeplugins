@@ -1,8 +1,6 @@
 
 import type {Config} from 'tailwindcss';
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 import tailwindcssAnimate from 'tailwindcss-animate';
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 import tailwindcssTypography from '@tailwindcss/typography';
 
 const config = {
