@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
 import { Balancer } from 'react-wrap-balancer';
-import { plugins } from '@/components/plugin-list';
+import { plugins } from '@/lib/plugins';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
@@ -113,13 +113,13 @@ export default function DashboardPage() {
           !purchasedSlugs.has(p.slug) && 
           (p.category === favoriteCategory || favoriteCategory === 'N/A')
       )
-      .sort((a,b) => b.rating - a.rating) // Consistent sorting
+      .sort((a,b) => b.rating - a.rating)
       .slice(0, 3);
       
     if (recommendations.length < 3) {
       const additionalPlugins = plugins
         .filter(p => !purchasedSlugs.has(p.slug) && !recommendations.some(r => r.slug === p.slug))
-        .sort((a,b) => b.rating - a.rating) // Consistent sorting
+        .sort((a,b) => b.rating - a.rating)
         .slice(0, 3 - recommendations.length);
       return [...recommendations, ...additionalPlugins];
     }

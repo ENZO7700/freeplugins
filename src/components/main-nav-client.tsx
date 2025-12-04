@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -23,7 +24,7 @@ import {
   ShoppingBag,
   ChevronDown
 } from "lucide-react"
-import { getPluginCategories } from "./plugin-list"
+import { getPluginCategories } from "@/lib/plugins";
 import { cn } from "@/lib/utils"
 
 export function MainNavClient() {

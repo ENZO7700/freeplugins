@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { getPluginCategories } from './plugin-list';
+import { getPluginCategories } from '@/lib/plugins';
 import { Twitter, Github, Linkedin, LucideProps } from 'lucide-react';
 import { useSidebar } from './ui/sidebar';
 import { cn } from '@/lib/utils';

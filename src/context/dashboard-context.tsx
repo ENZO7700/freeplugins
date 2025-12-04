@@ -1,7 +1,8 @@
+
 'use client';
 
 import * as React from 'react';
-import type { Plugin } from '@/components/plugin-list';
+import type { Plugin } from '@/lib/plugins';
 import { useAuth } from './auth-context';
 import { getFirebaseClient } from '@/lib/firebase-client';
 import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestore';

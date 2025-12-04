@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { getPluginCategories } from '@/components/plugin-list';
+import { getPluginCategories } from '@/lib/plugins';
 import { AppWindow, Download, ToyBrick, Smartphone, LucideIcon, Code, Monitor, Wind } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';

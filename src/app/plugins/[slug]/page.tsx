@@ -1,7 +1,7 @@
 
 import * as React from 'react';
-import { getPluginData } from '@/components/plugin-list';
-import { Metadata, ResolvingMetadata } from 'next';
+import { getPluginData } from '@/lib/plugins';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import PluginDetailClient from '@/components/plugin-detail-client';
 
@@ -10,8 +10,7 @@ type Props = {
 }
 
 export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
+  { params }: Props
 ): Promise<Metadata> {
   const plugin = getPluginData(params.slug);
   
