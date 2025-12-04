@@ -4,7 +4,7 @@ import * as React from 'react';
 import type { Plugin } from '@/components/plugin-list';
 import { useAuth } from './auth-context';
 import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, orderBy, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
 
 export interface Order {
     id: string;

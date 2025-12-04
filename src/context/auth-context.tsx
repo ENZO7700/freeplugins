@@ -12,8 +12,8 @@ import { signIn as firebaseSignIn, signUp as firebaseSignUp, logOut as firebaseS
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<any>;
-  signup: (email: string, password: string) => Promise<any>;
+  login: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   updateUserProfile: (profile: { displayName?: string; photoURL?: string }) => Promise<void>;
 }
@@ -33,12 +33,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => unsubscribe();
   }, []);
   
-  const login = async (email: string, password: string): Promise<any> => {
-    return firebaseSignIn({ email, password });
+  const login = async (email: string, password: string): Promise<void> => {
+    await firebaseSignIn({ email, password });
   }
 
-  const signup = async (email: string, password: string): Promise<any> => {
-    return firebaseSignUp({ email, password });
+  const signup = async (email: string, password: string): Promise<void> => {
+    await firebaseSignUp({ email, password });
   }
 
   const logout = async (): Promise<void> => {

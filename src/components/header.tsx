@@ -17,7 +17,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import Link from 'next/link';
 import { SidebarTrigger } from './ui/sidebar';
-import { MainNav } from './main-nav';
 
 export function Header() {
   const { user, loading, logout } = useAuth();

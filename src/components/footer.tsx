@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { getPluginCategories } from './plugin-list';
-import { Twitter, Github, Linkedin, LucideProps } from 'lucide-react';
+import { Twitter, Github, Linkedin } from 'lucide-react';
 import { useSidebar } from './ui/sidebar';
 import { cn } from '@/lib/utils';
 import { buttonVariants } from './ui/button';

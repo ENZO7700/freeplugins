@@ -52,11 +52,12 @@ export function SignupForm() {
       await signup(values.email, values.password);
       toast({ title: 'Účet vytvorený', description: "Boli ste úspešne zaregistrovaný." });
       router.push('/dashboard');
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Vyskytla sa neočakávaná chyba.';
       toast({
         variant: 'destructive',
         title: 'Registrácia zlyhala',
-        description: error.message || 'Vyskytla sa neočakávaná chyba.',
+        description: errorMessage,
       });
     } finally {
       setIsLoading(false);

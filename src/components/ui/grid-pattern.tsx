@@ -1,8 +1,8 @@
 
 'use client';
 
-import { useId, useRef, useState, useEffect, FC } from 'react';
-import { motion, useAnimation, useMotionValue, useSpring } from 'framer-motion';
+import { useId, useRef, useState, useEffect } from 'react';
+import { motion, useAnimation, useSpring } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface GridPatternProps {
@@ -10,11 +10,11 @@ interface GridPatternProps {
   height?: number;
   x?: number;
   y?: number;
-  strokeDasharray?: any;
+  strokeDasharray?: string | number;
   interactive?: boolean;
   className?: string;
   yOffset?: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export function GridPattern({
@@ -22,10 +22,8 @@ export function GridPattern({
   height = 40,
   x = -1,
   y = -1,
-  strokeDasharray = 0,
   interactive = false,
   className,
-  yOffset, // Destructure yOffset here
   ...props
 }: GridPatternProps) {
   const id = useId();

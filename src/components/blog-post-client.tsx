@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
-import { Card } from '@/components/ui/card';
 
 interface BlogPostClientProps {
     post: BlogPost;

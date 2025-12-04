@@ -50,11 +50,12 @@ export function LoginForm() {
       toast({ title: 'Prihlásenie úspešné', description: "Vitajte späť!" });
       const redirectUrl = searchParams.get('redirect') || '/dashboard';
       router.push(redirectUrl);
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Vyskytla sa neočakávaná chyba.';
       toast({
         variant: 'destructive',
         title: 'Prihlásenie zlyhalo',
-        description: error.message || 'Vyskytla sa neočakávaná chyba.',
+        description: errorMessage,
       });
     } finally {
       setIsLoading(false);

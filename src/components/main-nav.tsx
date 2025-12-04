@@ -2,7 +2,6 @@ import React, { Suspense } from 'react';
 import { MainNavClient } from './main-nav-client';
 import { SidebarContent, SidebarHeader, SidebarFooter, SidebarTrigger } from './ui/sidebar';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
 import { Skeleton } from './ui/skeleton';
 
 const NavSkeleton = () => (

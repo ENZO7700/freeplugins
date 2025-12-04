@@ -6,9 +6,9 @@ import { useDashboard } from '@/context/dashboard-context';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
-import { Loader2, User, Edit, Save, LogOut, Download, ShoppingBag, History, BadgeCheck, BarChart2, PieChart, Star, KeyRound, DollarSign, Package, Tag, ThumbsUp, Medal, Sparkles } from 'lucide-react';
+import { Loader2, User, Edit, Save, LogOut, Download, ShoppingBag, BadgeCheck, BarChart2, PieChart, Star, KeyRound, DollarSign, Package, Tag, ThumbsUp, Medal, Sparkles } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
@@ -89,7 +89,7 @@ export default function DashboardPage() {
         await updateUserProfile({ displayName: displayName });
         toast({ title: "Profil aktualizovaný", description: "Vaše zobrazované meno bolo aktualizované." });
         setIsEditing(false);
-    } catch (error: any) {
+    } catch {
         toast({ variant: "destructive", title: "Aktualizácia zlyhala", description: "Vyskytla sa chyba. Skúste to prosím znova." });
     } finally {
         setIsSaving(false);

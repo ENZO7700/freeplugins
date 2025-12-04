@@ -6,7 +6,7 @@ import { Plugin, StarRating, Review } from '@/components/plugin-list';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Sparkles, Loader2, Star } from 'lucide-react';
+import { ArrowLeft, Loader2, Star } from 'lucide-react';
 import Link from 'next/link';
 import { useCart } from '@/context/cart-context';
 import { useToast } from '@/hooks/use-toast';

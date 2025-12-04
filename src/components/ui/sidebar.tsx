@@ -483,20 +483,29 @@ const SidebarMenuButton = React.forwardRef<
 
     const buttonContent = (
       <>
-        {React.Children.map(children, (child, index) => {
-          if (React.isValidElement(child) && typeof child.type !== 'string' && child.type.displayName?.includes("Chevron")) {
-            return React.cloneElement(child, {
-              className: cn(child.props.className, 'transition-opacity duration-300 ml-auto', state === 'collapsed' ? 'opacity-0' : 'opacity-100')
-            });
+        {React.Children.map(children, (child) => {
+          if (React.isValidElement(child)) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const childType = child.type as any;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const childProps = child.props as any;
+            
+            // Check for Chevron icons
+            if (typeof childType !== 'string' && childType?.displayName?.includes("Chevron")) {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              return React.cloneElement(child as React.ReactElement<any>, {
+                className: cn(childProps.className, 'transition-opacity duration-300 ml-auto', state === 'collapsed' ? 'opacity-0' : 'opacity-100')
+              });
+            }
+            // Check for span elements
+            if (childType === 'span') {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              return React.cloneElement(child as React.ReactElement<any>, {
+                className: cn(childProps.className, 'transition-opacity duration-200 whitespace-nowrap', state === 'collapsed' ? 'opacity-0' : 'opacity-100')
+              });
+            }
+            return child
           }
-          if (React.isValidElement(child) && child.type === 'span') {
-             return React.cloneElement(child, {
-              className: cn(child.props.className, 'transition-opacity duration-200 whitespace-nowrap', state === 'collapsed' ? 'opacity-0' : 'opacity-100')
-            });
-          }
-           if (React.isValidElement(child)) {
-             return child
-           }
           return null
         })}
       </>
