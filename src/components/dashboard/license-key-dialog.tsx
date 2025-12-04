@@ -13,9 +13,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { Loader2, Copy, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { getFirebaseClient } from '@/lib/firebase-client';
-import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getOrCreateLicenseKey } from '@/lib/firestore-service';
 
 interface LicenseKeyDialogProps {
   pluginId: string;
@@ -30,43 +29,18 @@ export function LicenseKeyDialog({ pluginId, userId, trigger }: LicenseKeyDialog
   const [error, setError] = React.useState<string | null>(null);
   const [hasCopied, setHasCopied] = React.useState(false);
   const { toast } = useToast();
-  const { db } = getFirebaseClient();
 
-  React.useEffect(() => {
-    if (isOpen) {
-      fetchLicenseKey();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
-  
-  React.useEffect(() => {
-    if (hasCopied) {
-      const timer = setTimeout(() => {
-        setHasCopied(false);
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [hasCopied]);
-
-  const fetchLicenseKey = async () => {
+  const fetchKey = React.useCallback(async () => {
+    if (!isOpen) return;
     setIsLoading(true);
     setLicenseKey(null);
     setError(null);
     try {
-      const q = query(
-        collection(db, 'licenseKeys'),
-        where('userId', '==', userId),
-        where('pluginId', '==', pluginId),
-        orderBy('createdAt', 'desc'),
-        limit(1)
-      );
-      const querySnapshot = await getDocs(q);
-
-      if (querySnapshot.empty) {
-        setError('Licenčný kľúč nebol nájdený.');
+      const key = await getOrCreateLicenseKey(userId, pluginId);
+      if (key) {
+        setLicenseKey(key);
       } else {
-        const keyData = querySnapshot.docs[0].data();
-        setLicenseKey(keyData.keyString);
+        setError('Licenčný kľúč nebol nájdený alebo sa ho nepodarilo vytvoriť.');
       }
     } catch (err) {
       console.error('Chyba pri načítavaní licenčného kľúča:', err);
@@ -74,7 +48,18 @@ export function LicenseKeyDialog({ pluginId, userId, trigger }: LicenseKeyDialog
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [isOpen, userId, pluginId]);
+
+  React.useEffect(() => {
+    fetchKey();
+  }, [fetchKey]);
+
+  React.useEffect(() => {
+    if (hasCopied) {
+      const timer = setTimeout(() => setHasCopied(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [hasCopied]);
 
   const handleCopy = () => {
     if (licenseKey) {
@@ -98,9 +83,7 @@ export function LicenseKeyDialog({ pluginId, userId, trigger }: LicenseKeyDialog
           </DialogDescription>
         </DialogHeader>
         <div className="py-4">
-          {isLoading && (
-            <Skeleton className="h-10 w-full" />
-          )}
+          {isLoading && <Skeleton className="h-10 w-full" />}
           {error && (
             <div className="flex items-center justify-center h-20 text-destructive">
               <p>{error}</p>

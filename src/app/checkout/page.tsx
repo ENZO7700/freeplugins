@@ -13,8 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { getFirebaseClient } from '@/lib/firebase-client';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { createOrder } from '@/lib/firestore-service';
 
 export default function CheckoutPage() {
   const { user, loading } = useAuth();
@@ -22,7 +21,6 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [isProcessing, setIsProcessing] = React.useState(false);
-  const { db } = getFirebaseClient();
 
   React.useEffect(() => {
     if (loading) return;
@@ -48,16 +46,14 @@ export default function CheckoutPage() {
 
     try {
       // 1. Create the order document in Firestore
-      const orderRef = await addDoc(collection(db, "orders"), {
+      const orderId = await createOrder({
         userId: user.uid,
-        userEmail: user.email,
+        userEmail: user.email!,
         items: cart,
         total: total,
-        orderDate: serverTimestamp(),
-        status: 'paid' // Simulate successful payment
       });
 
-      console.log("Order created with ID: ", orderRef.id);
+      console.log("Order created with ID: ", orderId);
       
       setIsProcessing(false);
       clearCart();

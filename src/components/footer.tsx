@@ -52,9 +52,9 @@ export function Footer() {
         <div className="flex flex-col sm:flex-row justify-between items-center text-sm mt-8 pt-8 border-t">
           <p>&copy; {currentYear} FreePlugins. Všetky práva vyhradené.</p>
           <div className="flex space-x-2 mt-4 sm:mt-0">
-            <Link href="#" aria-label="Twitter" className={cn(buttonVariants({variant: "ghost", size:"icon"}))}><Twitter /></Link>
-            <Link href="#" aria-label="GitHub" className={cn(buttonVariants({variant: "ghost", size:"icon"}))}><Github /></Link>
-            <Link href="#" aria-label="LinkedIn" className={cn(buttonVariants({variant: "ghost", size:"icon"}))}><Linkedin /></Link>
+            <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className={cn(buttonVariants({variant: "ghost", size:"icon"}))}><Twitter /></Link>
+            <Link href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className={cn(buttonVariants({variant: "ghost", size:"icon"}))}><Github /></Link>
+            <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className={cn(buttonVariants({variant: "ghost", size:"icon"}))}><Linkedin /></Link>
           </div>
         </div>
       </div>

@@ -19,9 +19,8 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { format } from 'date-fns';
 import { sk } from 'date-fns/locale';
-import { getFirebaseClient } from '@/lib/firebase-client';
-import { collection, addDoc, serverTimestamp, query, onSnapshot, orderBy } from 'firebase/firestore';
 import { Skeleton } from '@/components/ui/skeleton';
+import { addReview, listenForReviews } from '@/lib/firestore-service';
 
 interface PluginDetailClientProps {
     pluginData: Plugin;
@@ -31,7 +30,6 @@ export default function PluginDetailClient({ pluginData }: PluginDetailClientPro
   const { user } = useAuth();
   const { addToCart } = useCart();
   const { toast } = useToast();
-  const { db } = getFirebaseClient();
   
   const [reviews, setReviews] = React.useState<Review[]>([]);
   const [averageRating, setAverageRating] = React.useState(pluginData.rating);
@@ -42,29 +40,16 @@ export default function PluginDetailClient({ pluginData }: PluginDetailClientPro
   const [isSubmittingReview, setIsSubmittingReview] = React.useState(false);
 
   React.useEffect(() => {
-    if (!pluginData || !db) return;
-    
-    const reviewsColRef = collection(db, "plugins", pluginData.slug, "reviews");
-    const q = query(reviewsColRef, orderBy("date", "desc"));
+    if (!pluginData) return;
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const fetchedReviews: Review[] = [];
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        fetchedReviews.push({
-          author: data.author,
-          rating: data.rating,
-          comment: data.comment,
-          date: data.date?.toDate()?.toISOString() || new Date().toISOString(),
-        });
-      });
+    const unsubscribe = listenForReviews(pluginData.slug, (fetchedReviews) => {
       setReviews(fetchedReviews);
       
       if (fetchedReviews.length > 0) {
         const totalRating = fetchedReviews.reduce((sum, r) => sum + r.rating, 0);
         setAverageRating(parseFloat((totalRating / fetchedReviews.length).toFixed(1)));
       } else {
-        setAverageRating(pluginData.rating); // Fallback to static rating
+        setAverageRating(pluginData.rating);
       }
       
       setIsReviewsLoading(false);
@@ -79,7 +64,7 @@ export default function PluginDetailClient({ pluginData }: PluginDetailClientPro
     });
 
     return () => unsubscribe();
-  }, [pluginData, toast, db]);
+  }, [pluginData, toast]);
 
   const handleAddToCart = () => {
     addToCart(pluginData);
@@ -111,15 +96,12 @@ export default function PluginDetailClient({ pluginData }: PluginDetailClientPro
     setIsSubmittingReview(true);
     
     try {
-        const reviewsColRef = collection(db, "plugins", pluginData.slug, "reviews");
-        await addDoc(reviewsColRef, {
+        await addReview(pluginData.slug, {
             author: user?.displayName || user?.email || 'Anonym',
             authorId: user.uid,
             rating: reviewRating,
             comment: reviewComment,
-            date: serverTimestamp(),
         });
-
         
         setReviewRating(0);
         setReviewComment('');
