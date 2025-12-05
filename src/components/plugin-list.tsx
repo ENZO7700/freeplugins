@@ -45,6 +45,8 @@ export function PluginList({ category }: { category: string | null }) {
     return matchesCategory && matchesSearch;
   }), [category, searchQuery]);
 
+  const displayedPlugins = filteredPlugins.slice(0, 9);
+
   const handleAddToCart = (plugin: Plugin) => {
     addToCart(plugin);
     toast({
@@ -78,9 +80,9 @@ export function PluginList({ category }: { category: string | null }) {
         />
       </div>
 
-      {filteredPlugins.length > 0 ? (
+      {displayedPlugins.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {filteredPlugins.map((plugin) => (
+          {displayedPlugins.map((plugin) => (
             <motion.div
               key={plugin.slug}
               whileHover={{ y: -8, scale: 1.02 }}

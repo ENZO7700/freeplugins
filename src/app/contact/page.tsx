@@ -8,19 +8,20 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { PageTransitionWrapper } from '@/components/page-transition-wrapper';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Mail, Phone, MapPin } from 'lucide-react';
+import { Loader2, Mail, Phone, MapPin, UploadCloud, X } from 'lucide-react';
 import * as React from 'react';
 import Image from 'next/image';
 
 export default function ContactPage() {
     const { toast } = useToast();
     const [isLoading, setIsLoading] = React.useState(false);
+    const [preview, setPreview] = React.useState<string | null>(null);
+    const fileInputRef = React.useRef<HTMLInputElement>(null);
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setIsLoading(true);
 
-        // Simulate sending a message
         await new Promise(resolve => setTimeout(resolve, 1500));
 
         setIsLoading(false);
@@ -29,9 +30,37 @@ export default function ContactPage() {
             description: "Odpovieme vám čo najskôr.",
         });
         
-        // Reset form - for a real app, you'd use react-hook-form
         (event.target as HTMLFormElement).reset();
+        setPreview(null);
+        if(fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
     };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            setPreview(null);
+            toast({
+                variant: 'destructive',
+                title: 'Neplatný súbor',
+                description: 'Prosím, vyberte obrázok.',
+            });
+        }
+    };
+    
+    const handleRemovePreview = () => {
+        setPreview(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    }
 
     return (
         <PageTransitionWrapper>
@@ -77,6 +106,46 @@ export default function ContactPage() {
                                 </form>
                             </CardContent>
                         </Card>
+                         <Card>
+                            <CardHeader>
+                                <CardTitle>Nahrajte prílohu</CardTitle>
+                                <CardDescription>Ukážte nám problém nahraním obrázka (max 5MB).</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                {preview ? (
+                                    <div className="relative group">
+                                        <Image src={preview} alt="Náhľad obrázka" width={500} height={300} className="rounded-md object-cover w-full h-auto" />
+                                        <Button
+                                            variant="destructive"
+                                            size="icon"
+                                            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                                            onClick={handleRemovePreview}
+                                            aria-label="Odstrániť obrázok"
+                                        >
+                                            <X className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <div 
+                                        className="border-2 border-dashed border-muted-foreground/50 rounded-lg p-12 text-center cursor-pointer hover:border-primary hover:bg-accent transition-colors"
+                                        onClick={() => fileInputRef.current?.click()}
+                                    >
+                                        <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                                            <UploadCloud className="h-10 w-10" />
+                                            <span className="font-medium">Kliknite pre nahratie súboru</span>
+                                            <span className="text-sm">alebo ho sem presuňte myšou</span>
+                                        </div>
+                                        <Input 
+                                            ref={fileInputRef}
+                                            type="file" 
+                                            className="hidden" 
+                                            accept="image/*"
+                                            onChange={handleFileChange} 
+                                        />
+                                    </div>
+                                )}
+                            </CardContent>
+                         </Card>
                     </div>
 
                      <div className="space-y-8">
