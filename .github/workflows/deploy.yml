@@ -1,43 +1,50 @@
-# GitHub Actions Workflow for deploying the Next.js app to Firebase Hosting
+# GitHub Actions Workflow pre automatické nasadenie Next.js aplikácie na Firebase Hosting
 
 name: Deploy to Firebase
 
 on:
   push:
     branches:
-      - main # Workflow sa spustí pri každom push-i do 'main' vetvy
+      - main # Tento workflow sa spustí pri každom 'git push' do 'main' vetvy
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
+      # 1. Krok: Stiahnutie kódu z repozitára
       - name: Check out the repo
         uses: actions/checkout@v4
 
+      # 2. Krok: Nastavenie prostredia Node.js (verzia 20)
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
+      # 3. Krok: Inštalácia všetkých potrebných závislostí (npm packages)
       - name: Install dependencies
         run: npm install
 
+      # 4. Krok: Vytvorenie produkčnej verzie aplikácie (build)
       - name: Build the application
         # Firebase API kľúč je potrebný počas build procesu
         env:
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
         run: npm run build
 
+      # 5. Krok: Nasadenie na Firebase Hosting
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
-          PROJECT_ID: expresvny-navigtor
+          PROJECT_ID: expresvny-navigtor # Nahraďte vaším Firebase Project ID, ak je iné
 
-# POZNÁMKA PRE POUŽÍVATEĽA:
-# Po pridaní tohto súboru do vášho projektu je potrebné nastaviť "Secrets" vo vašom GitHub repozitári.
+# --- DÔLEŽITÉ UPOZORNENIE PRE POUŽÍVATEĽA ---
+# Po uložení projektu na GitHub je potrebné nastaviť "Secrets" vo vašom repozitári.
+# Tieto premenné sú nevyhnutné pre bezpečné nasadenie.
+#
 # Choďte do: Settings > Secrets and variables > Actions a pridajte nasledujúce dve premenné:
 #
 # 1. Názov: FIREBASE_API_KEY
@@ -47,4 +54,4 @@ jobs:
 #    Hodnota: Spustite vo vašom lokálnom termináli príkaz `firebase login:ci` (musíte mať nainštalované Firebase CLI).
 #             Tento príkaz vám vygeneruje token, ktorý sem vložíte.
 #
-# Po nastavení týchto premenných bude každá zmena v 'main' vetve automaticky nasadená na Firebase.
+# Podrobnejší návod nájdete v súbore `NAVOD.md`.
