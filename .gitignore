@@ -28,7 +28,6 @@ lerna-debug.log*
 firebase-debug.log*
 firebase-debug.*.log*
 .firebase/
-.firebaserc
 
 # Backup files
 *.tar.gz
