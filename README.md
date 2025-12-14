@@ -177,14 +177,18 @@ Aplikácia je nakonfigurovaná pre automatické nasadenie na Firebase Hosting po
 
 2. Push do `main` vetvy automaticky spustí nasadenie
 
-### Vercel
+### Vercel (Odporúčané)
 
-Alternatívne môžete nasadiť na Vercel:
+**Kompletný návod:** Pozrite si [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md) pre detailné inštrukcie.
+
+**Rýchle nasadenie:**
 
 ```bash
 npm install -g vercel
 vercel
 ```
+
+Projekt je optimalizovaný pre Vercel s automatickým CI/CD pri každom push do GitHub.
 
 ## 🧪 Testovanie
 
