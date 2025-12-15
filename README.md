@@ -42,7 +42,7 @@ npm install
 
 1. Vytvorte Firebase projekt na [Firebase Console](https://console.firebase.google.com/)
 2. Aktivujte Authentication a Firestore Database
-3. Vytvorte súbor `.env.local` v koreňovom adresári projektu:
+3. Vytvorte súbor `.env.local` v koreňovom adresári projektu (môžete skopírovať `.env.example`):
 
 ```env
 NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
@@ -51,9 +51,10 @@ NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
 NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_measurement_id
 ```
 
-4. Aktualizujte `src/lib/firebase.ts` s vašimi Firebase údajmi (alebo použite environment variables)
+**Dôležité:** Všetky Firebase premenné musia byť nastavené - aplikácia používa environment variables bez fallback hodnôt pre bezpečnosť.
 
 ### 4. Spustenie Vývojového Servera
 
@@ -112,7 +113,7 @@ freeplugins/
 ## 🎨 Technologický Stack
 
 ### Frontend
-- **Next.js 15** - React framework s App Router
+- **Next.js 16** - React framework s App Router
 - **React 18** - UI knižnica
 - **TypeScript** - Type safety
 - **Tailwind CSS** - Utility-first CSS framework
